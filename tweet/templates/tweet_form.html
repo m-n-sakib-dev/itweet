@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{% if form.instance.pk %}
+Edit Tweet
+{% else %}
+Create Tweet
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-4">
+  {% if form.instance.pk %}
+  Edit My Tweet
+  {% else %}
+  Create New Tweet
+  {% endif %}
+</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="{{ form.text.id_for_label }}" class="form-label">{{ form.text.label }}</label>
+    {{ form.text }}
+    {% comment %} <textarea class="form-control" name="{{ form.text.name }} " id="{{ form.text.id_for_lebel }}"
+      rows="3"></textarea> {% endcomment %}
+  </div>
+  <div class="mb-3">
+    <label for="{{ form.photo.id_for_label }}" class="form-label">{{ form.photo.label }}</label>
+    {{ form.photo }}
+    {% comment %} <input class="form-control" type="file" id="{{ form.photo.id_for_label }}"
+      name="{{ form.photo.name }}" /> {% endcomment %}
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

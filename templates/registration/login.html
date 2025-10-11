@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  login
+{% endblock %}
+
+{% block content %}
+  <h1 class="mt-4 text-center">Welcome to iTweet</h1>
+  <h3 class="mt-4 text-center">LogIn Form</h3>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <div class="d-flex justify-content-between mt-3">
+      <button type="submit" class="btn btn-primary">Login</button>
+      <div>
+        Not a user? <a href="{% url 'registration' %}">Register</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}
