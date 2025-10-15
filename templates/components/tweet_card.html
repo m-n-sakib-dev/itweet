@@ -1,0 +1,28 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
+<script src="{% static 'scripts/tweet_card.js' %}" defer></script>
+<div class="tweet_card">
+  <div>
+    <h4>{{ tweet.user.username }}</h4>
+  </div>
+  <div>
+    <p>{{ tweet.text }}</p>
+  </div>
+  <div class="tweet_card_image_container">
+    <img src="{{ tweet.photo.url }}" class="tweet_card_image" />
+  </div>
+  <div class="tweet_interaction_container row text-center mt-2">
+    <div class="col">
+      <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-up"></i></button><span class="like_count">{{ tweet.like_count }}</span>
+    </div>
+    <div class="col">
+      <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-down"></i></button><span class="unlike_count">{{ tweet.like_count }}</span>
+    </div>
+    <div class="col">
+      <button class="icon-btn"><i class="bi bi-chat-left-text"></i></button>
+    </div>
+    <div class="col">
+      <button class="icon-btn"><i class="bi bi-repeat"></i></button>
+    </div>
+  </div>
+</div>
