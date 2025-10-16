@@ -16,13 +16,19 @@
       <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-up"></i></button><span class="like_count">{{ tweet.like_count }}</span>
     </div>
     <div class="col">
-      <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-down"></i></button><span class="unlike_count">{{ tweet.like_count }}</span>
+      <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-down"></i></button><span class="unlike_count">{{ tweet.unlike_count }}</span>
     </div>
     <div class="col">
-      <button class="icon-btn"><i class="bi bi-chat-left-text"></i></button>
+      <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-chat-left-text"></i></button>
     </div>
     <div class="col">
       <button class="icon-btn"><i class="bi bi-repeat"></i></button>
     </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="exampleModal">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
   </div>
 </div>

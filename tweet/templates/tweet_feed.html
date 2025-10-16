@@ -7,7 +7,7 @@
 {% block content %}
   <div class="container">
     {% for tweet in tweets %}
-      {% include 'components/tweet_card.html' with tweet=tweet %}
+      {% include 'components/tweet_card.html' with tweet=tweet comment_form=comment_form %}
     {% endfor %}
   </div>
 {% endblock %}

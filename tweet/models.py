@@ -14,7 +14,7 @@ class Tweet(models.Model):
  
 class TweetModel(models.Model):
         user=models.ForeignKey(User,on_delete=models.CASCADE)
-        text=models.TextField(max_length=280)
+        text=models.TextField(max_length=2000)
         photo=models.ImageField(upload_to='photos/',blank=True,null=True)
         like_count=models.IntegerField(default=0)
         unlike_count=models.IntegerField(default=0)
