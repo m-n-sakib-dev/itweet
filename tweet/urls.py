@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 #     path("admin/", admin.site.urls),
+	
 	path('', views.index, name='index'),
 	path('tweet_list/',views.tweet_list,name='tweet_list'),
 	path('tweet_create/',CreateTweet,name='tweet_create'),

@@ -28,6 +28,10 @@ class TweetModel(models.Model):
                 self.unlike_count=self.reactionmodel_set.filter(reactiontype='unlike').count()
                 self.save()
                 
+        def update_comment_count(self):
+                self.comment_count = self.comments.count()
+                self.save()
+                
         
         def __str__(self):
         	return f'{self.user.username}--{self.user.username} -- {self.text[:20]}'

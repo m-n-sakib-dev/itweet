@@ -23,7 +23,7 @@ def GiveReaction(request,tweet_id,reaction_type):
                 reaction.save()
         tweet.update_reaction_count()      
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return JsonResponse({'like_count': tweet.like_count,'unlike_count':tweet.unlike_count})
+            return JsonResponse({'like_count': tweet.like_count,'unlike_count':tweet.unlike_count,'tweet_id':tweet.id})
         
         return redirect('tweet_feed')
     

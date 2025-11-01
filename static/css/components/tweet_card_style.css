@@ -1,26 +1,55 @@
 .tweet_card {
-        border: 0.05em solid rgb(66, 66, 66);
-        border-radius: 0.5em;
-        padding: 0.5em;
-        margin: 0.5em;
+  border: 0 solid rgb(0, 0, 0);
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+  background-color: rgba(58, 58, 58, 0.216);
+  box-shadow: 0 1px 2px 0px rgb(1, 1, 1);
 }
+
 .tweet_card_image_container {
-        width: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
+
 .tweet_card_image {
-        width: 100%;
-        height: min(60vh, 100%);
-        max-height: 60vh;
-        object-fit: contain;
-        border-radius: 0.5em;
+  width: 100%;
+  height: min(58vh, 100%);
+  max-height: 58vh;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 0.5em;
 }
 
 .icon-btn {
-        border: none;
-        background: transparent;
-        transition: 0.3s;
+  border: none;
+  background: transparent;
+  transition: 0.3s;
 }
+
 .icon-btn:hover {
-        color: #0d6efd; /* bootstrap blue */
-        transform: scale(1.2);
+  color: #0d6efd; /* bootstrap blue */
+  transform: scale(1.2);
 }
+
+.tweet_profile_img_cls {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-right: 0.5em;
+}
+
+.post-modal {
+  height: 95vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+@media (max-width: 768px) {
+  .post-modal {
+    height: 65vh;
+  }
+}/*# sourceMappingURL=tweet_card_style.css.map */

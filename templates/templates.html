@@ -1,0 +1,44 @@
+<template id="comment_reply_form_template">
+  <div class="d-flex flex-row reply-comment-form-container">
+    <div class="comment_user_img mt-1 pe-2">
+      <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="" class="comment_profile_img_cls" />
+    </div>
+    <div class="flex-grow-1">
+      <form class="comment-form">
+        {% csrf_token %}
+        {{ comment_form.content }}
+        <div class="d-flex justify-content-end">
+          <button type="button" class="icon-btn submit_btn" onclick="fn_reply_comment(this)" data-comment-id="" data-tweet-id=""><i class="bi bi-send-fill"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template id="comment_body_template">
+  <div class="d-flex flex-row comment-item container" data-comment-id="" id="">
+    <div class="comment_user_img mt-1 pe-2">
+      <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="" class="comment_profile_img_cls" />
+    </div>
+    <div class="flex-grow-1">
+      <div class="d-flex flex-row comment-body-container">
+        <div class="comment-body">
+          <div class="comment-header">
+            <strong class="comment-username"></strong>
+          </div>
+          <p class="comment-content"></p>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-sm comment-menu-btn" type="button" data-bs-toggle="dropdown">⋮</button>
+          <ul class="comment-menu-dropdown-menu dropdown-menu"></ul>
+        </div>
+      </div>
+      <div class="comment-actions ms-2">
+        <button class="icon-btn" onclick="commentlikefunction(this)" data-reation-type="like"><i class="bi bi-hand-thumbs-up"></i></button><span class="comment_like_count">0</span>
+        <button class="icon-btn" onclick="commentlikefunction(this)" data-reation-type="unlike"><i class="bi bi-hand-thumbs-down"></i></button><span class="comment_unlike_count">0</span>
+        <span class="reply-btn"><button class="icon-btn" onclick="add_comment_reply_form(this)"><i class="bi bi-reply"></i></button><span class="comment_reply_count">0</span></span>
+      </div>
+      <div class="comment-reply-container mt-2"></div>
+    </div>
+  </div>
+</template>
