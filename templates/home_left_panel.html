@@ -1,0 +1,31 @@
+<div class="d-flex flex-column justify-content-between p-5 ms-3 vh-100">
+  <div>
+    <div class="text-center">
+      <a class="navbar-brand" href="{% url 'tweet_feed' %}">iTweet</a>
+    </div>
+    <div class="left_pane_item mt-2">
+      <a class="left_panel_item mt-2" href="{% url 'tweet_feed' %}"><i class="bi bi-house-door p-2"></i>Home</a>
+    </div>
+    <div class="left_pane_item mt-2">
+      <a class="left_panel_item mt-2" href="{% url 'tweet_feed' %}"><i class="bi bi-person p-2"></i>Profile</a>
+    </div>
+    <div class="left_pane_item mt-2">
+      <a class="left_panel_item mt-2" href="{% url 'tweet_feed' %}"><i class="bi bi-bell p-2"></i>Notification</a>
+    </div>
+  </div>
+  <div class="left_panel_item mt-2">
+    {% if user.is_authenticated %}
+      {% comment %} <div class="dropdown">
+        <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown button</button>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </div> {% endcomment %}
+      <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right p-2"></i>Logout</a>
+    {% else %}
+      <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right p-2"></i>Login</a>
+    {% endif %}
+  </div>
+</div>

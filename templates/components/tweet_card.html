@@ -9,20 +9,23 @@
     </div>
     <div class="post_body flex-grow-1">
       <div>
-        <h4>{{ tweet.user.username }}</h4>
+        <h6 class="m-0 p-0 text-capitalize">{{ tweet.user.username }}</h6>
+        <p class="tweet-card-upload-time">{{ tweet.created_at }}</p>
       </div>
-      <div>
-        <p>{{ tweet.text }}</p>
+      <div class="mb-2">
+        <!-- prettier-ignore -->
+        <p class="tweet-card-text m-0" >{{ tweet.text}}</p>
+        <button class="see-more-btn" onclick="toggleSeeMore(this)">See more</button>
       </div>
       <div class="tweet_card_image_container">
         <img src="{{ tweet.photo.url }}" class="tweet_card_image" />
       </div>
       <div class="tweet_interaction_container row text-center mt-2">
         <div class="col">
-          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-up"></i></button><span id="_{{ tweet.id }}" class="like_count">{{ tweet.like_count }}</span>
+          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','{{ csrf_token }}','like')"><i class="bi bi-hand-thumbs-up" id="like_{{ tweet.id }}"></i></button><span id="_{{ tweet.id }}" class="like_count">{{ tweet.like_count }}</span>
         </div>
         <div class="col">
-          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}')"><i class="bi bi-hand-thumbs-down"></i></button><span class="unlike_count" id="_{{ tweet.id }}">{{ tweet.unlike_count }}</span>
+          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}','unlike')"><i class="bi bi-hand-thumbs-down" id="unlike_{{ tweet.id }}"></i></button><span class="unlike_count" id="_{{ tweet.id }}">{{ tweet.unlike_count }}</span>
         </div>
         <div class="col">
           <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tweet.id }}" onclick="commentList({{ tweet.id }})"><i class="bi bi-chat-left-text"></i></button><span class="comment_count" id="_{{ tweet.id }}">{{ tweet.comment_count }}</span>

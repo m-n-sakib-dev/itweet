@@ -1,13 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  Mytweet
+Mytweet
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    {% for tweet in tweets %}
-      {% include 'components/tweet_card.html' with tweet=tweet comment_form=comment_form %}
-    {% endfor %}
-  </div>
+<div class="container p-0">
+  {% for tweet in tweets %}
+  {% include 'components/tweet_card.html' with tweet=tweet comment_form=comment_form %}
+  {% endfor %}
+</div>
 {% endblock %}
