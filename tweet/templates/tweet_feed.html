@@ -1,13 +1,23 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block title %}
-Mytweet
+  itweet
 {% endblock %}
 
 {% block content %}
-<div class="container p-0">
-  {% for tweet in tweets %}
-  {% include 'components/tweet_card.html' with tweet=tweet comment_form=comment_form %}
-  {% endfor %}
-</div>
+  {% csrf_token %}
+  <link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
+  <script src="{% static 'scripts/comment_script.js' %}"></script>
+  <script src="{% static 'scripts/tweet_card.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
+  <div class="row">
+    <div class="col-8 home_feed_conainer overflow-auto vh-100">
+      <div class="container p-3" id="tweet_feed_container">
+        <script>
+          loadTweets('{{user.id}}')
+        </script>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,0 +1,287 @@
+/* Dark Mode CSS - Bootstrap Compatible */
+/* Add this class to your body tag to activate dark mode */
+
+/* Base Dark Mode Styles with Bootstrap Overrides */
+body.dark-mode {
+        color: #ffffff !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        min-height: 100vh;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+}
+
+/* Important: Increase specificity for Bootstrap overrides */
+body.dark-mode .card {
+        background: rgba(30, 39, 50, 0.8) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px;
+        color: #ffffff !important;
+}
+
+body.dark-mode .container,
+body.dark-mode .container-fluid {
+        background: transparent !important;
+}
+
+/* Bootstrap Button Overrides */
+body.dark-mode .btn-primary {
+        background: linear-gradient(135deg, #1d9bf0, #1a8cd8) !important;
+        border: none !important;
+        border-radius: 8px;
+        color: #ffffff !important;
+}
+
+body.dark-mode .btn-outline-primary {
+        border-color: #1d9bf0 !important;
+        color: #1d9bf0 !important;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+        background: #1d9bf0 !important;
+        color: #ffffff !important;
+}
+
+/* Background Modes with Increased Specificity */
+
+/* Option 1: Deep Space Mode */
+body.dark-mode.deep-space {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%) !important;
+}
+
+/* Option 2: Twitter Blue Mode */
+body.dark-mode.twitter-blue {
+        background: linear-gradient(135deg, #15202b 0%, #192734 25%, #1c2e3f 50%, #1f3648 75%, #223d52 100%) !important;
+}
+
+/* Option 3: Purple Fusion Mode */
+body.dark-mode.purple-fusion {
+        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 20%, #16213e 40%, #0f3460 60%, #533483 80%) !important;
+}
+
+/* Option 4: Modern Dark Mode */
+body.dark-mode.modern-dark {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #3a3a3a 75%, #4a4a4a 100%) !important;
+}
+
+/* Option 5: Cosmic Mode (Recommended) */
+body.dark-mode.cosmic {
+        background: linear-gradient(135deg, #000000 0%, #0c0c1d 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%) !important;
+}
+
+/* Option 6: Panel Match Mode */
+body.dark-mode.panel-match {
+        background: linear-gradient(135deg, #15202b 0%, #1a2530 15%, #1f2a35 30%, #242f3a 45%, #29343f 60%, #2e3944 75%, #333e49 90%) !important;
+}
+
+/* Option 7: Animated Gradient Mode */
+body.dark-mode.animated-gradient {
+        background: linear-gradient(-45deg, #15202b, #1a2535, #1f2a3f, #242f49) !important;
+        background-size: 400% 400% !important;
+        animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+        0% {
+                background-position: 0% 50%;
+        }
+        50% {
+                background-position: 100% 50%;
+        }
+        100% {
+                background-position: 0% 50%;
+        }
+}
+
+/* Option 8: Glass Morphism Mode */
+body.dark-mode.glass-morphism {
+        background: linear-gradient(135deg, rgba(21, 32, 43, 0.95) 0%, rgba(26, 37, 48, 0.9) 50%, rgba(31, 42, 53, 0.85) 100%) !important;
+}
+
+/* Bootstrap Navbar Override */
+body.dark-mode .navbar {
+        background: rgba(21, 32, 43, 0.9) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .navbar-brand,
+body.dark-mode .navbar-nav .nav-link {
+        color: #ffffff !important;
+}
+
+body.dark-mode .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .navbar-toggler-icon {
+        filter: invert(1);
+}
+
+/* Bootstrap Text Colors */
+body.dark-mode .text-muted {
+        color: #8899a6 !important;
+}
+
+body.dark-mode .text-dark {
+        color: #ffffff !important;
+}
+
+body.dark-mode .text-body {
+        color: #ffffff !important;
+}
+
+/* Bootstrap Form Controls */
+body.dark-mode .form-control {
+        background: rgba(30, 39, 50, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+}
+
+body.dark-mode .form-control:focus {
+        background: rgba(40, 49, 60, 0.9) !important;
+        border-color: #1d9bf0 !important;
+        color: #ffffff !important;
+        box-shadow: 0 0 0 0.2rem rgba(29, 155, 240, 0.25) !important;
+}
+
+body.dark-mode .form-label {
+        color: #ffffff !important;
+}
+
+/* Bootstrap Tables */
+body.dark-mode .table {
+        color: #ffffff !important;
+        background: transparent !important;
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+        background: rgba(29, 155, 240, 0.1) !important;
+        color: #ffffff !important;
+}
+
+body.dark-mode .table th,
+body.dark-mode .table td {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Bootstrap Background Utilities */
+body.dark-mode .bg-light {
+        background: rgba(30, 39, 50, 0.8) !important;
+}
+
+body.dark-mode .bg-white {
+        background: rgba(30, 39, 50, 0.8) !important;
+}
+
+body.dark-mode .bg-body {
+        background: transparent !important;
+}
+
+/* Bootstrap Border Utilities */
+body.dark-mode .border {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .border-light {
+        border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Bootstrap Alert Overrides */
+body.dark-mode .alert-success {
+        background: rgba(21, 87, 36, 0.8) !important;
+        border-color: rgba(34, 187, 51, 0.3) !important;
+        color: #75b798 !important;
+}
+
+body.dark-mode .alert-danger {
+        background: rgba(114, 28, 36, 0.8) !important;
+        border-color: rgba(220, 53, 69, 0.3) !important;
+        color: #ea868f !important;
+}
+
+body.dark-mode .alert-warning {
+        background: rgba(133, 100, 4, 0.8) !important;
+        border-color: rgba(255, 193, 7, 0.3) !important;
+        color: #ffda6a !important;
+}
+
+body.dark-mode .alert-info {
+        background: rgba(23, 86, 105, 0.8) !important;
+        border-color: rgba(23, 162, 184, 0.3) !important;
+        color: #6edff6 !important;
+}
+
+/* Bootstrap Modal Overrides */
+body.dark-mode .modal-content {
+        background: rgba(30, 39, 50, 0.95) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+}
+
+body.dark-mode .modal-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .modal-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Bootstrap Dropdown Overrides */
+body.dark-mode .dropdown-menu {
+        background: rgba(30, 39, 50, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px);
+}
+
+body.dark-mode .dropdown-item {
+        color: #ffffff !important;
+}
+
+body.dark-mode .dropdown-item:hover {
+        background: rgba(29, 155, 240, 0.2) !important;
+        color: #1d9bf0 !important;
+}
+
+/* Dark Mode Toggle Switch */
+.dark-mode-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+}
+
+.theme-selector {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(30, 39, 50, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Dark Mode */
+@media (max-width: 768px) {
+        body.dark-mode .container {
+                padding-left: 15px;
+                padding-right: 15px;
+        }
+
+        .dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+        }
+
+        .theme-selector {
+                top: 60px;
+                right: 10px;
+        }
+}
+
+/* Loading Order Important: Load AFTER Bootstrap */
+/* Make sure this CSS loads after Bootstrap in your HTML */

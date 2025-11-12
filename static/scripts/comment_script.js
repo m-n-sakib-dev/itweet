@@ -1,5 +1,6 @@
 // here all the comment feature handling js functions are written
 // this function adds new comment on a tweet
+window.GLOBAL_CSRF_TOKEN = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 function handleCommentSubmission(button, tweet_id) {
         const form = button.closest("form");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken");
@@ -15,7 +16,7 @@ function handleCommentSubmission(button, tweet_id) {
                 .then((response) => response.json())
                 .then((data) => {
                         if (data.success) {
-                                document.querySelector(`#_${tweet_id}.comment_count`).textContent = data.comment_count;
+                                document.querySelector(`#_${tweet_id}_comment`).textContent = data.comment_count;
                                 document.querySelector(`#_${tweet_id}.comment_count_post-details`).textContent = data.comment_count;
                                 const comments_list = document.getElementById(`comment_list_${tweet_id}`);
                                 clone = addcomment(data.comment_data, `comment_list_${tweet_id}`);
@@ -30,6 +31,8 @@ function handleCommentSubmission(button, tweet_id) {
 // this function shows the main comments list(direct comment on the tweet)
 function commentList(tweet_id) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+        console.log(document);
         fetch(`/interaction/${tweet_id}/comments_list/`, {
                 method: "POST",
                 headers: {
@@ -80,6 +83,7 @@ function commentReplyList(comment_id) {
 // this function handles reaction  on comments(like or unlike)
 function commentlikefunction(buttonElement) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        console.log(csrf_token);
         comment_id = buttonElement.closest(".comment-item").dataset.commentId;
         reation_type = buttonElement.dataset.reationType;
         comment_action = buttonElement.closest(".comment-actions");
@@ -157,7 +161,7 @@ function fn_reply_comment(btn) {
                 .then((data) => {
                         if (data.success) {
                                 tweet_id = data.tweet_id;
-                                document.querySelector(`#_${tweet_id}.comment_count`).textContent = data.comment_count;
+                                document.querySelector(`#_${tweet_id}_comment`).textContent = data.comment_count;
                                 document.querySelector(`#_${tweet_id}.comment_count_post-details`).textContent = data.comment_count;
                                 const comments_list = document.getElementById(`comment_reply_list_${comment_id}`);
                                 clone = addcomment(data.comment_data, `comment_reply_list_${comment_id}`);

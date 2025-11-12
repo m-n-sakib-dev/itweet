@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from ..forms import CommentForm
-from django.template.loader import render_to_string
+
 
 @login_required
 def addComment(request, tweet_id):
@@ -28,7 +28,6 @@ def addComment(request, tweet_id):
                     'comment_count':tweet.comment_count,
                     'comment_data':returncomment
                 })
-            messages.success(request, 'Comment added successfully!')
            
         elif request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         	return JsonResponse({'success': False, 'errors': comment_form.errors})

@@ -76,7 +76,6 @@ def  userlogin(request):
             user=authenticate(request,username=username, password=password)
             if user is not None:
                 login(request,user)
-                messages.success(request, f'Welcome back, {username}!')
                 next_page = request.GET.get('next', 'tweet_list')
                 return redirect(next_page)
             else:

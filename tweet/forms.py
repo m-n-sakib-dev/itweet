@@ -13,7 +13,6 @@ class TweetForm(forms.ModelForm):
 		for field_name, field in self.fields.items():
 			if isinstance(field.widget, forms.Textarea):
 				field.widget.attrs['class'] = 'form-control'
-				field.widget.attrs['rows'] = '3'
 			elif isinstance(field.widget, forms.FileInput):
 				field.widget.attrs['class'] = 'form-control'
 

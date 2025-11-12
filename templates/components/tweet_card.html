@@ -1,37 +1,39 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
-<script src="{% static 'scripts/tweet_card.js' %}" defer></script>
-<script src="{% static 'scripts/comment_script.js' %}" defer></script>
 <div class="tweet_card">
-  <div class="tweet-container d-flex flex-row">
-    <div class="profile_image">
+  <div class="tweet-container d-flex flex-column">
+    <div class="profile_image d-flex mx-2 mt-2">
       <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="" class="tweet_profile_img_cls" />
-    </div>
-    <div class="post_body flex-grow-1">
       <div>
         <h6 class="m-0 p-0 text-capitalize">{{ tweet.user.username }}</h6>
-        <p class="tweet-card-upload-time">{{ tweet.created_at }}</p>
+        <p class="tweet-card-upload-time mb-1">{{ tweet.created_at }}</p>
       </div>
-      <div class="mb-2">
+    </div>
+
+    <div class="post_body flex-grow-1">
+      <div class="mt-1 mb-2 mx-3">
         <!-- prettier-ignore -->
-        <p class="tweet-card-text m-0" >{{ tweet.text}}</p>
+        <p class="tweet-card-text m-0">{{ tweet.text}}</p>
         <button class="see-more-btn" onclick="toggleSeeMore(this)">See more</button>
       </div>
       <div class="tweet_card_image_container">
         <img src="{{ tweet.photo.url }}" class="tweet_card_image" />
       </div>
-      <div class="tweet_interaction_container row text-center mt-2">
-        <div class="col">
-          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','{{ csrf_token }}','like')"><i class="bi bi-hand-thumbs-up" id="like_{{ tweet.id }}"></i></button><span id="_{{ tweet.id }}" class="like_count">{{ tweet.like_count }}</span>
+      <div class="tweet_interaction_container d-flex justify-content-between text-center my-2">
+        <div class="d-flex">
+          <div class="card-btn">
+            <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'like' %}','like')"><i class="bi bi-hand-thumbs-up fs-5" id="like_{{ tweet.id }}"></i></button><span id="_{{ tweet.id }}_like" class="like_count">{{ tweet.like_count }}</span>
+          </div>
+          <div class="card-btn">
+            <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','unlike')"><i class="bi bi-hand-thumbs-down fs-5" id="unlike_{{ tweet.id }}"></i></button><span class="unlike_count" id="_{{ tweet.id }}_unlike">{{ tweet.unlike_count }}</span>
+          </div>
+          <div class="card-btn">
+            <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tweet.id }}" onclick="commentList({{ tweet.id }})"><i class="bi bi-chat-left-text fs-5"></i></button><span class="comment_count" id="_{{ tweet.id }}_comment">{{ tweet.comment_count }}</span>
+          </div>
+          <div class="card-btn">
+            <button class="icon-btn"><i class="bi bi-repeat fs-5"></i></button>
+          </div>
         </div>
-        <div class="col">
-          <button class="icon-btn reaction_btn" onclick="likefunction('{% url 'give_reaction' tweet.id 'unlike' %}','{{ csrf_token }}','unlike')"><i class="bi bi-hand-thumbs-down" id="unlike_{{ tweet.id }}"></i></button><span class="unlike_count" id="_{{ tweet.id }}">{{ tweet.unlike_count }}</span>
-        </div>
-        <div class="col">
-          <button class="icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal{{ tweet.id }}" onclick="commentList({{ tweet.id }})"><i class="bi bi-chat-left-text"></i></button><span class="comment_count" id="_{{ tweet.id }}">{{ tweet.comment_count }}</span>
-        </div>
-        <div class="col">
-          <button class="icon-btn"><i class="bi bi-repeat"></i></button>
+        <div class="card-btn collect-btn">
+          <button class="icon-btn"><i class="bi bi-bookmark fs-5"></i></button>Collect
         </div>
       </div>
     </div>
