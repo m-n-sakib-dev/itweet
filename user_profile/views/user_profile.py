@@ -6,37 +6,16 @@ from django.contrib.auth.models import User
 from django.core.serializers import serialize
 from interactions.forms import CommentForm
 from django.contrib import messages
-from ..models import UserProfile as UserProfileModel
+from ..models import UserProfile as UserProfileModel,SavedTweet
 from ..forms import UserUpdateForm, UserProfileUpdateForm
 from django.forms.models import model_to_dict
 
+@login_required
 def UserProfile(request,user_id):
         user=get_object_or_404(User,id=user_id)
         user_profile=get_object_or_404(UserProfileModel,user=user)
         comment_form=CommentForm()
         return render(request, 'user_profile.html',{'comment_form':comment_form, "profile_user_id":user_id,'user_profile':user_profile})
-
-def UserTweets(request):
-        user_id=request.GET.get('user_id')
-        user=get_object_or_404(User,id=user_id)
-        user_profile=UserProfileModel.objects.get(user=user)
-        author=serialize('python',[user_profile])
-        author=author[0]['fields']
-        author.update({'profile_picture_url':user_profile.profile_picture.url})
-        tweets=TweetModel.objects.filter(user=user)
-        tweetList=list(tweets.values())
-        for tweet,tweet_data in zip(tweetList,tweets):
-                tweet['user']={'username':user.username}
-                tweet['author']=author
-                if(tweet_data.photo):
-                    tweet['photo']={'url':tweet_data.photo.url}
-        return JsonResponse({
-                'success': True,
-                'tweets':tweetList,
-        })
-        
-
-
 
 @login_required
 def profile_view(request, username):
@@ -81,3 +60,21 @@ def EditProfile(request):
         'title': 'Edit Profile'
     }
     return render(request, 'edit_profile.html', context)
+
+@login_required
+def SaveTweet(request,tweet_id):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            tweet = get_object_or_404(TweetModel, id=tweet_id)
+            try:
+                if not SavedTweet.objects.filter(user=request.user, tweet=tweet).exists():
+                    save_tweet = SavedTweet.objects.create(user=request.user, tweet=tweet)
+                    return JsonResponse({'success': True, 'message': 'Tweet saved'})
+                else:
+                    saved_tweet=SavedTweet.objects.get(user=request.user, tweet=tweet)
+                    saved_tweet.delete()
+                    return JsonResponse({'success': True, 'message': 'Tweet unsaved'})
+            except TweetModel.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Tweet not found'})
+
+

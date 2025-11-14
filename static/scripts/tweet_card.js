@@ -1,3 +1,4 @@
+console.log(current_user);
 function likefunction(link_url, reaction) {
         csrftoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
         fetch(link_url, {
@@ -107,7 +108,6 @@ function tempcommentList() {
 
 function loadTweets(user_id) {
         tweet_container = document.getElementById("tweet_feed_container");
-        console.log("loadtweets()");
         fetch(`/user/profile/tweets?user_id=${user_id}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -164,6 +164,7 @@ function fillTweetTemplate(tweetData) {
         const clone = template.content.cloneNode(true);
 
         const tweetCard = clone.querySelector(".tweet-card");
+        tweetCard.id = "tweet-card-" + tweetData.id;
         tweetCard.setAttribute("data-tweet-id", tweetData.id);
         tweetCard.setAttribute("data-full-text", tweetData.text);
 
@@ -171,6 +172,38 @@ function fillTweetTemplate(tweetData) {
         clone.querySelector(".username").textContent = tweetData.author.name;
         clone.querySelector(".user-handle").textContent = `@${tweetData.user.username}`;
         clone.querySelector(".timestamp").textContent = tweetData.created_at;
+
+        //menu button feature
+        const dropdown_menu = clone.querySelector(".dropdown-menu");
+        if (tweetData.user.username == current_user.username) {
+                //adding edit button
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                        <a class="dropdown-item tweet-menu-edit"  href="/tweet_edit/${tweetData.id}"><i class="bi bi-pencil-square me-1"></i>Edit</a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+                //adding delete button and its confirmation modal
+
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                        <a class="dropdown-item tweet-menu-delete" data-tweet-id="${tweetData.id}"><i class="bi bi-trash me-1"></i>Delete</a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+        }
+        if (current_user.username) {
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                <a class="dropdown-item tweet-menu-save" data-tweet-id="${tweetData.id}" ><i class="bi bi-bookmark${
+                        tweetData.is_saved ? "-x" : ""
+                } me-1"></i><span class="text">${tweetData.is_saved ? "Unsave" : "Save"}</span></a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+        }
+        menu_btn = document.createElement("li");
+        menu_btn.innerHTML = `
+                <a class="dropdown-item tweet-menu-copylink" data-tweet-id="${tweetData.id}" ><i class="bi bi-clipboard me-1"></i>Copy Link</a>
+        `;
+        dropdown_menu.appendChild(menu_btn);
 
         // Fill tweet content
         if (tweetData.text) {
@@ -180,8 +213,6 @@ function fillTweetTemplate(tweetData) {
 
         // Profile image
         const profileImg = clone.querySelector(".user-avatar");
-
-        console.log(tweetData.author.profile_picture_url);
         profileImg.src = tweetData.author.profile_picture_url;
 
         // Tweet image - Fixed height
@@ -205,6 +236,15 @@ function fillTweetTemplate(tweetData) {
         const likeBtn = clone.querySelector(".like-btn");
         const dislikeBtn = clone.querySelector(".dislike-btn");
         const commentBtn = clone.querySelector(".comment-btn");
+
+        //Set up users reaction on the tweet
+        switch (tweetData.reaction) {
+                case "like":
+                        likeBtn.classList.add("active");
+                        break;
+                case "unlike":
+                        dislikeBtn.classList.add("active");
+        }
 
         // Set IDs for reaction tracking
         likeBtn.id = `like_btn_${tweetData.id}`;
@@ -284,5 +324,83 @@ document.addEventListener("click", function (e) {
                         dislikeBtn.classList.add("active");
                 }
                 likeBtn.classList.remove("active");
+        }
+
+        //menu options functionality
+        if (e.target.classList.contains("tweet-menu-delete")) {
+                const tweetId = e.target.dataset.tweetId;
+                const modalId = `delete-confirm-modal-${tweetId}`;
+
+                let modal = document.getElementById(modalId);
+
+                if (!modal) {
+                        const modal_template = document.getElementById("confirm-modal-template");
+                        const modal_clone = modal_template.content.cloneNode(true);
+                        const modalElement = modal_clone.querySelector(".modal");
+                        modalElement.id = modalId;
+                        modalElement.querySelector(".confirm-tweet-delete-btn").dataset.tweetId = tweetId;
+                        document.body.appendChild(modal_clone);
+                        modal = document.getElementById(modalId);
+                }
+
+                const modalInstance = new bootstrap.Modal(modal);
+                modalInstance.show();
+        }
+        if (e.target.classList.contains("tweet-menu-save")) {
+                const tweetId = e.target.dataset.tweetId;
+                console.log(tweetId);
+                csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+                fetch(`/user/tweet/${tweetId}/save`, {
+                        method: "POST",
+                        headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRFToken": csrf_token,
+                        },
+                })
+                        .then((response) => response.json())
+                        .then((data) => {
+                                if (data.success) {
+                                        console.log(data.message);
+                                        icon = e.target.querySelector(".bi");
+                                        text = e.target.querySelector(".text");
+                                        if (data.message == "Tweet saved") {
+                                                icon.classList.remove("bi-bookmark");
+                                                icon.classList.add("bi-bookmark-x");
+                                                text.textContent = "Unsave";
+                                        } else {
+                                                icon.classList.remove("bi-bookmark-x");
+                                                icon.classList.add("bi-bookmark");
+                                                text.textContent = "Save";
+                                        }
+                                } else {
+                                        console.error(data.error);
+                                }
+                        });
+        }
+        if (e.target.classList.contains("confirm-tweet-delete-btn")) {
+                console.log("confirm-tweet-delete-btn clicked");
+                const tweetId = e.target.dataset.tweetId;
+                console.log(tweetId);
+                csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+                fetch(`/tweet_delete/${tweetId}`, {
+                        method: "POST",
+                        headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRFToken": csrf_token,
+                        },
+                })
+                        .then((response) => response.json())
+                        .then((data) => {
+                                if (data.success) {
+                                        elementToRemove = document.getElementById("tweet-card-" + tweetId);
+                                        if (elementToRemove) {
+                                                elementToRemove.remove();
+                                        }
+                                        elementToRemove = document.getElementById(`delete-confirm-modal-${tweetId}`);
+                                        if (elementToRemove) {
+                                                elementToRemove.remove();
+                                        }
+                                }
+                        });
         }
 });

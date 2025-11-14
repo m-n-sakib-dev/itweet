@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tweet.models import TweetModel
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -101,3 +102,13 @@ def save_user_profile(sender, instance, **kwargs):
     profile=instance.profile
     profile.name=profile.full_name
     profile.save()
+    
+    
+class SavedTweet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved_tweet')
+    tweet=models.ForeignKey(TweetModel,on_delete=models.CASCADE)
+    saved_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['user', 'tweet']  # Prevents duplicate saves
+        ordering = ['-saved_at']  # Newest saves first

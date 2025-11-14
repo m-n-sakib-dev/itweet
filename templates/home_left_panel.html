@@ -20,23 +20,7 @@
         href="{% if user.is_authenticated %}
           {% url 'user_profile' user_id=user.id %}
         {% else %}
-          
-          
-          
-          
-          
-          
-          
-          
-          #
-
-
-
-
-
-
-
-
+          {% url 'user_profile' user_id=1 %}
         {% endif %}">
         <div class="nav-icon-wrapper gradient-success">
           <i class="bi bi-person-fill"></i>
@@ -70,7 +54,7 @@
         <div class="nav-icon-wrapper gradient-purple">
           <i class="bi bi-bookmark-fill"></i>
         </div>
-        <span class="nav-label">Bookmarks</span>
+        <span class="nav-label">Saved Tweet</span>
       </a>
     </div>
 

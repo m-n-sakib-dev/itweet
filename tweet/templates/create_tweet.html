@@ -50,15 +50,27 @@
             <i class="bi bi-image"></i>
             Add Image
           </label>
-          <div class="image-preview" id="imagePreview"></div>
+          <div class="image-preview" id="imagePreview">
+            {% if form.instance.photo %}
+              <div style="position: relative; display: inline-block;">
+                <img src="{{ form.instance.photo.url }}" class="preview-image" alt="Current tweet image" />
+                <button type="button" class="remove-image" onclick="removeImage()"><i class="bi bi-x"></i></button>
+              </div>
+            {% endif %}
+          </div>
           <div class="file-upload-area" id="uploadArea">
             <i class="bi bi-cloud-upload upload-icon"></i>
-            <p class="upload-text">Drag & drop or click to upload</p>
+            <p class="upload-text">
+              {% if form.instance.photo %}
+                Click to change image
+              {% else %}
+                Drag & drop or click to upload
+              {% endif %}
+            </p>
             <p class="upload-subtext">PNG, JPG up to 5MB</p>
             {{ form.photo }}
           </div>
         </div>
-
         <!-- Submit Button -->
         <button type="submit" class="submit-btn" id="submitBtn">
           <i class="bi bi-send-fill"></i>

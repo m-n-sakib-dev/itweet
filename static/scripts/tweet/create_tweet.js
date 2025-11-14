@@ -7,11 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const submitBtn = document.getElementById("submitBtn");
         const suggestionTags = document.querySelectorAll(".suggestion-tag");
 
+        function fncharCount(text) {
+                const lineBreaks = (text.match(/\n/g) || []).length;
+                return text.length + lineBreaks;
+        }
+        let length = fncharCount(textInput.value);
+        charCount.textContent = `${length}/1000`;
         // Character count and validation
         textInput.addEventListener("input", function () {
-                const length = this.value.length;
+                length = fncharCount(textInput.value);
                 charCount.textContent = `${length}/1000`;
-
                 // Update color based on character count
                 if (length > 999) {
                         charCount.classList.add("error");
@@ -97,12 +102,15 @@ document.addEventListener("DOMContentLoaded", function () {
         // Form submission animation
         const form = document.querySelector(".tweet-form");
         form.addEventListener("submit", function (e) {
-                if (textInput.value.length > 1000) {
+                length = fncharCount(textInput.value);
+                if (length > 1000) {
+                        e.preventDefault();
+                        return;
+                } else if (fileInput.value == "" && length == 0) {
                         e.preventDefault();
                         return;
                 }
-
-                submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Posting...';
+                this.submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Posting...';
                 submitBtn.disabled = true;
         });
 });

@@ -15,6 +15,7 @@
         border-radius: 50%;
         object-fit: contain;
 }
+
 .comment-form {
         box-sizing: border-box;
         border: 0.05em solid rgb(66, 66, 66);

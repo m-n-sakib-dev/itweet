@@ -102,7 +102,6 @@ def CommentReply(request,comment_id):
     
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
-        
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.tweet= tweet
