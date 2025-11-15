@@ -168,10 +168,19 @@ function fillTweetTemplate(tweetData) {
         tweetCard.setAttribute("data-tweet-id", tweetData.id);
         tweetCard.setAttribute("data-full-text", tweetData.text);
 
+        // Profile image
+        const profileImg = clone.querySelector(".user-avatar");
+        profileImg.src = tweetData.author.profile_picture_url;
+
         // Fill user data
         clone.querySelector(".username").textContent = tweetData.author.name;
-        clone.querySelector(".user-handle").textContent = `@${tweetData.user.username}`;
+        clone.querySelector(".user-handle").textContent = `${tweetData.user.username}`;
         clone.querySelector(".timestamp").textContent = tweetData.created_at;
+
+        //setting url on username, user profile pic and name
+        clone.querySelectorAll(".user_profile_link").forEach((profile_link) => {
+                profile_link.setAttribute("href", `/user/profile/${tweetData.author.user}`);
+        });
 
         //menu button feature
         const dropdown_menu = clone.querySelector(".dropdown-menu");
@@ -210,10 +219,6 @@ function fillTweetTemplate(tweetData) {
                 const tweetText = clone.querySelector(".tweet-text");
                 tweetText.textContent = tweetData.text;
         }
-
-        // Profile image
-        const profileImg = clone.querySelector(".user-avatar");
-        profileImg.src = tweetData.author.profile_picture_url;
 
         // Tweet image - Fixed height
         if (tweetData.photo) {

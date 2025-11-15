@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from tweet.views import views
+from user_profile.views import register,userlogin
 from django.contrib.auth.urls import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls,name='admin'),
-    path("registration/",views.register,name="registration"),
-    path('accounts/login/',views.userlogin, name='login'),
+    path("registration/",register,name="registration"),
+    path('accounts/login/',userlogin, name='login'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('', include('tweet.urls')),
     path('user/', include('user_profile.urls')),

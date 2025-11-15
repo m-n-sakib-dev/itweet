@@ -14,13 +14,14 @@ from django.forms.models import model_to_dict
 
 @login_required
 def UserTweets(request):
-        user_id=request.GET.get('user_id')
-        user=get_object_or_404(User,id=user_id)
-        author_profile=UserProfileModel.objects.get(user=user)
+        profile_id=request.GET.get('user_id')
+        user=request.user
+        profile_owner=get_object_or_404(User,id=profile_id)
+        author_profile=UserProfileModel.objects.get(user=profile_owner)
         author=serialize('python',[author_profile])
         author=author[0]['fields']
         author.update({'profile_picture_url':author_profile.profile_picture.url})
-        tweets=TweetModel.objects.filter(user=user)
+        tweets=TweetModel.objects.filter(user=profile_owner)
         tweetList=list(tweets.values())
         for tweet,tweet_data in zip(tweetList,tweets):
                 tweet['user']={'username':author_profile.user.username}
@@ -35,6 +36,23 @@ def UserTweets(request):
                 'tweets':tweetList,
         })
 
+
+@login_required
+def SaveTweet(request,tweet_id):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            tweet = get_object_or_404(TweetModel, id=tweet_id)
+            try:
+                if not SavedTweet.objects.filter(user=request.user, tweet=tweet).exists():
+                    save_tweet = SavedTweet.objects.create(user=request.user, tweet=tweet)
+                    return JsonResponse({'success': True, 'message': 'Tweet saved'})
+                else:
+                    saved_tweet=SavedTweet.objects.get(user=request.user, tweet=tweet)
+                    saved_tweet.delete()
+                    return JsonResponse({'success': True, 'message': 'Tweet unsaved'})
+            except TweetModel.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Tweet not found'})
+        
 @login_required
 def SavedTweetsPage(request):
         user=request.user

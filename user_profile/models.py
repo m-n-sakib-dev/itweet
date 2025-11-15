@@ -46,6 +46,21 @@ class UserProfile(models.Model):
         null=True,
         default='cover_photos/default_cover.jpg'
     )
+    #follower Information
+    follower_count=models.IntegerField(default=0)
+    following_count=models.IntegerField(default=0)
+    
+    def update_follower_count(self):
+        follower_count=self.user.follower.count()
+        UserProfile.objects.filter(id=self.id).update(follower_count=follower_count)
+        self.refresh_from_db()
+        
+        
+    def update_following_count(self):
+        following_count=self.user.following.count()
+        UserProfile.objects.filter(id=self.id).update(following_count=following_count)
+        self.refresh_from_db()
+        
     
     # Location Information
     current_city = models.CharField(max_length=100, blank=True, null=True)
@@ -112,3 +127,34 @@ class SavedTweet(models.Model):
     class Meta:
         unique_together = ['user', 'tweet']  # Prevents duplicate saves
         ordering = ['-saved_at']  # Newest saves first
+
+class FollowModel(models.Model):
+    # the 'user' is following (who is doing the following)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+    # the 'following_to' is whom is the user is follwoing (who is getting the follower)
+    following_to= models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
+    followed_at=models.DateTimeField(auto_now_add=True)
+    class Meta:
+        unique_together=['user','following_to']
+        ordering=['-followed_at']
+        indexes=[
+            models.Index(fields=['user','following_to']),
+            models.Index(fields=['following_to','user']),
+        ]
+        
+    def save(self,*args, **kwargs):
+        super().save(*args, **kwargs)
+        print("updating counting on save")
+        self.user.profile.update_following_count()
+        self.following_to.profile.update_follower_count()
+        
+    def delete(self, *args, **kwargs):
+        user_profile = self.user.profile
+        target_profile = self.following_to.profile
+        super().delete(*args, **kwargs)    
+        print("updating counting")
+        user_profile.update_following_count()
+        target_profile.update_follower_count()
+    
+    def __str__(self):
+        return f"{self.user.username} follows {self.following_to.username}"

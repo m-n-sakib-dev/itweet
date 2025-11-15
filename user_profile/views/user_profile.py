@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.core.serializers import serialize
 from interactions.forms import CommentForm
 from django.contrib import messages
-from ..models import UserProfile as UserProfileModel,SavedTweet
+from ..models import UserProfile as UserProfileModel,FollowModel
 from ..forms import UserUpdateForm, UserProfileUpdateForm
 from django.forms.models import model_to_dict
 
@@ -15,23 +15,15 @@ def UserProfile(request,user_id):
         user=get_object_or_404(User,id=user_id)
         user_profile=get_object_or_404(UserProfileModel,user=user)
         comment_form=CommentForm()
-        return render(request, 'user_profile.html',{'comment_form':comment_form, "profile_user_id":user_id,'user_profile':user_profile})
+        is_following=FollowModel.objects.filter(user=request.user,following_to=user).exists()
+        return render(request, 'user_profile.html',{
+            'comment_form':comment_form, 
+            "profile_user":user,
+            'user_profile':user_profile,
+            'is_following':is_following,
+            })
 
-@login_required
-def profile_view(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = get_object_or_404(UserProfile, user=user)
-    
-    # Check if profile is public or user is viewing their own profile
-    if not profile.is_profile_public and request.user != user:
-        messages.warning(request, "This profile is private.")
-        return redirect('home')
-    
-    context = {
-        'profile_user': user,
-        'profile': profile,
-    }
-    return render(request, 'users/profile.html', context)
+
 
 @login_required
 def EditProfile(request):
@@ -61,20 +53,44 @@ def EditProfile(request):
     }
     return render(request, 'edit_profile.html', context)
 
+
+
+
 @login_required
-def SaveTweet(request,tweet_id):
-    if request.user.is_authenticated:
-        if request.method=='POST':
-            tweet = get_object_or_404(TweetModel, id=tweet_id)
-            try:
-                if not SavedTweet.objects.filter(user=request.user, tweet=tweet).exists():
-                    save_tweet = SavedTweet.objects.create(user=request.user, tweet=tweet)
-                    return JsonResponse({'success': True, 'message': 'Tweet saved'})
-                else:
-                    saved_tweet=SavedTweet.objects.get(user=request.user, tweet=tweet)
-                    saved_tweet.delete()
-                    return JsonResponse({'success': True, 'message': 'Tweet unsaved'})
-            except TweetModel.DoesNotExist:
-                return JsonResponse({'success': False, 'error': 'Tweet not found'})
-
-
+def FollowUser(request,to_follow_id):
+    if request.method == 'POST':
+        target_user = get_object_or_404(User, id=to_follow_id)
+        
+        # Check if already following
+        is_following = FollowModel.objects.filter(
+            user=request.user, 
+            following_to=target_user
+        ).exists()
+        
+        if is_following:
+            # Unfollow
+            FollowModel.objects.get(
+                user=request.user, 
+                following_to=target_user
+            ).delete()
+            action = 'unfollowed'
+        else:
+            # Follow
+            FollowModel.objects.create(
+                user=request.user, 
+                following_to=target_user
+            )
+            action = 'followed'
+        
+        # Get updated counts
+        followers_count = target_user.profile.follower_count
+        following_count = target_user.profile.following_count
+        my_following_count=request.user.profile.following_count
+        return JsonResponse({
+            'success': True,
+            'action': action,
+            'followers_count': followers_count,
+            'following_count': following_count,
+            'user_following_count':my_following_count,
+            'is_following': not is_following
+        })

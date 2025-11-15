@@ -102,6 +102,29 @@
         background: rgba(255, 255, 255, 0.05);
 }
 
+.follow-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 20px;
+        padding: 8px 4em;
+        color: rgb(13, 9, 39);
+        font-weight: 600;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: -20px;
+}
+
+.follow-btn:hover {
+        transform: translateY(-2px);
+        color: #78fdff;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.follow-btn:active {
+        transform: translateY(0);
+}
+
 /* Dark Mode Text */
 .dark-text {
         transition: color 0.3s ease;

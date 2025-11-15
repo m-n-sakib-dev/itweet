@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserProfile,UserTweets,EditProfile,SaveTweet
+from .views import UserProfile,UserTweets,EditProfile,SaveTweet,FollowUser
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
 	path('profile/tweets', UserTweets, name='user_tweets'),
 	path('profile/edit-profile/', EditProfile, name='edit_profile'),
 	path('tweet/<int:tweet_id>/save', SaveTweet, name='save_tweets'),
+	path('profile/<int:to_follow_id>/togglefollow', FollowUser, name='follow_user'),
 ]

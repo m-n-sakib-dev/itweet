@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+from django.forms import ValidationError
+import re
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
@@ -16,6 +19,7 @@ class UserUpdateForm(forms.ModelForm):
                 
         }
 class UserProfileUpdateForm(forms.ModelForm):
+    
     class Meta:
         model = UserProfile
         fields = [
@@ -67,3 +71,70 @@ class UserProfileUpdateForm(forms.ModelForm):
         # Make all fields not required
         for field in self.fields:
             self.fields[field].required = False
+
+
+class userRegistrationForm(UserCreationForm):
+        email = forms.EmailField(required=True,help_text="We'll send a verification email to this address.",)
+        class Meta:
+            model = User
+            fields = ('username', 'email', 'password1', 'password2')
+            help_texts={
+                'username':"5-20 characters allowed. Letters, numbers, and ./+/-/_ characters can be used. Must start with  '@'.",
+                'password1':"Password must contain at least 8 characters."
+            }
+            
+            
+            
+        def clean_username(self):
+            username = self.cleaned_data.get('username')
+            
+            if username[0]!='@':
+                raise ValidationError("Username Must Start with @")
+            
+            # Regex constraint: Only alphanumeric and specific special characters
+            if not re.match(r'^[a-zA-Z][a-zA-Z0-9.+-_]*$', username[1:]):
+                raise ValidationError(
+                    "Username can only contain letters, numbers, and ./+/-/_ characters. Must start with  @"
+                )
+            
+            # Length constraint
+            if len(username) < 5 or len(username)>20:
+                raise ValidationError("Username must be at least 5 characters long.")
+            
+            # Reserved names constraint
+            reserved_names = ['@admin', '@root', '@administrator', '@moderator', '@support']
+            if username.lower() in reserved_names:
+                raise ValidationError("This username is reserved. Please choose another one.")
+                
+            return username
+            
+     #Defining Emain constrains 
+        def clean_email(self):
+            email = self.cleaned_data.get('email')
+            
+            if User.objects.filter(email=email).exists():
+                raise ValidationError("This email address is already registered.")
+            
+            # Email format validation using regex
+            email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            if not re.match(email_regex, email):
+                raise ValidationError("Please enter a valid email address.")
+            
+            # Temporary email constraints
+            temp_domains = ['tempmail.com', '10minutemail.com']
+            if any(domain in email for domain in temp_domains):
+                raise ValidationError("Temporary email addresses are not allowed.")
+                
+            return email
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+		
+class userAuthenticationForm(AuthenticationForm):
+	class Meta:
+		model=User
+		fields=('username','password')
+  
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		for filed_name, filed in self.fields.items():
+			filed.widget.attrs['class']='form-control'

@@ -134,7 +134,12 @@ $mobile: 768px;
         gap: 12px;
         flex: 1;
 }
-
+a.user_profile_link {
+        text-decoration: none;
+}
+a.user_profile_link:hover {
+        cursor: pointer;
+}
 .avatar-wrapper {
         position: relative;
 }

@@ -2,19 +2,20 @@
   <div class="tweet-card" data-tweet-id="">
     <div class="tweet-header">
       <div class="user-info">
-        <div class="avatar-wrapper">
+        <a class="avatar-wrapper user_profile_link">
           <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="Profile" class="user-avatar" />
-        </div>
+        </a>
         <div class="user-details">
           <div class="d-flex">
-            <h3 class="username"></h3>
-            <span class="user-handle"></span>
+            <a class="username user_profile_link h3"></a>
+            <a class="user-handle user_profile_link"></a>
           </div>
           <span class="timestamp"></span>
         </div>
       </div>
       <div class="dropdown tweet-card-menu-dropdown">
-        <button class="menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></button>
+        <button class="menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+            class="bi bi-three-dots"></i></button>
         <ul class="dropdown-menu"></ul>
       </div>
     </div>
