@@ -1,0 +1,235 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/user_profile/edit_profile.css' %}" />
+<div class="container-fluid my-4 px-5">
+  <div class="row">
+    <div class="col mx-auto">
+      <div class="card ">
+        <div class="card-header ">
+          <h4 class="mb-0 ">Edit Your Profile</h4>
+        </div>
+        <div class="card-body bg-dark-subtle">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Basic User Information -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2 ">Basic Information</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ user_form.first_name.label }}</label>
+                    {{ user_form.first_name }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ user_form.last_name.label }}</label>
+                    {{ user_form.last_name }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ user_form.username.label }}</label>
+                    {{ user_form.username }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ user_form.email.label }}</label>
+                    {{ user_form.email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Images -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Profile Images</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Profile Picture</label>
+                    {{ profile_form.profile_picture }}
+                    {% if request.user.profile.profile_picture %}
+                    <small class="form-text text-muted">Current: <img
+                        src="{{ request.user.profile.profile_picture.url }}" alt="Profile" class="img-thumbnail mt-2"
+                        width="100" /></small>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Cover Photo</label>
+                    {{ profile_form.cover_photo }}
+                    {% if request.user.profile.cover_photo %}
+                    <small class="form-text text-muted">Current: <img src="{{ request.user.profile.cover_photo.url }}"
+                        alt="Cover" class="img-thumbnail mt-2" width="100" /></small>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Personal Information</h5>
+              <div class="form-group">
+                <label>Bio</label>
+                {{ profile_form.bio }}
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Date of Birth</label>
+                    {{ profile_form.date_of_birth }}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Gender</label>
+                    {{ profile_form.gender }}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Phone Number</label>
+                    {{ profile_form.phone_number }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Location Information -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Location Information</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Current City</label>
+                    {{ profile_form.current_city }}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Hometown</label>
+                    {{ profile_form.hometown }}
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Country</label>
+                    {{ profile_form.country }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Professional Information</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Workplace</label>
+                    {{ profile_form.workplace }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Position</label>
+                    {{ profile_form.position }}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Education</label>
+                {{ profile_form.education }}
+              </div>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Social Media Links</h5>
+              <div class="form-group">
+                <label>Website</label>
+                {{ profile_form.website }}
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Facebook URL</label>
+                    {{ profile_form.facebook_url }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Twitter URL</label>
+                    {{ profile_form.twitter_url }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Instagram URL</label>
+                    {{ profile_form.instagram_url }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>LinkedIn URL</label>
+                    {{ profile_form.linkedin_url }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Relationship & Privacy -->
+            <div class="mb-4">
+              <h5 class="border-bottom pb-2">Relationship & Privacy</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Relationship Status</label>
+                    {{ profile_form.relationship_status }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-check">
+                    {{ profile_form.is_profile_public }}
+                    <label class="form-check-label">Make profile public</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-check">
+                    {{ profile_form.show_email }}
+                    <label class="form-check-label">Show email publicly</label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-check">
+                    {{ profile_form.show_phone }}
+                    <label class="form-check-label">Show phone publicly</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
+              <a href="{% url 'user_profile' request.user.id %}" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,11 +1,11 @@
 from django import forms
-from .models import Tweet
+from .models import TweetModel
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
 class TweetForm(forms.ModelForm):
 	class Meta:
-		model=Tweet
+		model=TweetModel
 		fields=['text','photo']
   
 	def __init__(self,*args, **kwargs):
@@ -13,7 +13,6 @@ class TweetForm(forms.ModelForm):
 		for field_name, field in self.fields.items():
 			if isinstance(field.widget, forms.Textarea):
 				field.widget.attrs['class'] = 'form-control'
-				field.widget.attrs['rows'] = '3'
 			elif isinstance(field.widget, forms.FileInput):
 				field.widget.attrs['class'] = 'form-control'
 

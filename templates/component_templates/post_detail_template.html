@@ -1,0 +1,35 @@
+<template id="post-details-template">
+  <div class="post_details m-3">
+    <div class="card-body">
+      <div class="d-flex">
+        <h4 class="post-username"></h4>
+      </div>
+      <div>
+        <p class="post-text"></p>
+      </div>
+      <div class="tweet_card_image_container">
+        <img src="" class="tweet_card_image" />
+      </div>
+      <div class="tweet_interaction_container row text-center mt-2">
+        <div class="col">
+          <i class="bi bi-hand-thumbs-up"></i><span class="like_count">0</span>
+        </div>
+        <div class="col">
+          <i class="bi bi-hand-thumbs-down"></i><span class="unlike_count">0</span>
+        </div>
+        <div class="col">
+          <i class="bi bi-chat-left-text"></i><span class="comment_count_post-details">0</span>
+        </div>
+        <div class="col">
+          <i class="bi bi-repeat"></i>
+        </div>
+      </div>
+      <hr />
+      <div class="comment-form-container">
+        <!-- Comment form will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <div class="comment_list"></div>
+</template>

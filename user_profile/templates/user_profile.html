@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+itweet
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
+<script src="{% static 'scripts/comment_script.js' %}"></script>
+<script src="{% static 'scripts/tweet_card.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/user_profile/profile_body_style.css' %}" />
+<div class="row ps-4">
+  <div class="col-8 user_profile_center_container overflow-auto vh-100">
+    <div class="user_profile_data_container p-0 position-relative">
+      <div class="user_profile_cover_photo_container position-absolute">
+        <img class="user_profile_cover_photo" src="{{ user_profile.cover_photo.url }}" alt="" />
+      </div>
+      <div class="user_profile_display_photo_container position-absolute z-1 d-flex justify-content-between">
+        <img class="user_profile_display_photo border" src="{{ user_profile.profile_picture.url }}" alt="" />
+        <div class="user_profile_name_container d-flex flex-column-reverse d-flex align-items-end me-5">
+          <div class="user_profile_header_edit_profile">
+            {% if user.id == profile_user_id %}
+            <a href="{% url 'edit_profile' %}"><button class="btn text-danger-emphasis p-0"><i
+                  class="bi bi-pencil-fill"></i> Edit Profile</button></a>
+            {% endif %}
+          </div>
+          <h5 class="text-muted">@{{ user.username }}</h5>
+          <h2>{{ user.profile.full_name }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="user_feed_container">
+      <div class="container p-3" id="tweet_feed_container">
+        <script>
+          loadTweets('{{user.id}}')
+        </script>
+      </div>
+    </div>
+  </div>
+  <div class="user_profile_detail col-4 overflow-auto vh-100 p-2 pe-4">
+    {% include 'user_profile_right_panel.html' %}
+  </div>
+</div>
+{% endblock %}

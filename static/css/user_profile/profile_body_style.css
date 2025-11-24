@@ -1,0 +1,238 @@
+.user_profile_data_container {
+        height: 70vh;
+        border-radius: 0.5em;
+        background-color: #50505024;
+}
+.user_profile_cover_photo_container {
+        width: 100%;
+        height: 50vh;
+        background-color: black;
+        border-radius: 0.5em;
+        overflow: hidden;
+}
+.user_profile_cover_photo {
+        width: 100%;
+        height: 50vh;
+        object-fit: cover;
+}
+.user_profile_display_photo_container {
+        width: 100%;
+        overflow: hidden;
+        margin-top: 40vh;
+}
+.user_profile_display_photo {
+        width: 25%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-left: 5%;
+}
+.overflow-auto {
+        scrollbar-width: none;
+}
+/* Color Variables */
+:root {
+        --primary: #007bff;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --purple: #6f42c1;
+        --orange: #fd7e14;
+        --indigo: #6610f2;
+        --teal: #20c997;
+        --pink: #e83e8c;
+        --cyan: #0dcaf0;
+        --red: #dc3545;
+        --gray: #6c757d;
+}
+
+[data-bs-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-card: rgb(20, 21, 21);
+        --text-primary: #ffffff;
+        --text-muted: #adb5bd;
+}
+
+/* Profile Card */
+.profile-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .profile-card {
+        background: linear-gradient(135deg, var(--bg-card) 0%, #011812ff 100%);
+}
+
+.bg-gradient-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, #0056b3 100%) !important;
+}
+
+/* Icon Wrapper */
+.icon-wrapper {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+}
+
+.profile-item:hover .icon-wrapper {
+        transform: scale(1.1);
+}
+
+/* Profile Items */
+.profile-item {
+        border-left: 3px solid transparent;
+        padding-left: 12px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        padding: 8px 8px 8px 12px;
+}
+
+.profile-item:hover {
+        border-left-color: var(--primary);
+        background: rgba(0, 123, 255, 0.05);
+        transform: translateX(4px);
+}
+
+[data-bs-theme="dark"] .profile-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+}
+
+/* Dark Mode Text */
+.dark-text {
+        transition: color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .dark-text {
+        color: var(--text-primary) !important;
+}
+
+.dark-text-muted {
+        transition: color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .dark-text-muted {
+        color: var(--text-muted) !important;
+}
+
+/* Social Media Buttons */
+.social-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+}
+
+.social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.social-btn.facebook {
+        background: linear-gradient(135deg, #1877f2, #0d5fbb);
+        color: white;
+}
+
+.social-btn.twitter {
+        background: linear-gradient(135deg, #1da1f2, #0c85d0);
+        color: white;
+}
+
+.social-btn.instagram {
+        background: linear-gradient(135deg, #e4405f, #c13584, #833ab4);
+        color: white;
+}
+
+.social-btn.linkedin {
+        background: linear-gradient(135deg, #0077b5, #005582);
+        color: white;
+}
+
+/* Website Link */
+.website-link {
+        color: var(--primary);
+        transition: all 0.3s ease;
+}
+
+.website-link:hover {
+        color: #0056b3;
+        text-decoration: underline !important;
+}
+
+[data-bs-theme="dark"] .website-link {
+        color: #4dabf7;
+}
+
+[data-bs-theme="dark"] .website-link:hover {
+        color: #74c0fc;
+}
+
+/* Additional Color Classes */
+.bg-purple {
+        background-color: var(--purple) !important;
+}
+.text-purple {
+        color: var(--purple) !important;
+}
+
+.bg-orange {
+        background-color: var(--orange) !important;
+}
+.text-orange {
+        color: var(--orange) !important;
+}
+
+.bg-indigo {
+        background-color: var(--indigo) !important;
+}
+.text-indigo {
+        color: var(--indigo) !important;
+}
+
+.bg-teal {
+        background-color: var(--teal) !important;
+}
+.text-teal {
+        color: var(--teal) !important;
+}
+
+.bg-pink {
+        background-color: var(--pink) !important;
+}
+.text-pink {
+        color: var(--pink) !important;
+}
+
+.bg-cyan {
+        background-color: var(--cyan) !important;
+}
+.text-cyan {
+        color: var(--cyan) !important;
+}
+
+.bg-red {
+        background-color: var(--red) !important;
+}
+.text-red {
+        color: var(--red) !important;
+}
+
+.bg-gray {
+        background-color: var(--gray) !important;
+}
+.text-gray {
+        color: var(--gray) !important;
+}
+
+.bg-gradient-social {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}

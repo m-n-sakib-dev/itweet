@@ -1,0 +1,53 @@
+<template id="tweet-card-template">
+  <div class="tweet_card">
+    <div class="tweet-container d-flex flex-row">
+      <div class="profile_image">
+        <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="" class="tweet_profile_img_cls" />
+      </div>
+      <div class="post_body flex-grow-1">
+        <div>
+          <h6 class="m-0 p-0 text-capitalize"></h6>
+          <p class="tweet-card-upload-time"></p>
+        </div>
+        <div class="mb-2">
+          <!-- prettier-ignore -->
+          <p class="tweet-card-text m-0"></p>
+          <button class="see-more-btn" onclick="toggleSeeMore(this)">See more</button>
+        </div>
+        <div class="tweet_card_image_container">
+          <img src="" class="tweet_card_image" />
+        </div>
+        <div class="tweet_interaction_container row text-center mt-2">
+          <div class="col">
+            <button class="icon-btn reaction_btn" onclick="likefunction('','','like')"><i
+                class="bi bi-hand-thumbs-up"></i></button><span class="like_count">0</span>
+          </div>
+          <div class="col">
+            <button class="icon-btn reaction_btn" onclick="likefunction('','','unlike')"><i
+                class="bi bi-hand-thumbs-down"></i></button><span class="unlike_count">0</span>
+          </div>
+          <div class="col">
+            <button class="icon-btn" data-bs-toggle="modal" data-bs-target="" onclick="tempcommentList()"><i
+                class="bi bi-chat-left-text"></i></button><span class="comment_count">0</span>
+          </div>
+          <div class="col">
+            <button class="icon-btn"><i class="bi bi-repeat"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content post-modal">
+        <!-- Modal content will be loaded dynamically -->
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<!--            {% for tweet in tweets %}
+    {% include 'components/tweet_card.html' with tweet=tweet comment_form=comment_form %}
+    {% endfor %}            -->
