@@ -1,0 +1,77 @@
+.home-nav-container {
+        backdrop-filter: blur(10px);
+        position: fixed;
+        top: 0;
+        z-index: 100;
+
+        transition: top 0.3s ease-in-out;
+}
+
+@media (max-width: 576px) {
+        .home-nav-container {
+                margin-top: 51px;
+                position: fixed;
+                width: 100%;
+        }
+}
+.tweet-container {
+        padding-top: 55px !important;
+        width: 100%;
+        height: calc(100%);
+        overflow-y: auto;
+        scrollbar-width: none;
+}
+
+.home-nav {
+        background: transparent;
+        margin: 0;
+        border-radius: 16px;
+        overflow: hidden;
+}
+
+.home-nav-item {
+        text-align: center;
+        padding: 1rem 0.5rem;
+        font-weight: 600;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: rgba(102, 126, 234, 0.1);
+        height: 50px;
+}
+
+.home-nav-item:hover {
+        color: #cbd5e1;
+        background: rgba(106, 133, 255, 0.329);
+}
+
+.home-nav-item.active {
+        color: #6b98fa;
+        border-bottom-color: #667eea;
+        /* background: radial-gradient(circle, rgba(8, 103, 255, 0.323), transparent); */
+}
+
+.home-nav-item i {
+        font-size: 1.1rem;
+}
+
+.home_feed_conainer {
+        height: 100vh;
+        overflow: hidden !important; /* Remove scroll from parent */
+}
+
+.home-tweets-wrapper {
+        height: 100%;
+}
+
+.tweet-container.hidden {
+        display: none !important; /* Completely remove */
+}
+.tweet-container.visible {
+        display: block;
+}

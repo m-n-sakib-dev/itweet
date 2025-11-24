@@ -243,6 +243,7 @@ body.dark-mode .dropdown-item {
 body.dark-mode .dropdown-item:hover {
         background: rgba(29, 155, 240, 0.2) !important;
         color: #1d9bf0 !important;
+        cursor: pointer !important;
 }
 
 /* Dark Mode Toggle Switch */

@@ -90,6 +90,7 @@ class UserProfile(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     @property
     def full_name(self):
         if self.user.first_name and self.user.last_name:
@@ -100,6 +101,16 @@ class UserProfile(models.Model):
             return self.user.last_name
         else:
             return self.user.username
+        
+    def primaryfields(self):
+        return{
+            'user_id':self.user.id,
+            'name':self.name,
+            'profile_picture':self.profile_picture.url,
+            'cover_photo':self.cover_photo.url,
+            'follower_count':self.follower_count,
+            'following_count':self.following_count,
+        }
 
     def __str__(self):
         return f"{self.user.username}'s Profile"

@@ -45,84 +45,6 @@ function initSeeMoreButtons() {
 // Call on page load
 document.addEventListener("DOMContentLoaded", initSeeMoreButtons);
 
-function tempcommentList() {
-        console.log("funtion called");
-        return;
-}
-
-//funtion to fill the tweet card template
-// function fillTweetTemplate(tweetData) {
-//         // Get the template
-//         const template = document.getElementById("tweet-card-template");
-//         const clone = template.content.cloneNode(true);
-
-//         // Fill basic data
-//         clone.querySelector(".tweet_card h6").textContent = tweetData.user.username;
-//         clone.querySelector(".tweet-card-upload-time").textContent = tweetData.created_at;
-//         clone.querySelector(".tweet-card-text").textContent = tweetData.text;
-
-//         // Profile image
-//         const profileImg = clone.querySelector(".tweet_profile_img_cls");
-//         // profileImg.src = tweetData.profile_image;
-
-//         // Tweet image
-//         if (tweetData.photo) {
-//                 const tweetImg = clone.querySelector(".tweet_card_image");
-//                 tweetImg.src = tweetData.photo.url;
-//         } else {
-//                 clone.querySelector(".tweet_card_image_container").style.display = "none";
-//         }
-
-//         // Reaction counts
-//         clone.querySelector(".like_count").textContent = tweetData.like_count;
-//         clone.querySelector(".unlike_count").textContent = tweetData.unlike_count;
-//         clone.querySelector(".comment_count").textContent = tweetData.comment_count;
-
-//         // Set up reaction buttons with original function names
-//         const likeBtn = clone.querySelector('.reaction_btn[onclick*="like"]');
-//         const unlikeBtn = clone.querySelector('.reaction_btn[onclick*="unlike"]');
-//         const commentBtn = clone.querySelector('.icon-btn[onclick*="tempcommentList"]');
-
-//         // Update like function call
-//         likeBtn.setAttribute("onclick", `likefunction('/interaction/${tweetData.id}/reaction/like','like')`);
-//         likeBtn.querySelector("i").id = `like_${tweetData.id}`;
-//         likeBtn.nextElementSibling.id = `_${tweetData.id}`;
-
-//         // Update unlike function call
-//         unlikeBtn.setAttribute("onclick", `likefunction('/interaction/${tweetData.id}/reaction/unlike', 'unlike')`);
-//         unlikeBtn.querySelector("i").id = `unlike_${tweetData.id}`;
-//         unlikeBtn.nextElementSibling.id = `_${tweetData.id}`;
-
-//         // Update comment function call
-//         commentBtn.setAttribute("data-bs-target", `#exampleModal${tweetData.id}`);
-//         commentBtn.nextElementSibling.id = `_${tweetData.id}`;
-
-//         // Set up modal
-//         const modal = clone.querySelector(".modal");
-//         modal.id = `exampleModal${tweetData.id}`;
-//         const modal_content = modal.querySelector(".modal-content");
-//         modal_content.appendChild(fillPostDetailsTemplate(tweetData));
-//         commentBtn.setAttribute("onclick", `commentList(${tweetData.id})`);
-//         return clone;
-// }
-
-function loadTweets(user_id) {
-        tweet_container = document.getElementById("tweet_feed_container");
-        fetch(`/user/profile/tweets?user_id=${user_id}`)
-                .then((response) => response.json())
-                .then((data) => {
-                        if (data.success) {
-                                data.tweets.forEach((tweet) => {
-                                        clone = fillTweetTemplate(tweet);
-                                        tweet_container.appendChild(clone);
-                                });
-                        }
-                })
-                .then(() => {
-                        initSeeMoreButtons();
-                });
-}
-
 function fillPostDetailsTemplate(postData) {
         // Get the template
         const template = document.getElementById("post-details-template");
@@ -159,7 +81,7 @@ function fillPostDetailsTemplate(postData) {
         return clone;
 }
 
-function fillTweetTemplate(tweetData) {
+function newTweetCard(tweetData) {
         const template = document.getElementById("tweet-card-template");
         const clone = template.content.cloneNode(true);
 
@@ -170,16 +92,16 @@ function fillTweetTemplate(tweetData) {
 
         // Profile image
         const profileImg = clone.querySelector(".user-avatar");
-        profileImg.src = tweetData.author.profile_picture_url;
+        profileImg.src = tweetData.user.profile.profile_picture;
 
         // Fill user data
-        clone.querySelector(".username").textContent = tweetData.author.name;
+        clone.querySelector(".username").textContent = tweetData.user.profile.name;
         clone.querySelector(".user-handle").textContent = `${tweetData.user.username}`;
         clone.querySelector(".timestamp").textContent = tweetData.created_at;
 
         //setting url on username, user profile pic and name
         clone.querySelectorAll(".user_profile_link").forEach((profile_link) => {
-                profile_link.setAttribute("href", `/user/profile/${tweetData.author.user}`);
+                profile_link.setAttribute("href", `/user/profile/${tweetData.user.id}`);
         });
 
         //menu button feature
@@ -226,10 +148,6 @@ function fillTweetTemplate(tweetData) {
                 const tweetImg = clone.querySelector(".media-image");
                 tweetImg.src = tweetData.photo.url;
                 tweetMedia.style.display = "block";
-
-                // Set fixed height
-                tweetMedia.style.height = "65vh";
-                tweetMedia.style.maxHeight = "65vh";
         }
 
         // Reaction counts
@@ -409,3 +327,38 @@ document.addEventListener("click", function (e) {
                         });
         }
 });
+
+function loadTweets(user_id) {
+        tweet_container = document.getElementById("tweet_feed_container");
+        fetch(`/user/profile/tweets?user_id=${user_id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                        if (data.success) {
+                                data.tweets.forEach((tweet) => {
+                                        clone = newTweetCard(tweet);
+                                        tweet_container.appendChild(clone);
+                                });
+                        }
+                })
+                .then(() => {
+                        initSeeMoreButtons();
+                });
+}
+
+// function homeTweets(user_id) {
+//
+//         tweet_container = document.getElementById("tweet_feed_container");
+//         fetch(`/user/profile/tweets?user_id=${user_id}`)
+//                 .then((response) => response.json())
+//                 .then((data) => {
+//                         if (data.success) {
+//                                 data.tweets.forEach((tweet) => {
+//                                         clone = fillTweetTemplate(tweet);
+//                                         tweet_container.appendChild(clone);
+//                                 });
+//                         }
+//                 })
+//                 .then(() => {
+//                         initSeeMoreButtons();
+//                 });
+// }

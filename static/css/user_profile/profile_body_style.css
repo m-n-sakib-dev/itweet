@@ -1,24 +1,36 @@
-.user_profile_data_container {
-        height: 70vh;
+.user_profile_data_container_parent {
+        height: fit-content;
         border-radius: 0.5em;
         background-color: #50505024;
 }
+
+.user_profile_data_container {
+        width: 100%;
+        aspect-ratio: 16/9;
+}
 .user_profile_cover_photo_container {
         width: 100%;
-        height: 50vh;
-        background-color: black;
+        aspect-ratio: 16/7;
+        background-color: #50505024;
         border-radius: 0.5em;
         overflow: hidden;
 }
 .user_profile_cover_photo {
         width: 100%;
-        height: 50vh;
+        aspect-ratio: 16/7;
         object-fit: cover;
 }
+/* .profile_photo_container_gap {
+        width: 100%;
+        aspect-ratio: 16/5;
+} */
 .user_profile_display_photo_container {
         width: 100%;
-        overflow: hidden;
-        margin-top: 40vh;
+        overflow: visible;
+        height: fit-content;
+        /* transform: translateY(-50%); */
+        margin-top: -12%;
+        padding-bottom: 20px;
 }
 .user_profile_display_photo {
         width: 25%;
@@ -27,9 +39,21 @@
         border-radius: 50%;
         margin-left: 5%;
 }
+@media (max-width: 900px) {
+        .user_profile_display_photo_container {
+                margin-top: -17%;
+        }
+        .user_profile_display_photo {
+                width: 35%;
+        }
+        .user_profile_name_container {
+                font-size: 0.8em;
+        }
+}
 .overflow-auto {
         scrollbar-width: none;
 }
+
 /* Color Variables */
 :root {
         --primary: #007bff;
@@ -106,15 +130,22 @@
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
         border-radius: 20px;
-        padding: 8px 4em;
+        padding: 0.2vw 5vw;
         color: rgb(13, 9, 39);
         font-weight: 600;
         font-size: 1em;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin-right: -20px;
+        margin-left: -20px;
+        margin-top: 5px;
 }
-
+/* .profile_name {
+        margin: 0;
+        font-size: 1.5em;
+}*/
+.profile_username {
+        font-size: 0.7em;
+}
 .follow-btn:hover {
         transform: translateY(-2px);
         color: #78fdff;

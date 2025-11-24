@@ -1,0 +1,283 @@
+/* 
+MOBILE TOPBAR CONTAINER
+Critical positioning styles:
+- fixed: Stays at top during scroll
+- top:0, left:0, right:0: Full width at top
+- z-index:1050: Above all content but below modals
+- flex-direction:column: Allows search overlay to stack below
+*/
+.mobile-topbar {
+        height: 50px; /* Standard mobile navigation height */
+        background: linear-gradient(135deg, rgba(23, 23, 33, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%);
+        backdrop-filter: blur(20px); /* Glass morphism effect */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        position: fixed; /* Critical: Stays at top when scrolling */
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1050; /* Above page content */
+        display: flex;
+        flex-direction: column; /* Stack main content and overlay */
+}
+
+/*
+TOP BAR CONTENT
+The visible part of the topbar when not searching
+- flexbox: Space-between layout for left/right sections
+- fixed height: Matches parent container
+- flex-shrink:0: Prevents collapsing
+*/
+.topbar-content {
+        display: flex;
+        /* align-items: center; */
+        justify-content: space-between; /* Logo left, buttons right */
+        padding: 0 19px; /* Horizontal spacing */
+        height: 50px; /* Full height of parent */
+        flex-shrink: 0; /* Prevents content squishing */
+}
+
+/* 
+LOGO STYLING
+- Gradient text: Visual appeal without images
+- flex display: Aligns icon and text
+*/
+.topbar-left {
+        padding-top: 6px;
+}
+.topbar-logo {
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #1d9bf0 0%, #e4405f 50%, #833ab4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-left: -10px;
+        font-family: "Brush Script MT", cursive;
+}
+.topbar-logo-img {
+        height: 2rem;
+        margin-right: -4px;
+        margin-bottom: 16px;
+}
+.topbar-logo:hover {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+        cursor: pointer;
+}
+/* 
+ACTION BUTTONS CONTAINER
+- flexbox: Horizontal layout for buttons
+- gap: Space between buttons
+*/
+.topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 12px; /* Consistent spacing */
+}
+
+/*
+UNIVERSAL TOPBAR BUTTON STYLING
+- Square buttons: Optimal for touch targets
+- backdrop-filter: Glass morphism effect
+- transition: Smooth hover effects
+*/
+.topbar-btn {
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent */
+        border: none;
+        border-radius: 22px; /* Rounded modern look */
+        width: 35px; /* Square aspect ratio */
+        height: 35px; /* Minimum touch target size */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #cbd5e1; /* Light gray for icons */
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease; /* Smooth state changes */
+        backdrop-filter: blur(10px); /* Enhanced glass effect */
+}
+
+/* Hover state for buttons */
+.topbar-btn:hover {
+        background: rgba(102, 126, 234, 0.3); /* Brand color tint */
+        color: #8fa4ff; /* Brand color for icons */
+        transform: translateY(-1px); /* Lift effect */
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/*
+NOTIFICATION BADGE POSITIONING
+- absolute: Positions relative to notification-wrapper
+- negative top/right: Places badge outside button bounds
+- border: Creates separation from background
+*/
+.notification-badge {
+        position: absolute;
+        top: 2px; /* Half outside button */
+        right: 8px; /* Half outside button */
+        background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        color: white;
+        border-radius: 50%; /* Circular badge */
+        width: 15px;
+        height: 15px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        animation: pulse 2s infinite; /* Attention-grabbing */
+        visibility: hidden;
+}
+.notification-badge.active {
+        visibility: visible;
+}
+
+/* Pulsing animation for notification badge */
+@keyframes pulse {
+        0%,
+        100% {
+                transform: scale(0.9);
+        }
+        50% {
+                transform: scale(1.1);
+        } /* Subtle grow/shrink */
+}
+
+/*
+SEARCH OVERLAY - CRITICAL FIXES
+- absolute: Positions within mobile-topbar container
+- top:60px: Starts right below the main topbar
+- transform/opacity: For smooth slide-in animation
+*/
+.search-overlay {
+        position: absolute; /* Within topbar container */
+        top: 0px; /* Below main topbar content */
+        left: 0;
+        right: 0;
+        bottom: 0; /* Fills remaining height */
+        background: rgba(15, 15, 25, 0.98); /* Dark overlay */
+        backdrop-filter: blur(20px);
+        z-index: 1051; /* Above main topbar content */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px); /* Start position for animation */
+        transition: all 0.3s ease; /* Smooth appearance */
+        display: flex;
+        flex-direction: column; /* Header + results stack */
+        height: 60vh;
+}
+
+/* Active state - overlay becomes visible */
+.search-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0); /* Final position */
+}
+
+/*
+SEARCH HEADER
+Contains back button and search input
+- flex-shrink:0: Prevents header from shrinking
+- border-bottom: Visual separation from results
+*/
+.search-header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 16px;
+        padding-left: 6px;
+        background: linear-gradient(135deg, rgba(23, 23, 33, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0; /* Fixed height section */
+}
+
+/*
+SEARCH INPUT WITH ICONS
+- relative positioning: For absolute positioned icons
+- flex:1: Takes available space
+*/
+.search-input-wrapper {
+        flex: 1; /* Fill available space */
+        position: relative; /* For absolute child positioning */
+        display: flex;
+        align-items: center;
+}
+
+/* Search icon positioned inside input */
+.search-icon {
+        position: absolute;
+        left: 16px; /* Inside padding area */
+        color: #64748b; /* Subtle gray */
+        z-index: 2; /* Above input */
+}
+
+/* Search overlay close Button Design*/
+.back-btn {
+        border: none;
+        background: transparent;
+}
+
+/*
+SEARCH INPUT STYLING
+- Full width padding: Accommodates icons
+- backdrop-filter: Consistent glass effect
+- border transitions: Interactive feedback
+*/
+.search-input {
+        width: 100%;
+        height: 44px;
+        background: rgba(30, 41, 59, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0 50px; /* Space for both icons */
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+}
+
+/* Focus state for better accessibility */
+.search-input:focus {
+        outline: none;
+        border-color: #667eea; /* Brand color */
+        background: rgba(30, 41, 59, 0.9);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2); /* Glow effect */
+}
+
+/*
+CLEAR SEARCH BUTTON
+- absolute positioning: Inside input on right side
+- appears conditionally: When text is entered
+*/
+.clear-search {
+        position: absolute;
+        right: 12px; /* Inside padding area */
+        background: none;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+}
+
+/*
+SEARCH RESULTS AREA
+- flex:1: Takes all remaining space
+- overflow-y:auto: Scrollable if many results
+*/
+.search-results {
+        flex: 1; /* Fill remaining height */
+        overflow-y: auto; /* Scrollable content */
+        padding: 16px;
+        width: 100%;
+        overflow-wrap: break-word;
+        background: linear-gradient(135deg, rgba(23, 23, 33, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%);
+}
+
+/*
+CRITICAL FIX: PREVENT CONTENT UNDER TOPBAR
+This ensures page content starts below the fixed topbar
+*/

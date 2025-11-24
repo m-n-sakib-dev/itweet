@@ -320,7 +320,6 @@ a.user_profile_link:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   background: none;
   border: none;
   padding: 8px 12px;
@@ -352,7 +351,7 @@ a.user_profile_link:hover {
 }
 
 .icon-container {
-  width: 20px;
+  width: 15px;
   height: 20px;
   display: flex;
   align-items: center;
@@ -374,8 +373,17 @@ a.user_profile_link:hover {
   color: #e4405f;
 }
 
+.dislike-btn > .icon-container {
+  margin-bottom: -5px;
+}
+
 .dislike-btn.active {
   color: #1d9bf0;
+}
+
+.comment-btn > .icon-container {
+  margin-right: 2px;
+  margin-bottom: -5px;
 }
 
 .comment-btn.active {
@@ -393,6 +401,11 @@ a.user_profile_link:hover {
 
 .comment-btn:hover {
   color: #00ba7c;
+}
+
+.share-btn > .icon-container {
+  margin-right: 2px;
+  margin-bottom: -5px;
 }
 
 .share-btn:hover {
@@ -452,21 +465,20 @@ a.user_profile_link:hover {
     margin-bottom: 12px;
   }
   .tweet-actions {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
   }
   .action-btn {
-    padding: 8px;
     font-size: 13px;
   }
-  .action-btn span {
-    display: none;
+  .dislike-btn {
+    margin-left: -20px;
   }
   .tweet-stats {
     gap: 16px;
   }
   .tweet-media {
-    max-height: 50vh;
+    height: 50vh;
   }
 }
 /* Animation */

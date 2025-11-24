@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     '192.168.0.102',  # Your computer's IP
     '.localhost',
     '0.0.0.0',
+    '10.222.111.20',
 ]
 
 
