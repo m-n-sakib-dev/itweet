@@ -26,12 +26,12 @@
   <div class="">
     <!-- This is used for some page which needs the full page, no nav bar like Registration and login -->
     {% block full_page %}
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
       <!-- Mobile Topbar and only showe on device under 576px -->
       <div class="mobile_top_bar d-sm-none">
         {% include 'layouts/mobile_top_bar.html' %}
       </div>
-      <div class="row">
+      <div class="d-flex">
         <!-- Desktop left panel or navigation panel -->
         <div class="col-sm-2 col-md-1 col-lg-2 home-left-panel p-0 d-none d-sm-block">
           {% include 'layouts/home_left_panel.html' %}

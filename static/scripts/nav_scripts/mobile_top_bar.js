@@ -100,20 +100,23 @@ document.addEventListener("DOMContentLoaded", function () {
                         searchResult.innerHTML = noResult;
                 }
         });
+        autohideNavbar("tweet-container", "home-nav-container");
+        autohideNavbar("home_following_tweets_container", "home-nav-container");
+});
 
-        const tweetContainer = document.querySelector(".tweet-container");
+function autohideNavbar(container, navbarId) {
+        const Container = document.querySelector("." + container);
         let prevScrollpos = 0;
-        if (tweetContainer != null) {
-                tweetContainer.addEventListener("scroll", function () {
+        if (Container != null) {
+                Container.addEventListener("scroll", function () {
                         var currentScrollPos = this.scrollTop;
+                        var navbar = document.getElementById(navbarId);
                         if (prevScrollpos > currentScrollPos || currentScrollPos < 10) {
-                                document.getElementById("home-nav-container").style.top = "0";
+                                navbar.style.top = "0";
                         } else {
-                                document.getElementById("home-nav-container").style.top = "-50px";
+                                navbar.style.top = `-${navbar.offsetHeight}px`;
                         }
                         prevScrollpos = currentScrollPos;
                 });
         }
-
-        // the home-navbar hiding on scroll and showin on backscroll
-});
+}

@@ -39,17 +39,7 @@
         border-radius: 50%;
         margin-left: 5%;
 }
-@media (max-width: 900px) {
-        .user_profile_display_photo_container {
-                margin-top: -17%;
-        }
-        .user_profile_display_photo {
-                width: 35%;
-        }
-        .user_profile_name_container {
-                font-size: 0.8em;
-        }
-}
+
 .overflow-auto {
         scrollbar-width: none;
 }
@@ -125,18 +115,26 @@
 [data-bs-theme="dark"] .profile-item:hover {
         background: rgba(255, 255, 255, 0.05);
 }
+.user_profile_follower_count_container:hover,
+.user_profile_following_count_container:hover {
+        cursor: pointer;
+        filter: brightness(150%);
+}
 
-.follow-btn {
+.user_profile_follow_list_modal-body {
+        height: 80vh;
+}
+.profile-follow-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
         border-radius: 20px;
-        padding: 0.2vw 5vw;
+        padding: 0.3vw 5vw;
         color: rgb(13, 9, 39);
         font-weight: 600;
         font-size: 1em;
         cursor: pointer;
         transition: all 0.3s ease;
-        margin-left: -20px;
+        margin-left: -10px;
         margin-top: 5px;
 }
 /* .profile_name {
@@ -146,13 +144,13 @@
 .profile_username {
         font-size: 0.7em;
 }
-.follow-btn:hover {
+.profile-follow-btn:hover {
         transform: translateY(-2px);
         color: #78fdff;
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
-.follow-btn:active {
+.profile-follow-btn:active {
         transform: translateY(0);
 }
 
@@ -289,4 +287,175 @@
 
 .bg-gradient-social {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/*  Navbar */
+/* Profile Navbar */
+.profile-navbar {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px); /* Blur effect */
+        -webkit-backdrop-filter: blur(5px); /* Safari support */
+        background: rgba(0, 0, 0, 0.507); /* Semi-transparent dark */
+        transition: top 0.3s ease-in-out;
+        margin-bottom: 5px;
+}
+
+.profile-nav {
+        display: flex;
+        justify-content: space-around;
+}
+
+.profile-nav-item {
+        display: flex;
+        align-items: center;
+        padding: 9px;
+        text-decoration: none;
+        color: #8b98a5;
+        font-weight: 400;
+        font-size: 1em;
+        position: relative;
+        transition: color 0.2s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        width: 100%;
+        justify-content: center;
+}
+
+.profile-nav-item:hover {
+        color: #ffffff;
+}
+
+.profile-nav-item.active {
+        color: #ffffff;
+        font-weight: 500;
+}
+
+.profile-nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #1d9bf0;
+        border-radius: 2px 2px 0 0;
+}
+
+.profile-nav-count {
+        background: rgba(139, 152, 165, 0.2);
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+}
+
+/* Tab Content */
+.tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+        display: block;
+}
+
+@keyframes fadeIn {
+        from {
+                opacity: 0;
+        }
+        to {
+                opacity: 1;
+        }
+}
+
+/* Follow List Items Style */
+
+.follow-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-radius: 12px;
+        transition: background 0.2s ease;
+}
+
+.follow-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+}
+
+.follow-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.follow-info {
+        flex: 1;
+}
+
+.follow-name {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 15px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.follow-handle {
+        color: #8b98a5;
+        font-size: 14px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.follow-btn {
+        background: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 24px;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.follow-btn:hover {
+        background: #e6e6e6;
+}
+
+.follow-btn.following {
+        background: transparent;
+        color: #ffffff;
+        border: 1px solid #8b98a5;
+}
+
+.follow-btn.following:hover {
+        background: rgba(244, 33, 46, 0.1);
+        color: #f4212e;
+        border-color: #f4212e;
+}
+
+@media (max-width: 900px) {
+        .user_profile_display_photo_container {
+                margin-top: -17%;
+        }
+        .user_profile_display_photo {
+                width: 35%;
+        }
+        .user_profile_name_container {
+                font-size: 0.8em;
+        }
+        .user_profile_follow_list_modal-body {
+                height: 60vh;
+        }
+        .follow-item {
+                transform: scale(0.85);
+                transform-origin: top center; /* Scale from top */
+                width: 117.65%; /* Counteract scale: 100/0.85 = 117.65% */
+                margin-left: -8.825%; /*Center it: (117.65-100)/2 = 8.825%*/
+        }
 }

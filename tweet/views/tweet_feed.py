@@ -1,14 +1,13 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from ..models import TweetModel
-from user_profile.models import UserProfile as UserProfileModel,SavedTweet,FollowModel
+from user_profile.models import  SavedTweet,FollowModel
 from interactions.models import ReactionModel
 from interactions.forms import CommentForm
 from django.contrib.auth.models import User
-from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required
-from django.db.models import OuterRef,Subquery,Exists
 from django.forms.models import model_to_dict
+from .hashtag import Hastagify
 
 
 
@@ -23,7 +22,6 @@ def GolobalTweetLoad(request):
         page=int(request.GET.get('page'))
         start=tweet_per_page*(page-1)
         end=tweet_per_page*page
-        print(page)
         if request.user.is_authenticated:
                 user=request.user
         else:
@@ -39,6 +37,8 @@ def tweetAllData(tweets,user):
         tweets_data=[]
         for tweet in tweets:
                 data = model_to_dict(tweet)
+                data['text']=Hastagify(tweet.text)
+                del data["hashtags"]
                 data['reaction']=ReactionModel.objects.filter(user=user,tweet=tweet).values_list('reactiontype', flat=True).first()
                 data['is_saved']=SavedTweet.objects.filter(user=user,tweet=tweet).exists()
                 data['photo'] = {'url': tweet.photo.url}   if tweet.photo else None
@@ -51,12 +51,13 @@ def tweetAllData(tweets,user):
                 tweets_data.append(data)
         return tweets_data
 
+
+
 @login_required
 def FollowingTweetLoad(request):
         page=int(request.GET.get('page'))
         start=tweet_per_page*(page-1)
         end=tweet_per_page*page
-        print(page)
         if request.user.is_authenticated:
                 user=request.user
         else:

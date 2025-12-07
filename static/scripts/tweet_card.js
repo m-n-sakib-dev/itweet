@@ -139,7 +139,7 @@ function newTweetCard(tweetData) {
         // Fill tweet content
         if (tweetData.text) {
                 const tweetText = clone.querySelector(".tweet-text");
-                tweetText.textContent = tweetData.text;
+                tweetText.innerHTML = `${tweetData.text}`;
         }
 
         // Tweet image - Fixed height

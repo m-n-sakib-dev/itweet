@@ -28,23 +28,6 @@ def UserTweets(request):
                 'is_more': len(tweets_data)==tweet_per_page
         })
 
-def GolobalTweetLoad(request):
-        page=int(request.GET.get('page'))
-        start=tweet_per_page*(page-1)
-        end=tweet_per_page*page
-        print(page)
-        if request.user.is_authenticated:
-                user=request.user
-        else:
-                user=None
-        tweets=TweetModel.objects.all().select_related('user__profile')[start:end]
-        tweets_data = tweetAllData(tweets,user)         
-        return JsonResponse({
-                'success': True,
-                'tweets':tweets_data,
-                'is_more': len(tweets_data)==tweet_per_page
-        })
-
 
 @login_required
 def SaveTweet(request,tweet_id):

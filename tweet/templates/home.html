@@ -13,8 +13,8 @@ itweet
 <script src="{% static 'scripts/tweet/home.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
 <link rel="stylesheet" href="{% static 'css/tweet/home_style.css' %}" />
-<div class="">
-  <div class="col-lg-8 home_feed_conainer ">
+<div class="d-flex h-100">
+  <div class="col-12 col-lg-8 home_feed_conainer h-100">
     <div class="home-nav-container" id="home-nav-container">
       <div class="home-nav row">
         <div class="home-nav-item nav-foryou col-6 active">
@@ -42,7 +42,8 @@ itweet
         </div>
       </div>
 
-      <div class="tweet-container hidden p-lg-3 p-1" id="home_following_tweets_container">
+      <div class="tweet-container hidden p-lg-3 p-1 home_following_tweets_container"
+        id="home_following_tweets_container">
         <div class="tweets-list" id="following_tweets_list">
           <!-- Tweets will be loaded here -->
         </div>
@@ -57,6 +58,8 @@ itweet
       </div>
     </div>
   </div>
-  <div class="col-lg-4"></div>
+  <div class="col-0 col-lg-4 ">
+    {% include "layouts/suggestion_trending.html" %}
+  </div>
 </div>
 {% endblock %}

@@ -22,22 +22,21 @@
 
       <ul class="dropdown-menu bottom-bar-profile-menu bottom-bar-profile-dropdown-menu">
         {% if user.is_authenticated %}
-        <li>
-          <div class="bottom-bar-user-info">
-            <img src="{{ user.profile.profile_picture.url }}" alt="Profile" class="bottom-bar-user-avatar" />
-            <div class="bottom-bar-user-details">
-              <strong class="bottom-bar-username">{{ user.profile.name }}</strong>
-              <span class="bottom-bar-user-handle">{{ user.username }}</span>
+          <li>
+            <div class="bottom-bar-user-info">
+              <img src="{{ user.profile.profile_picture.url }}" alt="Profile" class="bottom-bar-user-avatar" />
+              <div class="bottom-bar-user-details">
+                <strong class="bottom-bar-username">{{ user.profile.name }}</strong>
+                <span class="bottom-bar-user-handle">{{ user.username }}</span>
+              </div>
             </div>
-          </div>
-        </li>
-        <li>
-          <hr class="bottom-bar-dropdown-divider" />
-        </li>
-        <li>
-          <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'user_profile' user.id %}"><i
-              class="bi bi-person"></i> Profile</a>
-        </li>
+          </li>
+          <li>
+            <hr class="bottom-bar-dropdown-divider" />
+          </li>
+          <li>
+            <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'user_profile' user.id %}"><i class="bi bi-person"></i> Profile</a>
+          </li>
         {% endif %}
         <li>
           <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-bookmark"></i> Saved Tweets</a>
@@ -49,13 +48,13 @@
           <hr class="bottom-bar-dropdown-divider" />
         </li>
         {% if user.is_authenticated %}
-        <li>
-          <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-box-arrow-right"></i> Log out</a>
-        </li>
+          <li>
+            <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Log out</a>
+          </li>
         {% else %}
-        <li>
-          <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-box-arrow-in-right"></i> Login</a>
-        </li>
+          <li>
+            <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-box-arrow-in-right"></i> Login</a>
+          </li>
         {% endif %}
       </ul>
     </div>

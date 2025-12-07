@@ -3,19 +3,20 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from tweet.models import TweetModel
 from django.contrib.auth.models import User
-from django.core.serializers import serialize
 from interactions.forms import CommentForm
 from django.contrib import messages
 from ..models import UserProfile as UserProfileModel,FollowModel
 from ..forms import UserUpdateForm, UserProfileUpdateForm
 from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
+
 
 @login_required
 def UserProfile(request,user_id):
         user=get_object_or_404(User,id=user_id)
         user_profile=get_object_or_404(UserProfileModel,user=user)
         comment_form=CommentForm()
-        is_following=FollowModel.objects.filter(user=request.user,following_to=user).exists()
+        is_following=FollowModel.objects.filter(user=request.user,following_to=user).exists() if request.user.is_authenticated else False
         return render(request, 'user_profile.html',{
             'comment_form':comment_form, 
             "profile_user":user,
@@ -53,44 +54,23 @@ def EditProfile(request):
     }
     return render(request, 'edit_profile.html', context)
 
-
-
-
-@login_required
-def FollowUser(request,to_follow_id):
-    if request.method == 'POST':
-        target_user = get_object_or_404(User, id=to_follow_id)
-        
-        # Check if already following
-        is_following = FollowModel.objects.filter(
+def BasicProfile(request,profile):
+    return{
+        'id':profile.user.id,
+        'name':profile.name,
+        'username':profile.user.username,
+        'profile_picture':profile.profile_picture.url,
+        'cover_photo':profile.cover_photo.url,
+        'follower_count':profile.follower_count,
+        'following_count':profile.following_count,
+        'is_following': FollowModel.objects.filter(
             user=request.user, 
-            following_to=target_user
-        ).exists()
-        
-        if is_following:
-            # Unfollow
-            FollowModel.objects.get(
-                user=request.user, 
-                following_to=target_user
-            ).delete()
-            action = 'unfollowed'
-        else:
-            # Follow
-            FollowModel.objects.create(
-                user=request.user, 
-                following_to=target_user
-            )
-            action = 'followed'
-        
-        # Get updated counts
-        followers_count = target_user.profile.follower_count
-        following_count = target_user.profile.following_count
-        my_following_count=request.user.profile.following_count
-        return JsonResponse({
-            'success': True,
-            'action': action,
-            'followers_count': followers_count,
-            'following_count': following_count,
-            'user_following_count':my_following_count,
-            'is_following': not is_following
-        })
+            following_to=profile.user
+        ).exists() if request.user.is_authenticated else False
+    }
+    
+def ProfileAbout(request,user_id):
+        user=get_object_or_404(User,id=user_id)
+        user_profile=get_object_or_404(UserProfileModel,user=user)
+        about_content = render_to_string('user_profile_right_panel.html', model_to_dict(user_profile))
+        return JsonResponse({'about_content': about_content})

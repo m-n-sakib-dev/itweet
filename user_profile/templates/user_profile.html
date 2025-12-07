@@ -3,17 +3,18 @@
 
 {% block content %}
   {% csrf_token %}
+  <link rel="stylesheet" href="{% static 'css/user_profile/profile_body_style.css' %}" />
   <link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
   <script src="{% static 'scripts/user_profile/user_profile.js' %}"></script>
   <script src="{% static 'scripts/comment_script.js' %}"></script>
   <script src="{% static 'scripts/tweet_card.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/user_profile/profile_body_style.css' %}" />
+
   <script>
     const profile_id = '{{profile_user.id}}'
   </script>
-  <div class="row px-lg-4">
-    <div class="col-lg-8 user_profile_center_container overflow-auto vh-100">
+  <div class="d-flex px-lg-1 h-100">
+    <div class="col-lg-8 user_profile_center_container overflow-auto">
       <div class="user_profile_data_container_parent">
         <div class="user_profile_data_container p-0">
           <div class="user_profile_cover_photo_container">
@@ -22,16 +23,16 @@
           <div class="user_profile_display_photo_container z-1 d-flex">
             <img class="user_profile_display_photo border" src="{{ user_profile.profile_picture.url }}" alt="" />
             <div class="row ms-2">
-              <div class="col-12 h-50"></div>
+              <div class="col-12 p-0 h-50"></div>
               <div class="user_profile_name_container d-flex flex-column col-12">
                 <p class="profile_name m-0 hx">
                   {{ user_profile.name }}<span class="profile_username text-muted m-0 ms-1">&middot; {{ profile_user.username }}</span>
                 </p>
                 <div class="d-flex gap-3">
-                  <div>
+                  <div class="user_profile_follower_count_container" data-bs-toggle="modal" data-bs-target="#id_user_profile_follow_list_modal">
                     <span class="profile_followers_count">{{ user_profile.follower_count }}</span> <span class="text-muted">Followers</span>
                   </div>
-                  <div>
+                  <div class="user_profile_following_count_container" data-bs-toggle="modal" data-bs-target="#id_user_profile_follow_list_modal">
                     <span class="profile_following_count">{{ user_profile.following_count }}</span> <span class="text-muted">Following</span>
                   </div>
                 </div>
@@ -39,9 +40,9 @@
                   {% if user.id == profile_user.id %}
                     <a href="{% url 'edit_profile' %}"><button class="btn text-danger-emphasis p-0"><i class="bi bi-pencil-fill"></i> Edit Profile</button></a>
                   {% elif is_following %}
-                    <button class="btn follow-btn" onclick="fn_toggle_follow('{{ profile_user.id }}')"><i class="bi bi-bookmark-dash"></i> Unfollow</button>
+                    <button class="btn profile-follow-btn" onclick="fn_toggle_follow('{{ profile_user.id }}')"><i class="bi bi-bookmark-dash"></i> Unfollow</button>
                   {% else %}
-                    <button class="btn follow-btn" onclick="fn_toggle_follow('{{ profile_user.id }}')"><i class="bi bi-bookmark-plus"></i> Follow</button>
+                    <button class="btn profile-follow-btn" onclick="fn_toggle_follow('{{ profile_user.id }}')"><i class="bi bi-bookmark-plus"></i> Follow</button>
                   {% endif %}
                 </div>
               </div>
@@ -49,20 +50,48 @@
           </div>
         </div>
       </div>
-      <div class="user_feed_container p-lg-3 p-1">
-        <div class="container p-0" id="user_tweet_feed_container"></div>
-        <div class="loading-spinner text-center" id="profile_tweet_loading">
-          <div class="loading-dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+      <!-- User Profile Navbar with Tabs -->
+      <div class="profile-navbar sticky-top d-lg-none" id="user-profile-navbar-id">
+        <nav class="profile-nav">
+          <button class="profile-nav-item active" data-tab="tweetsTab"><span class="profile-nav-text">Tweets</span></button>
+          <button class="profile-nav-item" data-tab="aboutTab"><span class="profile-nav-text">About</span></button>
+        </nav>
+      </div>
+
+      <!-- Content Sections -->
+      <div class="tab-content active" id="tweetsTab">
+        <div class="user_feed_container p-lg-3 p-1">
+          <div class="container p-0" id="user_tweet_feed_container"></div>
+          <div class="loading-spinner text-center" id="profile_tweet_loading">
+            <div class="loading-dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="tab-content" id="aboutTab">
+        <!-- About content will be loaded here -->
+      </div>
     </div>
-    <div class="user_profile_detail col-lg-4 overflow-auto vh-100 p-2 d-none d-sm-block">
-      {% include 'user_profile_right_panel.html' %}
+    <div class="user_profile_detail col-lg-4 overflow-auto vh-100 p-2 d-none d-lg-block"></div>
+  </div>
+
+  <!-- Follower and Follwoing List Modal -->
+  <div class="modal fade" id="id_user_profile_follow_list_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header px-3 py-2">
+          <h1 class="user_profile_follow_list_modal-title fs-5 flex-grow-1 text-center mb-0">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="p-2">
+          <div class="user_profile_follow_list_modal-body overflow-y-auto">ddd</div>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

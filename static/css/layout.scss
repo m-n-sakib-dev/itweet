@@ -11,6 +11,7 @@ body {
 .content-panel {
         scrollbar-width: none;
         overflow: auto;
+        height: 100vh;
 }
 @media (max-width: 576px) {
         .content-panel {
