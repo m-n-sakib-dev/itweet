@@ -114,6 +114,7 @@ def CommentReply(request,comment_id):
                     'success': True,
                     'comment_id': comment.id,
                     'tweet_id':tweet.id,
+                    'parent_comment_id':comment_id,
                     'comment_count':tweet.comment_count,
                     'comment_data':returncomment,
                     'reply_count':parent_comment.reply_count,
@@ -133,6 +134,7 @@ def CommentsReply_list(request,comment_id):
         comments_list=[]
         for comment in comments:
             comment_info=commentInfo(comment)
+            comment_info['parent_comment_id']=comment_id
             comments_list.append(comment_info)
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success':True,'comments_list':comments_list})

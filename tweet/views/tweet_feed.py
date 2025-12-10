@@ -26,7 +26,7 @@ def GolobalTweetLoad(request):
                 user=request.user
         else:
                 user=None
-        tweets=TweetModel.objects.all().select_related('user__profile')[start:end]
+        tweets=TweetModel.objects.all().select_related('user__profile').order_by("-comment_count")[start:end]
         tweets_data = tweetAllData(tweets,user)         
         return JsonResponse({
                 'success': True,

@@ -2,7 +2,6 @@ $mobile: 768px;
 .tweet_card {
         border: 0 solid rgb(0, 0, 0);
         border-radius: 0.5em;
-
         margin: 1em;
         background-color: rgba(58, 58, 58, 0.216);
         box-shadow: 0 1px 2px 0px rgb(1, 1, 1);
@@ -35,8 +34,8 @@ $mobile: 768px;
         transform: scale(1.2);
 }
 .tweet_profile_img_cls {
-        width: 3em;
-        height: 3em;
+        width: 2.5em;
+        height: 2.5em;
         border-radius: 50%;
         object-fit: contain;
         margin-right: 0.5em;
@@ -87,7 +86,7 @@ $mobile: 768px;
 .tweet-card {
         background: #ffffff;
         border-radius: 16px;
-        padding: 20px;
+        padding: 12px;
         padding-bottom: 5px;
         margin-bottom: 16px;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -124,6 +123,12 @@ $mobile: 768px;
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 16px;
+        @media (max-width: $mobile) {
+                transform: scale(0.85);
+                transform-origin: top center; /* Scale from top */
+                width: 117.65%; /* Counteract scale: 100/0.85 = 117.65% */
+                margin-left: -8.825%; /* Center it: (117.65-100)/2 = 8.825% */
+        }
 }
 
 .user-info {
@@ -143,8 +148,8 @@ a.user_profile_link:hover {
 }
 
 .user-avatar {
-        width: 48px;
-        height: 48px;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         object-fit: cover;
         border: 2px solid #f0f0f0;
@@ -264,7 +269,7 @@ a.user_profile_link:hover {
 .tweet-stats {
         display: flex;
         gap: 20px;
-        padding: 12px 0;
+        padding: 12px 5px;
         border-top: 1px solid #f0f0f0;
         border-bottom: 1px solid #f0f0f0;
         margin-bottom: 5px;
@@ -396,8 +401,10 @@ a.user_profile_link:hover {
 
 .tweet-modal .modal-body {
         padding: 0;
-        border-radius: 16px;
-        overflow: hidden;
+        max-height: 75vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-width: none;
 }
 
 .hashtag {
@@ -456,17 +463,18 @@ a.user_profile_link:hover {
 /* Responsive */
 @media (max-width: 768px) {
         .tweet-card {
-                padding: 16px;
                 border-radius: 12px;
                 margin-bottom: 12px;
         }
 
         .tweet-actions {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 4px;
+                gap: 0px;
         }
 
         .action-btn {
+                padding-top: 4px;
+                padding-bottom: 4px;
                 font-size: 13px;
         }
         .dislike-btn {
@@ -478,6 +486,7 @@ a.user_profile_link:hover {
         // }
 
         .tweet-stats {
+                padding: 6px 5px;
                 gap: 16px;
         }
 
@@ -501,4 +510,8 @@ a.user_profile_link:hover {
 
 .tweet-card {
         animation: fadeInUp 0.4s ease-out;
+}
+
+.tweet-modal .tweet-card {
+        border-radius: 0px;
 }

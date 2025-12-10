@@ -33,7 +33,6 @@ function loadFollowSuggestions() {
                 .then((response) => response.json())
                 .then((data) => {
                         if (data.success) {
-                                console.log(data.suggested_users);
                                 renderFollowSuggestions(data.suggested_users);
                         }
                 });
@@ -94,7 +93,6 @@ function toggleFollow(button, profile_id) {
                 .then((response) => response.json())
                 .then((data) => {
                         if (data.success) {
-                                console.log(data);
                                 button.classList.toggle("following");
                                 button.textContent = isFollowing ? "Follow" : "Following";
                         }

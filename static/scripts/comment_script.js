@@ -1,7 +1,8 @@
-// here all the comment feature handling js functions are written
 // this function adds new comment on a tweet
 window.GLOBAL_CSRF_TOKEN = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-function handleCommentSubmission(button, tweet_id) {
+function handleCommentSubmission(button) {
+        tweet_id = button.closest(".tweet-modal").querySelector(".tweet-card").dataset.tweetId;
+        console.log(tweet_id);
         const form = button.closest("form");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken");
 
@@ -17,7 +18,8 @@ function handleCommentSubmission(button, tweet_id) {
                 .then((data) => {
                         if (data.success) {
                                 document.querySelector(`#_${tweet_id}_comment`).textContent = data.comment_count;
-                                document.querySelector(`#_${tweet_id}.comment_count_post-details`).textContent = data.comment_count;
+                                button.closest(".tweet-modal").querySelector(".tweet-card").querySelector(".comments-count").textContent =
+                                        data.comment_count;
                                 const comments_list = document.getElementById(`comment_list_${tweet_id}`);
                                 clone = addcomment(data.comment_data, `comment_list_${tweet_id}`);
                                 form.reset();
@@ -32,7 +34,6 @@ function handleCommentSubmission(button, tweet_id) {
 function commentList(tweet_id) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 
-        console.log(document);
         fetch(`/interaction/${tweet_id}/comments_list/`, {
                 method: "POST",
                 headers: {
@@ -45,7 +46,6 @@ function commentList(tweet_id) {
                         if (data.success) {
                                 const comments_list = document.getElementById(`comment_list_${tweet_id}`);
                                 comments_list.innerHTML = "";
-                                // comments_list.innerHTML = data.html;
                                 data.comments_list.forEach((commentData) => {
                                         clone = addcomment(commentData, `comment_list_${tweet_id}`);
                                         comments_list.appendChild(clone);
@@ -57,6 +57,7 @@ function commentList(tweet_id) {
 // this function shows the reply comments list(replies on a comment)
 function commentReplyList(comment_id) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
         fetch(`/interaction/comments/${comment_id}/replies/`, {
                 method: "POST",
                 headers: {
@@ -70,16 +71,30 @@ function commentReplyList(comment_id) {
                                 const comments_list = document.getElementById(`comment_reply_list_${comment_id}`);
                                 // comments_list.innerHTML = data.html;
                                 data.comments_list.forEach((commentData) => {
-                                        clone = addcomment(commentData, `comment_reply_list_${comment_id}`);
-                                        commentElement = clone.querySelector(".comment-actions");
-                                        reply_btn = commentElement.querySelector(".reply-btn");
-                                        commentElement.removeChild(reply_btn);
-                                        comments_list.appendChild(clone);
+                                        comments_list.appendChild(pushCommentIntoList(commentData));
+                                        sibling = document.getElementById("containerOfcommentId" + commentData.id).previousElementSibling;
+                                        if (sibling) {
+                                                r = sibling.querySelector(".vr-line-1-for-comment-reply");
+                                                if (r) {
+                                                        r.classList.remove("d-none");
+                                                }
+                                        }
                                 });
                         }
                 });
 }
 
+function pushCommentIntoList(commentData) {
+        clone = addcomment(commentData, `comment_reply_list_${commentData.parent_comment_id}`);
+        clone.querySelector(".angle-mark-for-comment-reply").classList.remove("d-none");
+        clone.querySelector(".vr-line-2-for-comment-reply").classList.add("d-none");
+        clone.querySelector(".comment-line-container").classList.remove("d-none");
+        clone.querySelector(".comment-item").classList.remove("px-2");
+        commentElement = clone.querySelector(".comment-actions");
+        reply_btn = commentElement.querySelector(".comment-reply-btn");
+        commentElement.removeChild(reply_btn);
+        return clone;
+}
 // this function handles reaction  on comments(like or unlike)
 function commentlikefunction(buttonElement) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
@@ -118,15 +133,22 @@ function addcomment(commentData, parent_container) {
         commentElement.querySelector(".comment-reply-container").id = "comment_reply_list_" + commentData.id;
         comment_body = commentElement.querySelector(".comment-body");
         comment_menu = commentElement.querySelector(".comment-menu-dropdown-menu");
-        comment_menu.innerHTML = `
+        console.log(commentData.user.user_id);
+        if (commentData.user.user_id == current_user.id) {
+                comment_menu.innerHTML = `
                 <li><button class="dropdown-item" onclick="editComment(${commentData.id},this)">Edit</button></li>
                 <li><button class="dropdown-item" onclick="deletecomment(${commentData.id},${parent_container})">Delete</button></li>`;
+        } else {
+                clone.querySelector(".dropdown").remove();
+        }
+
         return clone;
 }
 
 // this function insert a comment reply form under a comment
 function add_comment_reply_form(reply_button) {
         const parent_comment = reply_button.closest(".comment-item");
+        parent_comment.querySelector(".vr-line-2-for-comment-reply").classList.remove("d-none");
         const comment_id = parent_comment.dataset.commentId;
         const tweet_id = parent_comment.dataset.tweetId;
         const r_container = parent_comment.querySelector(".comment-reply-container");
@@ -139,6 +161,9 @@ function add_comment_reply_form(reply_button) {
                 const commentbtn = clone.querySelector(".submit_btn");
                 commentbtn.dataset.commentId = comment_id;
                 commentbtn.dataset.tweetId = tweet_id;
+                if (!r_container.innerHTML == "") {
+                        clone.querySelector(".vr-line-1-for-comment-reply").classList.remove("d-none");
+                }
                 r_container.prepend(clone);
         }
 }
@@ -148,6 +173,7 @@ function fn_reply_comment(btn) {
         const comment_id = btn.dataset.commentId;
         const form = btn.closest(".comment-form");
         parent_comment = btn.closest(".comment-item");
+        post_details_comment_count = btn.closest(".modal-body").querySelector(".comments-count");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken");
         fetch(`/interaction/comments/${comment_id}/comment_reply/`, {
                 method: "POST",
@@ -162,15 +188,15 @@ function fn_reply_comment(btn) {
                         if (data.success) {
                                 tweet_id = data.tweet_id;
                                 document.querySelector(`#_${tweet_id}_comment`).textContent = data.comment_count;
-                                document.querySelector(`#_${tweet_id}.comment_count_post-details`).textContent = data.comment_count;
+                                post_details_comment_count.textContent = data.comment_count;
                                 const comments_list = document.getElementById(`comment_reply_list_${comment_id}`);
-                                clone = addcomment(data.comment_data, `comment_reply_list_${comment_id}`);
-                                commentElement = clone.querySelector(".comment-actions");
-                                reply_btn = commentElement.querySelector(".reply-btn");
-                                commentElement.removeChild(reply_btn);
                                 form.reset();
-                                comments_list.prepend(clone);
                                 comments_list.removeChild(comments_list.querySelector(".reply-comment-form-container"));
+                                clone = pushCommentIntoList(data.comment_data);
+                                if (!comments_list.childElementCount == 0) {
+                                        clone.querySelector(".vr-line-1-for-comment-reply").classList.remove("d-none");
+                                }
+                                comments_list.prepend(clone);
                                 parent_comment.querySelector(".comment_reply_count").textContent = data.reply_count;
                         } else {
                                 alert("Error adding comment");
@@ -180,7 +206,6 @@ function fn_reply_comment(btn) {
 
 //this function delete a comment
 function deletecomment(comment_id, parent_container) {
-        console.log(parent_container);
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
         if (confirm("are you sure to delete this comment?")) {
                 fetch(`/interaction/comments/${comment_id}/delete/`, {
@@ -215,14 +240,18 @@ function deletecomment(comment_id, parent_container) {
 function editComment(comment_id, btn) {
         const comment_body = btn.closest(".comment-item");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-        edit_form_container = comment_body;
+        edit_form_container = comment_body.querySelector(".comment-body-main-content");
         const template = document.getElementById("comment_reply_form_template");
         const clone = template.content.cloneNode(true);
         const form = clone.querySelector(".comment-form");
-        const textarea = form.querySelector("textarea[name='content']");
-        textarea.textContent = comment_body.querySelector(".comment-content").textContent;
+        const originalText = comment_body.querySelector(".comment-content").textContent;
         const copy_comment_body = edit_form_container.cloneNode(true);
-        edit_form_container.innerHTML = clone.querySelector(".reply-comment-form-container").innerHTML;
+        edit_form_container.innerHTML = clone.querySelector(".comment-form-container").innerHTML;
+        const textarea = edit_form_container.querySelector("textarea[name='content']");
+        textarea.value = originalText;
+        setTimeout(() => {
+                edit_form_container.querySelector("textarea[name='content']").focus();
+        }, 50);
         const submit_btn = edit_form_container.querySelector(".submit_btn");
         submit_btn.removeAttribute("onclick");
         submit_btn.addEventListener("click", () => {
@@ -241,17 +270,19 @@ function editComment(comment_id, btn) {
                                 if (data.success) {
                                         copy_comment_body.querySelector(".comment-content").textContent = data.comment_data.content;
                                         edit_form_container.innerHTML = copy_comment_body.innerHTML;
-                                        const dropdownElement = edit_form_container.querySelector(".dropdown");
-                                        const dropdown = bootstrap.Dropdown.getInstance(dropdownElement);
-                                        if (dropdown) {
-                                                dropdown.toggle();
-                                        } else {
-                                                // If no instance exists, create one and toggle
-                                                new bootstrap.Dropdown(dropdownElement).toggle();
-                                        }
+                                        edit_form_container.querySelector(".dropdown-menu").classList.remove("show");
                                 } else {
                                         alert("Error adding comment");
                                 }
                         });
         });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", (e) => {
+                if (e.target.closest(".comment-form-container")) {
+                        container = e.target.closest(".comment-form-container");
+                        container.querySelector("textarea[name='content']").focus();
+                }
+        });
+});

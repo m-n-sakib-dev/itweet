@@ -47,7 +47,6 @@ function initializeTabs() {
 }
 
 function homeTweets() {
-        console.log("homeTweets()");
         tweet_container = document.getElementById("foryou_tweets_list");
         fetch(`/tweets/home/all?page=${forYouPage}`)
                 .then((response) => response.json())
@@ -69,7 +68,6 @@ function homeTweets() {
                 });
 }
 function followingTweets() {
-        console.log("followingTweets()");
         tweet_container = document.getElementById("following_tweets_list");
         fetch(`/tweets/home/following_tweets?page=${followingPage}`)
                 .then((response) => response.json())
@@ -95,7 +93,6 @@ function initializeInfiniteScroll() {
                 (entries) => {
                         entries.forEach((entry) => {
                                 if (entry.isIntersecting) {
-                                        console.log(entry.target.id);
                                         // When container becomes visible in viewport
                                         const container = entry.target;
                                         if (container.id === "foryou_loading" && forYouHasMore && !forYouLoading) {

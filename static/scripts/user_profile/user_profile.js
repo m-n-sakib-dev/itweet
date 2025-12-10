@@ -144,7 +144,9 @@ function followListItemCard(user) {
                 <span class="follow-handle">${user.username}</span>
                 <span class="follow-handle">-- ${user.follower_count} Follower</span>
         </div>
-        <button class="follow-btn ${user.is_following ? " following" : ""}" onclick="modalToggleFollow(this, ${user.id})">
+        <button class="follow-btn ${user.is_following ? " following" : ""} ${
+                user.id == current_user.id ? "d-none" : ""
+        }" onclick="modalToggleFollow(this, ${user.id})">
                 ${user.is_following ? "Following" : "Follow"}
         </button>
 </div>

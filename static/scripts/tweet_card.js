@@ -1,7 +1,7 @@
 console.log(current_user);
 function likefunction(link_url, reaction) {
         csrftoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-        fetch(link_url, {
+        return fetch(link_url, {
                 method: "POST",
                 headers: {
                         "X-Requested-With": "XMLHttpRequest",
@@ -10,9 +10,12 @@ function likefunction(link_url, reaction) {
         })
                 .then((response) => response.json())
                 .then((data) => {
-                        console.log(reaction);
                         document.getElementById("_" + data.tweet_id + "_like").textContent = data.like_count;
                         document.getElementById("_" + data.tweet_id + "_unlike").textContent = data.unlike_count;
+                        return {
+                                like_count: data.like_count,
+                                unlike_count: data.unlike_count,
+                        };
                 });
 }
 function toggleSeeMore(button) {
@@ -78,6 +81,102 @@ function fillPostDetailsTemplate(postData) {
         commentCount.id = `_${postData.id}`;
         commentList.id = `comment_list_${postData.id}`;
 
+        return clone;
+}
+
+function loadPostDetail(tweetData) {
+        const template = document.getElementById("post-details-template");
+        const clone = template.content.cloneNode(true);
+
+        const tweetCard = clone.querySelector(".tweet-card");
+        tweetCard.id = "tweet-card-" + tweetData.id;
+        tweetCard.setAttribute("data-tweet-id", tweetData.id);
+        tweetCard.setAttribute("data-full-text", tweetData.text);
+
+        // Profile image
+        const profileImg = clone.querySelector(".user-avatar");
+        profileImg.src = tweetData.user.profile.profile_picture;
+
+        // Fill user data
+        clone.querySelector(".username").textContent = tweetData.user.profile.name;
+        clone.querySelector(".user-handle").textContent = `${tweetData.user.username}`;
+        clone.querySelector(".timestamp").textContent = tweetData.created_at;
+
+        //setting url on username, user profile pic and name
+        clone.querySelectorAll(".user_profile_link").forEach((profile_link) => {
+                profile_link.setAttribute("href", `/user/profile/${tweetData.user.id}`);
+        });
+
+        //menu button feature
+        const dropdown_menu = clone.querySelector(".dropdown-menu");
+        if (tweetData.user.username == current_user.username) {
+                //adding edit button
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                        <a class="dropdown-item tweet-menu-edit"  href="/tweet_edit/${tweetData.id}"><i class="bi bi-pencil-square me-1"></i>Edit</a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+                //adding delete button and its confirmation modal
+
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                        <a class="dropdown-item tweet-menu-delete" data-tweet-id="${tweetData.id}"><i class="bi bi-trash me-1"></i>Delete</a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+        }
+        if (current_user.username) {
+                menu_btn = document.createElement("li");
+                menu_btn.innerHTML = `
+                <a class="dropdown-item tweet-menu-save" data-tweet-id="${tweetData.id}" ><i class="bi bi-bookmark${
+                        tweetData.is_saved ? "-x" : ""
+                } me-1"></i><span class="text">${tweetData.is_saved ? "Unsave" : "Save"}</span></a>
+                `;
+                dropdown_menu.appendChild(menu_btn);
+        }
+        menu_btn = document.createElement("li");
+        menu_btn.innerHTML = `
+                <a class="dropdown-item tweet-menu-copylink" data-tweet-id="${tweetData.id}" ><i class="bi bi-clipboard me-1"></i>Copy Link</a>
+        `;
+        dropdown_menu.appendChild(menu_btn);
+
+        // Fill tweet content
+        if (tweetData.text) {
+                const tweetText = clone.querySelector(".tweet-text");
+                tweetText.innerHTML = `${tweetData.text}`;
+        }
+
+        // Tweet image - Fixed height
+        if (tweetData.photo) {
+                const tweetMedia = clone.querySelector(".tweet-media");
+                const tweetImg = clone.querySelector(".media-image");
+                tweetImg.src = tweetData.photo.url;
+                tweetMedia.style.display = "block";
+        }
+
+        // Reaction counts
+        clone.querySelector(".likes-count").textContent = tweetData.like_count;
+        clone.querySelector(".dislikes-count").textContent = tweetData.unlike_count;
+        clone.querySelector(".comments-count").textContent = tweetData.comment_count;
+
+        // Set up action buttons with proper event listeners
+        const likeBtn = clone.querySelector(".like-btn");
+        const dislikeBtn = clone.querySelector(".dislike-btn");
+        const commentBtn = clone.querySelector(".comment-btn");
+
+        //Set up users reaction on the tweet
+        switch (tweetData.reaction) {
+                case "like":
+                        likeBtn.classList.add("active");
+                        break;
+                case "unlike":
+                        dislikeBtn.classList.add("active");
+        }
+
+        // Set IDs for reaction tracking
+        likeBtn.id = `like_btn_${tweetData.id}`;
+        dislikeBtn.id = `dislike_btn_${tweetData.id}`;
+
+        // Return the clone - event listeners will be attached globally
         return clone;
 }
 
@@ -182,8 +281,10 @@ function newTweetCard(tweetData) {
         // commentBtn.setAttribute("data-bs-target", `#tweetModal${tweetData.id}`);
         modal.id = `exampleModal${tweetData.id}`;
         commentBtn.setAttribute("data-bs-target", `#exampleModal${tweetData.id}`);
-        const modal_content = modal.querySelector(".modal-content");
-        modal_content.appendChild(fillPostDetailsTemplate(tweetData));
+        modal.querySelector(".modal-title").textContent = `${tweetData.user.profile.name}'s Tweet`;
+        const modal_tweet_data = modal.querySelector(".modal_tweet_data");
+        modal_tweet_data.appendChild(loadPostDetail(tweetData));
+        modal.querySelector(".comment_list").id = `comment_list_${tweetData.id}`;
         commentBtn.setAttribute("onclick", `commentList(${tweetData.id})`);
 
         // Return the clone - event listeners will be attached globally
@@ -217,7 +318,10 @@ document.addEventListener("click", function (e) {
                 const dislikeCount = tweetCard.querySelector(".dislikes-count");
 
                 // Call your existing likefunction
-                likefunction(`/interaction/${tweetId}/reaction/like`, "like");
+                likefunction(`/interaction/${tweetId}/reaction/like`, "like").then((data) => {
+                        likeCount.innerHTML = data.like_count;
+                        dislikeCount.innerHTML = data.unlike_count;
+                });
 
                 // Visual feedback
                 if (likeBtn.classList.contains("active")) {
@@ -238,7 +342,10 @@ document.addEventListener("click", function (e) {
                 const dislikeCount = tweetCard.querySelector(".dislikes-count");
 
                 // Call your existing likefunction
-                likefunction(`/interaction/${tweetId}/reaction/unlike`, "unlike");
+                likefunction(`/interaction/${tweetId}/reaction/unlike`, "unlike").then((data) => {
+                        likeCount.innerHTML = data.like_count;
+                        dislikeCount.innerHTML = data.unlike_count;
+                });
 
                 // Visual feedback
                 if (dislikeBtn.classList.contains("active")) {
@@ -271,7 +378,7 @@ document.addEventListener("click", function (e) {
         }
         if (e.target.classList.contains("tweet-menu-save")) {
                 const tweetId = e.target.dataset.tweetId;
-                console.log(tweetId);
+
                 csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
                 fetch(`/user/tweet/${tweetId}/save`, {
                         method: "POST",
@@ -283,7 +390,6 @@ document.addEventListener("click", function (e) {
                         .then((response) => response.json())
                         .then((data) => {
                                 if (data.success) {
-                                        console.log(data.message);
                                         icon = e.target.querySelector(".bi");
                                         text = e.target.querySelector(".text");
                                         if (data.message == "Tweet saved") {
@@ -301,9 +407,7 @@ document.addEventListener("click", function (e) {
                         });
         }
         if (e.target.classList.contains("confirm-tweet-delete-btn")) {
-                console.log("confirm-tweet-delete-btn clicked");
                 const tweetId = e.target.dataset.tweetId;
-                console.log(tweetId);
                 csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
                 fetch(`/tweet_delete/${tweetId}`, {
                         method: "POST",

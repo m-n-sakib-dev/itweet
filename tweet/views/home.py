@@ -7,6 +7,6 @@ from interactions.forms import CommentForm
 from django.contrib.auth.decorators import login_required
 
 def Home(request):
-        # comment_form=CommentForm()
+        comment_form=CommentForm()
         functiontocall='loadTweets(1)'
-        return render(request, 'home.html', {'load_tweet_function':functiontocall,'call_from':"home"})
+        return render(request, 'home.html', {'comment_form':comment_form})

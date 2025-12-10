@@ -7,7 +7,7 @@
       {% csrf_token %}
       {{ comment_form.content }}
       <div class="d-flex justify-content-end">
-        <button type="button" class="icon-btn submit_btn" onclick="handleCommentSubmission(this, {{ tweet.id }})"><i class="bi bi-send-fill"></i></button>
+        <button type="button" class="icon-btn submit_btn" onclick="handleCommentSubmission(this)"><i class="bi bi-send-fill"></i></button>
       </div>
     </form>
   </div>

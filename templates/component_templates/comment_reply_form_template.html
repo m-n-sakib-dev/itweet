@@ -1,14 +1,19 @@
 <template id="comment_reply_form_template">
-  <div class="d-flex flex-row reply-comment-form-container">
-    <div class="comment_user_img mt-1 pe-2">
+  <div class="d-flex flex-row reply-comment-form-container ">
+    <div class="d-flex flex-row comment-line-container">
+      <div class="vr-line-1-for-comment-reply flex-grow-1 comment-reply-line d-none"></div>
+      <div class="angle-mark-for-comment-reply comment-reply-line"></div>
+    </div>
+    <div class="comment_user_img  pe-2 ">
       <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="" class="comment_profile_img_cls" />
     </div>
-    <div class="flex-grow-1">
+    <div class="flex-grow-1 mb-2 comment-form-container">
       <form class="comment-form">
         {% csrf_token %}
         {{ comment_form.content }}
         <div class="d-flex justify-content-end">
-          <button type="button" class="icon-btn submit_btn" onclick="fn_reply_comment(this)" data-comment-id="" data-tweet-id=""><i class="bi bi-send-fill"></i></button>
+          <button type="button" class="icon-btn submit_btn" onclick="fn_reply_comment(this)" data-comment-id=""
+            data-tweet-id=""><i class="bi bi-send-fill"></i></button>
         </div>
       </form>
     </div>

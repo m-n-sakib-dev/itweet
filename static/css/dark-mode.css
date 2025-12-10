@@ -46,27 +46,27 @@ body.dark-mode .btn-outline-primary:hover {
 /* Background Modes with Increased Specificity */
 
 /* Option 1: Deep Space Mode */
-body.dark-mode.deep-space {
+.dark-mode.deep-space {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%) !important;
 }
 
 /* Option 2: Twitter Blue Mode */
-body.dark-mode.twitter-blue {
+.dark-mode.twitter-blue {
         background: linear-gradient(135deg, #15202b 0%, #192734 25%, #1c2e3f 50%, #1f3648 75%, #223d52 100%) !important;
 }
 
 /* Option 3: Purple Fusion Mode */
-body.dark-mode.purple-fusion {
+.dark-mode.purple-fusion {
         background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 20%, #16213e 40%, #0f3460 60%, #533483 80%) !important;
 }
 
 /* Option 4: Modern Dark Mode */
-body.dark-mode.modern-dark {
+.dark-mode.modern-dark {
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2d2d2d 50%, #3a3a3a 75%, #4a4a4a 100%) !important;
 }
 
 /* Option 5: Cosmic Mode (Recommended) */
-body.dark-mode.cosmic {
+.dark-mode.cosmic {
         background: linear-gradient(135deg, #000000 0%, #0c0c1d 25%, #1a1a2e 50%, #16213e 75%, #0f3460 100%) !important;
 }
 
@@ -76,7 +76,7 @@ body.dark-mode.panel-match {
 }
 
 /* Option 7: Animated Gradient Mode */
-body.dark-mode.animated-gradient {
+.dark-mode.animated-gradient {
         background: linear-gradient(-45deg, #15202b, #1a2535, #1f2a3f, #242f49) !important;
         background-size: 400% 400% !important;
         animation: gradientShift 15s ease infinite;
@@ -95,10 +95,12 @@ body.dark-mode.animated-gradient {
 }
 
 /* Option 8: Glass Morphism Mode */
-body.dark-mode.glass-morphism {
+.dark-mode.glass-morphism {
         background: linear-gradient(135deg, rgba(21, 32, 43, 0.95) 0%, rgba(26, 37, 48, 0.9) 50%, rgba(31, 42, 53, 0.85) 100%) !important;
 }
-
+.dark-mode.cosmic-2 {
+        background: linear-gradient(135deg, #252d3f 0%, #13132e 25%, #1c1c3a 50%, #1b284a 75%, #0f243e 100%) !important;
+}
 /* Bootstrap Navbar Override */
 body.dark-mode .navbar {
         background: rgba(21, 32, 43, 0.9) !important;
@@ -215,7 +217,8 @@ body.dark-mode .alert-info {
 
 /* Bootstrap Modal Overrides */
 body.dark-mode .modal-content {
-        background: rgba(30, 39, 50, 0.95) !important;
+        /* background: rgba(30, 39, 50, 0.95) !important; */
+        background: linear-gradient(135deg, rgba(21, 32, 43, 0.95) 0%, rgba(26, 37, 48, 0.9) 50%, rgba(31, 42, 53, 0.85) 100%) !important;
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1) !important;
         color: #ffffff !important;

@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import tweet_feed_global,CreateTweet,tweet_delete,TweetEdit,Home,GolobalTweetLoad,FollowingTweetLoad,getTrendingHashtag
+from .views import tweet_feed_global,CreateTweet,tweet_delete,TweetEdit,Home,GolobalTweetLoad,FollowingTweetLoad
+from .views import Search,getTrendingHashtag
 from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
 #     path("admin/", admin.site.urls),
@@ -13,4 +15,5 @@ urlpatterns = [
 	path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 	path('tweet_feed/',Home,name='tweet_feed'),
 	path('hastags/trending-hashtags',getTrendingHashtag,name='trending_hashtags'),
+	path('search/',Search,name='search'),
 ]
