@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function loadFollowSuggestions() {
         const followList = document.getElementById("followList");
         if (!followList) return;
-        fetch(`follower/suggestions`)
+        fetch(`/follower/suggestions`) //url in project url.py file
                 .then((response) => response.json())
                 .then((data) => {
                         if (data.success) {
@@ -57,7 +57,7 @@ function renderFollowSuggestions(users) {
         followList.innerHTML = users
                 .map(
                         (user) => `
-        <div class="follow-item" data-user-id="${user.id}">
+        <a href="/user/profile/${user.id}" class="follow-item" data-user-id="${user.id}">
             <img src="${user.profile_picture || "/static/default-avatar.png"}" 
                  alt="${user.username}" 
                  class="follow-avatar"
@@ -70,7 +70,7 @@ function renderFollowSuggestions(users) {
             <button class="follow-btn ${user.is_following ? "following" : ""}" >
                 ${user.is_following ? "Following" : "Follow"}
             </button>
-        </div>
+        </a>
     `
                 )
                 .join("");
@@ -124,10 +124,12 @@ function refreshTrending() {
                                         trend_item = document.createElement("div");
                                         trend_item.innerHTML = `
 					<div class="trending-item">
+                                                <a href="/hastags/${hashtag.data.name}/hashtag_page">
 						<div class="trending-content">
-						<a href="" class="trending-name">#${hashtag.data.name}</a>
-						<div class="trending-stats"> ${hashtag.data.tweet_count} tweets (${hashtag.recent_tweets} in 24hrs)</div>
+						<div class="trending-name">#${hashtag.data.name}</div>
+						<div class="trending-stats ps-2">${hashtag.data.tweet_count} tweets (${hashtag.recent_tweets} in 24hrs)</div>
 						</div>
+                                                </a>
 					</div>
 					`;
                                         trendingListContainer.appendChild(trend_item);

@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         if (data.result.length == 0) {
                                                                 searchResult.textContent = "No Result Found";
                                                         } else {
-                                                                searchResult.textContent = data.result;
+                                                                searchResult.innerHTML = loadSearchedProfile(data.result);
                                                         }
                                                 }
                                         });
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         if (data.result.length == 0) {
                                                                 searchResult.textContent = "No Result Found";
                                                         } else {
-                                                                searchResult.textContent = data.result;
+                                                                searchResult.innerHTML = loadSearchedProfile(data.result);
                                                         }
                                                 }
                                         });
@@ -72,3 +72,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
         });
 });
+
+function loadSearchedProfile(users) {
+        return users
+                .map(
+                        (user) => `
+        <a href="/user/profile/${user.id}" class="follow-item" data-user-id="${user.id}">
+            <img src="${user.profile_picture || "/static/default-avatar.png"}" 
+                 alt="${user.username}" 
+                 class="follow-avatar"
+                 onerror="this.src='/static/default-avatar.png'">
+            <div class="follow-info">
+                <div class="follow-name">${user.name}  </div>
+		<span class="follow-handle">${user.username}</span>
+		<span class="follow-handle">-- ${user.follower_count} Follower</span>
+            </div>
+        </a>
+    `
+                )
+                .join("");
+}

@@ -155,7 +155,6 @@ class FollowModel(models.Model):
         
     def save(self,*args, **kwargs):
         super().save(*args, **kwargs)
-        print("updating counting on save")
         self.user.profile.update_following_count()
         self.following_to.profile.update_follower_count()
         
@@ -163,7 +162,6 @@ class FollowModel(models.Model):
         user_profile = self.user.profile
         target_profile = self.following_to.profile
         super().delete(*args, **kwargs)    
-        print("updating counting")
         user_profile.update_following_count()
         target_profile.update_follower_count()
     

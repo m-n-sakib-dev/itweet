@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import tweet_feed_global,CreateTweet,tweet_delete,TweetEdit,Home,GolobalTweetLoad,FollowingTweetLoad
-from .views import Search,getTrendingHashtag
+from .views import Search,getTrendingHashtag,HashtagTweetsPage,HashtagTweets
 from django.contrib.auth import views as auth_views
+from .services import update_trending_table
 
 
 urlpatterns = [
@@ -16,4 +17,8 @@ urlpatterns = [
 	path('tweet_feed/',Home,name='tweet_feed'),
 	path('hastags/trending-hashtags',getTrendingHashtag,name='trending_hashtags'),
 	path('search/',Search,name='search'),
+	path('hastags/<str:hashtag_name>/hashtag_page',HashtagTweetsPage,name='hashtag_page'),
+	path('hastags/<str:hashtag_name>/tweets',HashtagTweets,name='hashtag_tweets'),
+	path('hastags/update-trending',update_trending_table,name='update_trending'),
+ 
 ]

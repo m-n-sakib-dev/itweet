@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import UserProfile,UserTweets,EditProfile,SaveTweet,FollowUser,FollowSuggestion,ProfileAbout
-from .views import userFollowersList,userFollowingList
+from .views import UserProfile,UserTweets,EditProfile,SaveTweet,FollowUser,ProfileAbout
+from .views import userFollowersList,userFollowingList,SavedTweetsPage,SavedTweets
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -14,4 +14,6 @@ urlpatterns = [
 	path('profile/<int:user_id>/about', ProfileAbout, name='user_profile_about'),
 	path('profile/<int:profile_id>/followers', userFollowersList, name='user_profile_follower'),
 	path('profile/<int:profile_id>/following', userFollowingList, name='user_profile_following'),
+	path('saved-tweets-page', SavedTweetsPage, name='user_saved_tweets_page'),
+	path('saved-tweets', SavedTweets, name='user_saved_tweets'),
 ]

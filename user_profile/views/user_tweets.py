@@ -50,9 +50,27 @@ def SavedTweetsPage(request):
         user=request.user
         if user.is_authenticated:
                 comment_form=CommentForm()
-                functiontocall='loadTweets(1)'
-                return render(request, 'tweet_feed.html', {'comment_form':comment_form,'load_tweet_function':functiontocall,'call_from':"Saved Tweets"})
+                functiontocall='SavedTweets()'
+                saved_tweets_count=SavedTweet.objects.filter(user=user).count()
+                return render(request, 'common_page.html', {'load_tweet_function':functiontocall,'page':"Saved Tweets",'tweet_count':saved_tweets_count})
 
 @login_required
 def SavedTweets(request):
-        pass
+        user=request.user
+        page=int(request.GET.get('page',1))
+        start=tweet_per_page*(page-1)
+        end=tweet_per_page*page
+        if request.user.is_authenticated:
+                user=request.user
+        else:
+                return JsonResponse({
+                'success': False,
+        })
+        tweets=TweetModel.objects.filter(savedtweet__user=user).select_related('user__profile')[start:end]
+        tweets_data = tweetAllData(tweets,user)         
+        return JsonResponse({
+                'success': True,
+                'tweets':tweets_data,
+                'is_more': len(tweets_data)==tweet_per_page
+        })
+

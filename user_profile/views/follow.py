@@ -21,7 +21,6 @@ def login_required_redirect(view_func):
             
             if is_ajax:
                 # For AJAX: Return JSON that tells JavaScript to redirect
-                print("Redirecting AJAX request to login")
                 return JsonResponse({
                     'success': False,
                     'redirect': True,
@@ -30,7 +29,6 @@ def login_required_redirect(view_func):
                 }, status=403)
             else:
                 # For regular requests: Use Django's redirect
-                print("Redirecting regular request to login")
                 return HttpResponseRedirect(redirect_url)
         
         return view_func(request, *args, **kwargs)

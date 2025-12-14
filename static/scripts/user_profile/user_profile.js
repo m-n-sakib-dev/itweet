@@ -32,7 +32,7 @@ function activateUserProfileNav() {
 }
 
 function fn_toggle_follow(profile_id) {
-        follow_btn = document.querySelector(".follow-btn");
+        follow_btn = document.querySelector(".profile-follow-btn");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
         fetch(`/user/profile/${profile_id}/togglefollow`, {
                 method: "POST",
@@ -44,7 +44,6 @@ function fn_toggle_follow(profile_id) {
                 .then((response) => response.json())
                 .then((data) => {
                         if (data.success) {
-                                console.log(data);
                                 if (data.action == "followed") {
                                         follow_btn.innerHTML = `<i class="bi bi-bookmark-dash"></i> Unfollow`;
                                 } else {
@@ -136,7 +135,7 @@ function loadFollowingList() {
 
 function followListItemCard(user) {
         return `
-<div class="follow-item" data-user-id="${user.id}">
+<a href="/user/profile/${user.id}" class="follow-item"  data-user-id="${user.id}">
         <img src="${user.profile_picture || " /static/default-avatar.png"}" alt="${user.username}" class="follow-avatar"
                 onerror="this.src='/static/default-avatar.png'">
         <div class="follow-info">
@@ -149,7 +148,7 @@ function followListItemCard(user) {
         }" onclick="modalToggleFollow(this, ${user.id})">
                 ${user.is_following ? "Following" : "Follow"}
         </button>
-</div>
+</a>
 `;
 }
 

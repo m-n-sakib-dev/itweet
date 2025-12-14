@@ -16,7 +16,7 @@ def get_trending_hashtags(hours=24, limit=10):
     
     return trending
 
-def update_trending_table():
+def update_trending_table(request):
         trending_hashtags=get_trending_hashtags(hours=24,limit=10)
         TrendingHashtag.objects.all().delete()
         for t_hashtag in trending_hashtags:
