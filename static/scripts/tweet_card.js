@@ -47,7 +47,7 @@ function initSeeMoreButtons() {
 
 // Call on page load
 document.addEventListener("DOMContentLoaded", initSeeMoreButtons);
-
+// old post details modal,not using
 function fillPostDetailsTemplate(postData) {
         // Get the template
         const template = document.getElementById("post-details-template");
@@ -84,6 +84,7 @@ function fillPostDetailsTemplate(postData) {
         return clone;
 }
 
+//new post details modal, its using currently
 function loadPostDetail(tweetData) {
         const template = document.getElementById("post-details-template");
         const clone = template.content.cloneNode(true);
