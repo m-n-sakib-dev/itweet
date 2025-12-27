@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const imagePreview = document.getElementById("imagePreview");
         const submitBtn = document.getElementById("submitBtn");
         const suggestionTags = document.querySelectorAll(".suggestion-tag");
+        const page_name = document.querySelector(".create-title").textContent;
 
         function fncharCount(text) {
                 const lineBreaks = (text.match(/\n/g) || []).length;
@@ -113,6 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.submitBtn.innerHTML = '<i class="bi bi-arrow-repeat spinner"></i> Posting...';
                 submitBtn.disabled = true;
         });
+        if (page_name.split(/\s/).join("") == "EditMyTweet") {
+                document.querySelector(".image_upload_area").classList.add("d-none");
+        }
 });
 
 // Add spinner animation

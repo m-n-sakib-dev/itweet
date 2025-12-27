@@ -43,6 +43,8 @@ def tweetAllData(tweets,user):
                 data['is_saved']=SavedTweet.objects.filter(user=user,tweet=tweet).exists()
                 data['photo'] = {'url': tweet.photo.url}   if tweet.photo else None
                 data['created_at']=tweet.created_at.strftime("%b %d, %Y at %I:%M %p")
+                if tweet.parent !=None:
+                        data['parent']=tweetAllData(TweetModel.objects.filter(id=data['parent']),user)[0]
                 data['user'] = model_to_dict(tweet.user,fields=['id','username'])
                 data['user']['profile'] = model_to_dict(tweet.user.profile,fields=['name','follower_count','following_count'])  
                 data['user']['profile']['profile_picture'] = tweet.user.profile.profile_picture.url

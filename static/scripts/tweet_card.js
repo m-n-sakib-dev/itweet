@@ -181,6 +181,51 @@ function loadPostDetail(tweetData) {
         return clone;
 }
 
+// Parent tweet showing tweet card
+function parentTweet(tweetData) {
+        const template = document.getElementById("tweet-card-template");
+        const clone = template.content.querySelector(".tweet_info").cloneNode(true);
+
+        clone.classList.add("tweet-card");
+        const tweetCard = clone;
+        tweetCard.setAttribute("data-tweet-id", tweetData.id);
+        tweetCard.setAttribute("data-full-text", tweetData.text);
+
+        // Profile image
+        const profileImg = clone.querySelector(".user-avatar");
+        profileImg.src = tweetData.user.profile.profile_picture;
+
+        // Fill user data
+        clone.querySelector(".username").textContent = tweetData.user.profile.name;
+        clone.querySelector(".user-handle").textContent = `${tweetData.user.username}`;
+        clone.querySelector(".timestamp").textContent = tweetData.created_at;
+
+        //setting url on username, user profile pic and name
+        clone.querySelectorAll(".user_profile_link").forEach((profile_link) => {
+                profile_link.setAttribute("href", `/user/profile/${tweetData.user.id}`);
+        });
+
+        //menu button feature
+        const dropdown_menu = clone.querySelector(".tweet-card-menu-dropdown");
+        dropdown_menu.classList.add("d-none");
+
+        // Fill tweet content
+        if (tweetData.text) {
+                const tweetText = clone.querySelector(".tweet-text");
+                tweetText.innerHTML = `${tweetData.text}`;
+        }
+
+        // Tweet image - Fixed height
+        if (tweetData.photo) {
+                const tweetMedia = clone.querySelector(".tweet-media");
+                const tweetImg = clone.querySelector(".media-image");
+                tweetImg.src = tweetData.photo.url;
+                tweetMedia.style.display = "block";
+        }
+        return clone;
+}
+
+// this tweet card is currently using
 function newTweetCard(tweetData) {
         const template = document.getElementById("tweet-card-template");
         const clone = template.content.cloneNode(true);
@@ -241,6 +286,10 @@ function newTweetCard(tweetData) {
                 const tweetText = clone.querySelector(".tweet-text");
                 tweetText.innerHTML = `${tweetData.text}`;
         }
+        if (tweetData.parent != null) {
+                parent_tweet_container = clone.querySelector(".parent_tweet");
+                parent_tweet_container.appendChild(parentTweet(tweetData.parent));
+        }
 
         // Tweet image - Fixed height
         if (tweetData.photo) {
@@ -259,6 +308,10 @@ function newTweetCard(tweetData) {
         const likeBtn = clone.querySelector(".like-btn");
         const dislikeBtn = clone.querySelector(".dislike-btn");
         const commentBtn = clone.querySelector(".comment-btn");
+        const shareBtn = clone.querySelector(".share-btn");
+
+        // calling sharemodalfunction to open a tweet share from
+        shareBtn.setAttribute("onclick", `createShareModal(${tweetData.id})`);
 
         //Set up users reaction on the tweet
         switch (tweetData.reaction) {
@@ -287,7 +340,6 @@ function newTweetCard(tweetData) {
         modal_tweet_data.appendChild(loadPostDetail(tweetData));
         modal.querySelector(".comment_list").id = `comment_list_${tweetData.id}`;
         commentBtn.setAttribute("onclick", `commentList(${tweetData.id})`);
-
         // Return the clone - event listeners will be attached globally
         return clone;
 }
@@ -467,3 +519,85 @@ function loadTweets(user_id) {
 //                         initSeeMoreButtons();
 //                 });
 // }
+
+// fuction for share modal
+function createShareModal(tweet_id, title = "Share") {
+        // Create modal HTML
+        const modalHTML = `
+    <div class="modal fade" id="dynamicShareModal" tabindex="-1">
+        <div class="modal-dialog">
+        <form>
+            <div class="modal-content">
+                <div class="modal-header px-3 py-2">
+                    <h5 class="modal-title fs-5 flex-grow-1 text-center mb-0">${title}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body px-0">
+                        <textarea name="input_text" class="share_tweet_input_filed" placeholder="Say something about the tweet...."></textarea>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                <div class="text-muted" id="character_count">0</div>
+                <button type="button" class="btn btn-primary px-5 submit-btn" data-bs-dismiss="modal" onclick="shareTweet(this, ${tweet_id})">Share</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    `;
+
+        // Add to DOM
+        const modalContainer = document.createElement("div");
+        modalContainer.innerHTML = modalHTML;
+        document.body.appendChild(modalContainer.firstElementChild);
+
+        // Initialize and show
+        const modal = new bootstrap.Modal(document.getElementById("dynamicShareModal"));
+        modal.show();
+
+        // Clean up on hide
+        modal._element.addEventListener("hidden.bs.modal", function () {
+                modal.dispose();
+                document.getElementById("dynamicShareModal").remove();
+        });
+
+        // Count the character of the input text
+        const charCount = document.getElementById("character_count");
+        const submitBtn = document.querySelector(".submit-btn");
+        const textInput = document.querySelector(".share_tweet_input_filed");
+        function fncharCount(text) {
+                const lineBreaks = (text.match(/\n/g) || []).length;
+                return text.length + lineBreaks;
+        }
+        let length = fncharCount(textInput.value);
+        charCount.textContent = `${length}/1000`;
+        // Character count and validation
+        textInput.addEventListener("input", function () {
+                length = fncharCount(textInput.value);
+                charCount.textContent = `${length}/1000`;
+
+                // Disable submit if over limit
+                submitBtn.disabled = length > 1000;
+        });
+
+        return modal;
+}
+
+function shareTweet(btn, tweet_id) {
+        inputText = btn.closest("form").querySelector('[name="input_text"]').value;
+        formData = new FormData(btn.closest("form"));
+        csrftoken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+        fetch(`/share_tweet/${tweet_id}`, {
+                method: "POST",
+                body: formData,
+                headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": csrftoken,
+                },
+        })
+                .then((r) => r.json())
+                .then((data) => {
+                        if (data.success) {
+                                alert("Tweet Shared Successfully");
+                        }
+                });
+}

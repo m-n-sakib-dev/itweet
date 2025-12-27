@@ -449,6 +449,20 @@ a.user_profile_link:hover {
   margin-right: 4px;
 }
 
+.share_tweet_input_filed {
+  width: 100%;
+  min-height: 30vh;
+  overflow-y: auto;
+  background: transparent;
+  resize: none;
+  border: none;
+  scrollbar-gutter: stable both-edges;
+}
+
+.share_tweet_input_filed:focus {
+  outline: none;
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .tweet-card {

@@ -77,6 +77,7 @@ class TweetModel(models.Model):
         user=models.ForeignKey(User,on_delete=models.CASCADE)
         text=models.TextField(max_length=1000,blank=True,null=True)
         photo=models.ImageField(upload_to='photos/',blank=True,null=True)
+        parent=models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True, default=None, related_name='retweets')
         like_count=models.IntegerField(default=0)
         unlike_count=models.IntegerField(default=0)
         comment_count=models.IntegerField(default=0)

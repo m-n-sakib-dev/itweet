@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render
+from django.http import JsonResponse
 from ..forms import TweetForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
@@ -20,8 +21,6 @@ def CreateTweet(request):
            tweet.user=request.user
            tweet.save()
            return redirect('tweet_feed')
-       
-            
    else:
        form=TweetForm()
    return render(request,'create_tweet.html',{'form':form})
@@ -44,3 +43,16 @@ def TweetEdit(request,tweet_id):
     else:
         form=TweetForm(instance=tweet)
     return render(request,'create_tweet.html',{'form':form})
+
+@login_required
+def shareTweet(request,tweet_id):
+    if request.method=='POST':
+        input_text=request.POST.get('input_text',None)
+        parent_tweet=TweetModel.objects.get(id=tweet_id)
+        if parent_tweet.parent != None:
+            parent_tweet=parent_tweet.parent
+        retweet=TweetModel.objects.create(user=request.user,parent=parent_tweet,text=input_text)
+        print(retweet)
+        return JsonResponse({
+            'success':True
+        })
