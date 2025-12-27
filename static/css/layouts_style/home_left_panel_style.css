@@ -1,0 +1,431 @@
+.navbar-brand {
+        font-family: "Brush Script MT", cursive;
+}
+.left_panel_item {
+        text-decoration: none;
+        font-size: 1.1em;
+        font-weight: 350;
+        color: inherit;
+}
+.left_panel_item > .bi {
+        background: linear-gradient(to right, red, orange, rgb(255, 253, 108), rgba(110, 255, 209, 0.874), violet);
+        -webkit-background-clip: text; /* For Webkit browsers like Chrome, Safari */
+        background-clip: text; /* Standard property */
+        color: transparent;
+}
+.home-left-panel {
+        background: linear-gradient(135deg, #17292cff 0%, #171a1aff 100%);
+}
+.left_panel_profile_img_cls {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0.2em;
+}
+.text-small {
+        font-size: 0.8em;
+}
+.dropup:hover {
+        cursor: pointer;
+}
+.left-panel-dark {
+        background: var(--bg-dark);
+        border-right: 1px solid var(--border-color);
+        width: 100%;
+}
+
+/* Logo Gradient */
+.logo-gradient {
+        font-size: 1.7rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #1d9bf0 0%, #e4405f 50%, #833ab4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-left: -10px;
+}
+.nav-logo-img {
+        height: 2.2rem;
+        margin-right: -4px;
+        margin-bottom: 16px;
+}
+.logo-gradient:hover {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+}
+
+/* Navigation Menu */
+.nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0rem;
+}
+
+.nav-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        gap: 0.75rem;
+}
+
+.nav-item:hover {
+        background: var(--bg-hover);
+        transform: translateX(5px);
+}
+
+.nav-item.active {
+        background: var(--bg-hover);
+        color: var(--text-primary);
+}
+
+.nav-item.active::before {
+        content: "";
+        position: absolute;
+        left: -1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4px;
+        height: 60%;
+        background: linear-gradient(135deg, #1d9bf0, #833ab4);
+        border-radius: 2px;
+}
+/* Gradient Icons */
+.nav-icon-wrapper {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+}
+
+.nav-icon-wrapper i {
+        font-size: 1.2rem;
+        color: white;
+}
+
+.nav-item:hover .nav-icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+}
+
+.nav-item.active .nav-icon-wrapper {
+        transform: scale(1.1);
+}
+/* Navigation Labels */
+.nav-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+}
+
+.nav-item:hover .nav-label {
+        color: var(--accent-primary);
+}
+
+/* Notification Dot */
+.notification-dot {
+        width: 8px;
+        height: 8px;
+        background: linear-gradient(135deg, #ffd400, #f91880);
+        border-radius: 50%;
+        margin-left: auto;
+        animation: pulse 2s infinite;
+        box-shadow: 0 0 10px rgba(255, 212, 0, 0.5);
+}
+
+@keyframes pulse {
+        0%,
+        100% {
+                transform: scale(1);
+                opacity: 1;
+        }
+        50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+        }
+}
+
+/* Tweet Button Gradient */
+.btn-tweet-gradient {
+        background: linear-gradient(135deg, #1d9bf0, #833ab4);
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+}
+
+.btn-tweet-gradient::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+}
+
+.btn-tweet-gradient:hover::before {
+        left: 100%;
+}
+
+.btn-tweet-gradient:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 15px rgba(29, 155, 240, 0.4);
+}
+
+/* User Profile with Smooth Transitions */
+.user-profile-dropup {
+        position: relative;
+}
+
+.user-profile-card {
+        display: flex;
+        align-items: center;
+        padding: 0.45rem;
+        background: transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        gap: 0.2rem;
+        border: 1px solid transparent;
+}
+
+.user-profile-card:hover {
+        background: var(--bg-hover);
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+}
+
+.user-avatar {
+        flex-shrink: 0;
+}
+
+.profile-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+}
+
+.user-profile-card:hover .profile-img {
+        border-color: var(--accent-primary);
+        transform: scale(1.1);
+}
+
+.user-info {
+        flex: 1;
+        min-width: 0;
+}
+
+.left_panel_username {
+        color: var(--text-primary);
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease;
+}
+
+.user-handle {
+        color: var(--text-secondary);
+        margin: 0;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease;
+}
+
+.user-profile-card:hover .username {
+        color: var(--accent-primary);
+}
+
+.dropdown-arrow {
+        color: var(--text-secondary);
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+}
+
+.user-profile-card:hover .dropdown-arrow {
+        color: var(--accent-primary);
+        transform: rotate(180deg);
+}
+.user-dropdown {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 0.5rem;
+        min-width: 200px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        width: 100%;
+
+        opacity: 0;
+        visibility: hidden;
+}
+
+.user-dropdown.show {
+        opacity: 1;
+        visibility: visible;
+}
+
+.user-dropdown .dropdown-item {
+        color: var(--text-primary);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        align-items: center;
+        overflow: hidden;
+}
+
+.user-dropdown .dropdown-item::before {
+        content: "";
+
+        left: -100%;
+        top: 0;
+        width: 100%;
+
+        background: linear-gradient(90deg, transparent, var(--bg-hover), transparent);
+}
+
+.user-dropdown .dropdown-item:hover::before {
+        left: 100%;
+}
+
+.user-dropdown .dropdown-item:hover {
+        background: var(--bg-hover);
+        color: var(--accent-primary);
+        transform: translateX(5px);
+}
+
+.user-dropdown .dropdown-item i {
+        width: 20px;
+        transition: all 0.3s ease;
+}
+
+.user-dropdown .dropdown-item:hover i {
+        transform: scale(1.2);
+}
+
+/* Login Button Gradient */
+.btn-outline-gradient-home-left {
+        background: transparent;
+        border: 1px solid;
+        border-image: linear-gradient(135deg, #1d9bf0, #833ab4) 1;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+}
+
+.btn-outline-gradient-home-left::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1d9bf0, #833ab4);
+        transition: left 0.3s;
+        z-index: -1;
+}
+
+.btn-outline-gradient-home-left:hover::before {
+        left: 0;
+}
+
+.btn-outline-gradient-home-left:hover {
+        color: white;
+        transform: scale(1.02);
+}
+
+/* Style For Search Functionality */
+.search-input-wrapper {
+        flex: 1; /* Fill available space */
+        position: relative; /* For absolute child positioning */
+        display: flex;
+        align-items: center;
+}
+.search-icon {
+        position: absolute;
+        left: 16px; /* Inside padding area */
+        color: #64748b; /* Subtle gray */
+        z-index: 2; /* Above input */
+}
+.search-input {
+        width: 100%;
+        height: 44px;
+        background: rgba(30, 41, 59, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 0 50px; /* Space for both icons */
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+}
+.search-input:focus {
+        outline: none;
+        border-color: #667eea; /* Brand color */
+        background: rgba(30, 41, 59, 0.9);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2); /* Glow effect */
+}
+.clear-search {
+        position: absolute;
+        right: 12px; /* Inside padding area */
+        background: none;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+}
+/* Responsive */
+@media (max-width: 1050px) {
+        .left-panel-dark {
+                width: 100%;
+        }
+        .logo-gradient {
+                font-size: 0rem;
+        }
+
+        .nav-label,
+        .user-info,
+        .dropdown-arrow {
+                display: none;
+        }
+
+        .logo-gradient span {
+                display: none;
+        }
+
+        .nav-item {
+                justify-content: center;
+                padding: 0.75rem;
+        }
+
+        .btn-tweet-gradient span {
+                display: none;
+        }
+
+        .btn-tweet-gradient {
+                padding: 0.5rem;
+        }
+}

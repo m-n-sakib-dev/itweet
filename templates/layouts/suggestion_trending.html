@@ -1,0 +1,63 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/layouts_style/suggestion_trending.css' %}" />
+<script src="{% static 'scripts/nav_scripts/suggestion_trending.js' %}"></script>
+<!-- Right Panel - Suggestions & Trending -->
+<div class="right-panel">
+  <!-- Trending Hashtags -->
+  <div class="panel-section trending-section">
+    <div class="section-header">
+      <div class="section-title">
+        <i class="bi bi-fire"></i>
+        <div>Trending now</div>
+      </div>
+      <a href="#" class="see-more">See more</a>
+    </div>
+
+    <div class="trending-list" id="trendingList"></div>
+
+    <div class="section-footer">
+      <a href="#" class="refresh-btn"><i class="bi bi-arrow-clockwise"></i> Refresh</a>
+      <span class="update-time"><i class="bi bi-clock"></i> Updated recently</span>
+    </div>
+  </div>
+
+  <!-- Who to Follow -->
+  <div class="panel-section follow-section">
+    <div class="section-header">
+      <div class="section-title">
+        <i class="bi bi-person-add"></i>
+        <div>Who to follow</div>
+      </div>
+      <a href="#" class="see-more refresh-follow">Refresh</a>
+    </div>
+
+    <div class="follow-list" id="followList">
+      <!-- Will be loaded by JavaScript -->
+      <div class="loading-follow">
+        <i class="bi bi-person-circle"></i>
+        <p>Loading suggestions...</p>
+      </div>
+    </div>
+
+    <div class="section-footer">
+      <a href="#" class="show-more">Show more</a>
+    </div>
+  </div>
+
+  <!-- Quick Links -->
+  <div class="panel-section links-section">
+    <div class="links-grid">
+      <a href="#">About</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Developers</a>
+    </div>
+    <div class="section-footer">
+      <div class="copyright">
+        <i class="bi bi-twitter"></i>
+        <span>© 2025 iTweet, Inc.</span>
+      </div>
+    </div>
+  </div>
+</div>

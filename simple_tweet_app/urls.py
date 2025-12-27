@@ -17,14 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from tweet import views
+from user_profile.views import register,userlogin,FollowSuggestion
 from django.contrib.auth.urls import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls,name='admin'),
-    path("registration/",views.register,name="registration"),
-    path('accounts/login/',views.userlogin, name='login'),
+    path("registration/",register,name="registration"),
+    path('accounts/login/',userlogin, name='login'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('', include('tweet.urls')),
     path('user/', include('user_profile.urls')),
+    path('interaction/', include('interactions.urls')),
+    path('follower/suggestions', FollowSuggestion, name='follow_suggestions'),
+    
+    path("__reload__/", include("django_browser_reload.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

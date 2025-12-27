@@ -1,0 +1,43 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/layouts_style/mobile_topbar_style.css' %}" />
+<script src="{% static 'scripts/nav_scripts/mobile_top_bar.js' %}"></script>
+
+<div class="mobile-topbar" id="mobileTopBar">
+  <!-- Element that should be shown on topbar -->
+  <div class="topbar-content">
+    <!-- topbar logo -->
+    <div class="topbar-left">
+      <a class="topbar-logo" href="{% url 'home' %}"><img src="{% static 'favicon.ico' %}" alt="iTweet Logo"
+          class="topbar-logo-img" />Tweet</a>
+    </div>
+    <!-- Function Buttons like search notification -->
+    <div class="topbar-right">
+      <!-- search button. this will trigger the search overlay by js -->
+      <button class="topbar-btn search-btn" id="searchBtn"><i class="bi bi-search"></i></button>
+      <!-- notification button with badge -->
+      <div class="notification-wrapper">
+        <button class="topbar-btn notification-btn" id="notificationBtn"><i class="bi bi-bell"></i></button>
+        <!-- notification badge showing unread notification -->
+        <span class="notification-badge">3</span>
+      </div>
+    </div>
+  </div>
+  <!-- search overlay showing te search input and serch output -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-header">
+      <button class="back-btn" id="closeSearch"><i class="bi bi-arrow-left"></i></button>
+      <div class="search-input-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Search iTweet..." id="searchInput" />
+        <button class="clear-search" id="clearSearch"><i class="bi bi-x"></i></button>
+      </div>
+    </div>
+    <!-- search output area -->
+    <div class="search-results" id="topbar_search_result">
+      <div class="no-results">
+        <i class="bi bi-search"></i>
+        Search for users, tweets, or hashtags
+      </div>
+    </div>
+  </div>
+</div>

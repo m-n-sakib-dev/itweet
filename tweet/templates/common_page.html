@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+  itweet
+{% endblock %}
+
+{% block content %}
+  {% csrf_token %}
+  <link rel="stylesheet" href="{% static 'css/components/tweet_card_style.css' %}" />
+  <script src="{% static 'scripts/comment_script.js' %}"></script>
+  <script src="{% static 'scripts/tweet_card.js' %}"></script>
+  <script src="{% static 'scripts/tweet/common_page.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/components/comment_style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/tweet/home_style.css' %}" />
+  <div class="d-flex h-100">
+    <div class="col-12 col-lg-8 home_feed_conainer h-100">
+      <div class="home-nav-container" id="home-nav-container">
+        <div class="home-nav row">
+          <div class="home-nav-item active">
+            {% if page == 'Saved Tweets' %}
+              <span class="page_name" data-page-name="saved_tweets"></span>
+              <i class="bi bi-bookmark-fill"></i>
+              Saved Tweets ({{ tweet_count }})
+            {% elif page == 'Hashtag Tweets' %}
+              <span class="page_name" data-page-name="hashtag"></span>
+              <span class="fs-5 hashtag_name">#{{ hashtag_name }}</span>( {{ tweet_count }} Tweets in total)
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="home-tweets-wrapper">
+        <div class="tweet-container visible p-lg-3 p-1" id="home_tweets_container">
+          <div class="tweets-list" id="tweets_list">
+            <!-- Tweets will be loaded here -->
+          </div>
+          <div class="loading-spinner text-center" id="loading_spinner">
+            <div class="loading-dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-0 col-lg-4">
+      {% include 'layouts/suggestion_trending.html' %}
+    </div>
+  </div>
+{% endblock %}

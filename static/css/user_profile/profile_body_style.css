@@ -1,0 +1,392 @@
+.user_profile_data_container_parent {
+        height: fit-content;
+        border-radius: 0.5em;
+        background-color: #50505024;
+}
+
+.user_profile_data_container {
+        width: 100%;
+        aspect-ratio: 16/9;
+}
+.user_profile_cover_photo_container {
+        width: 100%;
+        aspect-ratio: 16/7;
+        background-color: #50505024;
+        border-radius: 0.5em;
+        overflow: hidden;
+}
+.user_profile_cover_photo {
+        width: 100%;
+        aspect-ratio: 16/7;
+        object-fit: cover;
+}
+/* .profile_photo_container_gap {
+        width: 100%;
+        aspect-ratio: 16/5;
+} */
+.user_profile_display_photo_container {
+        width: 100%;
+        overflow: visible;
+        height: fit-content;
+        /* transform: translateY(-50%); */
+        margin-top: -12%;
+        padding-bottom: 20px;
+}
+.user_profile_display_photo {
+        width: 25%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-left: 5%;
+}
+
+.overflow-auto {
+        scrollbar-width: none;
+}
+
+/* Color Variables */
+:root {
+        --primary: #007bff;
+        --success: #28a745;
+        --info: #17a2b8;
+        --warning: #ffc107;
+        --purple: #6f42c1;
+        --orange: #fd7e14;
+        --indigo: #6610f2;
+        --teal: #20c997;
+        --pink: #e83e8c;
+        --cyan: #0dcaf0;
+        --red: #dc3545;
+        --gray: #6c757d;
+}
+
+[data-bs-theme="dark"] {
+        --bg-primary: #1a1a1a;
+        --bg-card: rgb(20, 21, 21);
+        --text-primary: #ffffff;
+        --text-muted: #adb5bd;
+}
+
+/* Profile Card */
+.profile-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .profile-card {
+        background: linear-gradient(135deg, var(--bg-card) 0%, #011812ff 100%);
+}
+
+.bg-gradient-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, #0056b3 100%) !important;
+}
+
+/* Icon Wrapper */
+.icon-wrapper {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+}
+
+.profile-item:hover .icon-wrapper {
+        transform: scale(1.1);
+}
+
+/* Profile Items */
+.profile-item {
+        border-left: 3px solid transparent;
+        padding-left: 12px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        padding: 8px 8px 8px 12px;
+}
+
+.profile-item:hover {
+        border-left-color: var(--primary);
+        background: rgba(0, 123, 255, 0.05);
+        transform: translateX(4px);
+}
+
+[data-bs-theme="dark"] .profile-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+}
+.user_profile_follower_count_container:hover,
+.user_profile_following_count_container:hover {
+        cursor: pointer;
+        filter: brightness(150%);
+}
+
+.user_profile_follow_list_modal-body {
+        height: 80vh;
+}
+.profile-follow-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 20px;
+        padding: 0.3vw 5vw;
+        color: rgb(13, 9, 39);
+        font-weight: 600;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-left: -10px;
+        margin-top: 5px;
+}
+/* .profile_name {
+        margin: 0;
+        font-size: 1.5em;
+}*/
+.profile_username {
+        font-size: 0.7em;
+}
+.profile-follow-btn:hover {
+        transform: translateY(-2px);
+        color: #78fdff;
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.profile-follow-btn:active {
+        transform: translateY(0);
+}
+
+/* Dark Mode Text */
+.dark-text {
+        transition: color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .dark-text {
+        color: var(--text-primary) !important;
+}
+
+.dark-text-muted {
+        transition: color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .dark-text-muted {
+        color: var(--text-muted) !important;
+}
+
+/* Social Media Buttons */
+.social-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+}
+
+.social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.social-btn.facebook {
+        background: linear-gradient(135deg, #1877f2, #0d5fbb);
+        color: white;
+}
+
+.social-btn.twitter {
+        background: linear-gradient(135deg, #1da1f2, #0c85d0);
+        color: white;
+}
+
+.social-btn.instagram {
+        background: linear-gradient(135deg, #e4405f, #c13584, #833ab4);
+        color: white;
+}
+
+.social-btn.linkedin {
+        background: linear-gradient(135deg, #0077b5, #005582);
+        color: white;
+}
+
+/* Website Link */
+.website-link {
+        color: var(--primary);
+        transition: all 0.3s ease;
+}
+
+.website-link:hover {
+        color: #0056b3;
+        text-decoration: underline !important;
+}
+
+[data-bs-theme="dark"] .website-link {
+        color: #4dabf7;
+}
+
+[data-bs-theme="dark"] .website-link:hover {
+        color: #74c0fc;
+}
+
+/* Additional Color Classes */
+.bg-purple {
+        background-color: var(--purple) !important;
+}
+.text-purple {
+        color: var(--purple) !important;
+}
+
+.bg-orange {
+        background-color: var(--orange) !important;
+}
+.text-orange {
+        color: var(--orange) !important;
+}
+
+.bg-indigo {
+        background-color: var(--indigo) !important;
+}
+.text-indigo {
+        color: var(--indigo) !important;
+}
+
+.bg-teal {
+        background-color: var(--teal) !important;
+}
+.text-teal {
+        color: var(--teal) !important;
+}
+
+.bg-pink {
+        background-color: var(--pink) !important;
+}
+.text-pink {
+        color: var(--pink) !important;
+}
+
+.bg-cyan {
+        background-color: var(--cyan) !important;
+}
+.text-cyan {
+        color: var(--cyan) !important;
+}
+
+.bg-red {
+        background-color: var(--red) !important;
+}
+.text-red {
+        color: var(--red) !important;
+}
+
+.bg-gray {
+        background-color: var(--gray) !important;
+}
+.text-gray {
+        color: var(--gray) !important;
+}
+
+.bg-gradient-social {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+/*  Navbar */
+/* Profile Navbar */
+.profile-navbar {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px); /* Blur effect */
+        -webkit-backdrop-filter: blur(5px); /* Safari support */
+        background: rgba(0, 0, 0, 0.507); /* Semi-transparent dark */
+        transition: top 0.3s ease-in-out;
+        margin-bottom: 5px;
+}
+
+.profile-nav {
+        display: flex;
+        justify-content: space-around;
+}
+
+.profile-nav-item {
+        display: flex;
+        align-items: center;
+        padding: 9px;
+        text-decoration: none;
+        color: #8b98a5;
+        font-weight: 400;
+        font-size: 1em;
+        position: relative;
+        transition: color 0.2s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        width: 100%;
+        justify-content: center;
+}
+
+.profile-nav-item:hover {
+        color: #ffffff;
+}
+
+.profile-nav-item.active {
+        color: #ffffff;
+        font-weight: 500;
+}
+
+.profile-nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #1d9bf0;
+        border-radius: 2px 2px 0 0;
+}
+
+.profile-nav-count {
+        background: rgba(139, 152, 165, 0.2);
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 500;
+}
+
+/* Tab Content */
+.tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+        display: block;
+}
+
+@keyframes fadeIn {
+        from {
+                opacity: 0;
+        }
+        to {
+                opacity: 1;
+        }
+}
+
+@media (max-width: 900px) {
+        .user_profile_display_photo_container {
+                margin-top: -17%;
+        }
+        .user_profile_display_photo {
+                width: 35%;
+        }
+        .user_profile_name_container {
+                font-size: 0.8em;
+        }
+        .user_profile_follow_list_modal-body {
+                height: 60vh;
+        }
+        .follow-item {
+                transform: scale(0.85);
+                transform-origin: top center; /* Scale from top */
+                width: 117.65%; /* Counteract scale: 100/0.85 = 117.65% */
+                margin-left: -8.825%; /*Center it: (117.65-100)/2 = 8.825%*/
+        }
+}

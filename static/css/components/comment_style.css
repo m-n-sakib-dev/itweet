@@ -1,0 +1,167 @@
+/* Facebook Comment Styling */
+.comment-item {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.comment_profile_img_cls {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 50%;
+}
+.comment-content {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        word-break: break-word; /* Softer than break-all */
+        white-space: pre-wrap;
+        max-width: 100%;
+        overflow-x: hidden;
+        height: fit-content;
+}
+/* Action Buttons */
+.icon-btn {
+        color: #65676b;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s;
+}
+
+.icon-btn:hover {
+        text-decoration: none;
+        color: #050505;
+}
+
+/* Active States */
+.icon-btn.active[data-reation-type="like"] {
+        color: #1877f2;
+}
+
+.icon-btn.active[data-reation-type="unlike"] {
+        color: #f02849;
+}
+.comment_list {
+        margin-top: -20px;
+        padding-top: 20px;
+        background: #15202b;
+}
+
+.angle-mark-for-comment-reply {
+        width: 25px;
+        height: 16px;
+        border-radius: 0 0 0 6px;
+        border-bottom: 1px solid rgb(89, 89, 89);
+        margin-left: -0.5px;
+        border-left: 1px solid rgb(89, 89, 89);
+}
+.comment-line-container {
+        padding-left: 16px;
+}
+.vr-line-1-for-comment-reply {
+        border-left: 1px solid rgb(89, 89, 89);
+        margin-left: -0.5px;
+}
+.vr-line-2-for-comment-reply {
+        border-left: 1px solid rgb(89, 89, 89);
+        margin-left: 15.5px;
+}
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+        .bg-light.rounded-3 {
+                background-color: #3e4042 !important;
+        }
+
+        .comment-content,
+        .comment-username {
+                color: #e4e6eb !important;
+        }
+
+        .comment-actions {
+                color: #b0b3b8 !important;
+        }
+
+        .icon-btn {
+                color: #b0b3b8;
+        }
+
+        .icon-btn:hover {
+                color: #e4e6eb;
+        }
+
+        .border-light {
+                border-color: #3e4042 !important;
+        }
+}
+.comment-form-container {
+        width: 100%;
+}
+
+.comment-body {
+        box-sizing: border-box;
+        border: 0.05em solid rgb(66, 66, 66);
+        border-radius: 1em;
+        padding: 0.5em;
+        width: fit-content;
+        min-width: 250px;
+        background-color: #ffffff0d;
+}
+
+/* Comment Reply Form */
+.comment-form {
+        box-sizing: border-box;
+        border: 0.05em solid rgb(66, 66, 66);
+        border-radius: 0.5em;
+        padding: 0.5em;
+        margin: 0;
+        background-color: #ffffff0d;
+        width: 100%;
+}
+.form-content-area {
+        background: none;
+        border: none;
+        outline: none;
+        field-sizing: content;
+        overflow: hidden;
+        resize: none;
+        padding: 0;
+        margin-bottom: 0.5em;
+        word-wrap: break-word; /* Old browsers */
+        overflow-wrap: break-word; /* Modern */
+        word-break: break-all; /* Force break */
+        white-space: pre-wrap; /* Preserve line breaks */
+        max-width: 100%;
+        overflow-x: hidden;
+}
+
+.submit_btn {
+        transform: rotate(45deg);
+        border: none;
+        background: transparent;
+        transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+        .comment_profile_img_cls {
+                width: 26px;
+                height: 26px;
+        }
+        .angle-mark-for-comment-reply {
+                width: 15px;
+                height: 13px;
+        }
+        .comment-line-container {
+                padding-left: 13px;
+        }
+        .vr-line-1-for-comment-reply {
+                margin-left: -0.5px;
+        }
+        .vr-line-2-for-comment-reply {
+                margin-left: 13px;
+        }
+        .comment-body {
+                transform: scale(0.85);
+                transform-origin: top center;
+                width: 117.65%;
+                margin-left: -8.825%;
+                height: 117.65%;
+        }
+}

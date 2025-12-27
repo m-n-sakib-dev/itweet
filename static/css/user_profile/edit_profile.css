@@ -1,0 +1,15 @@
+h4 {
+        color: rgb(255, 164, 16);
+}
+h5 {
+        color: rgb(34, 207, 255);
+}
+label {
+        color: rgb(13, 251, 168);
+}
+.form-control {
+        background-color: transparent;
+}
+.card {
+        box-shadow: 0 0 15px 0px black;
+}
