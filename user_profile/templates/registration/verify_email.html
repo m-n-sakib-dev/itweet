@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/user_profile/registration_style.css' %}" />
+
+{% block full_page %}
+  <link rel="stylesheet" href="{% static 'css/user_profile/registration_style.css' %}" />
+  <div class="registration-container">
+    <div class="registration-card">
+      <!-- Left Side Panel - Desktop Only -->
+      <div class="registration-left-panel">
+        <div class="registration-left-content">
+          <div class="registration-left-logo">
+            <img src="{% static 'favicon.ico' %}" alt="iTweet Logo" class="registration-left-icon" />
+            <h1 class="registration-left-title">iTweet</h1>
+          </div>
+          <div class="registration-left-quotes">
+            <div class="registration-quote">
+              <i class="bi bi-chat-quote registration-quote-icon"></i>
+              <p>"Join the conversation and share your thoughts with the world"</p>
+            </div>
+            <div class="registration-quote">
+              <i class="bi bi-people registration-quote-icon"></i>
+              <p>"Connect with friends and discover amazing content"</p>
+            </div>
+            <div class="registration-quote">
+              <i class="bi bi-lightning registration-quote-icon"></i>
+              <p>"Stay updated with real-time news and trends"</p>
+            </div>
+          </div>
+          <div class="registration-left-features">
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Real-time updates</span>
+            </div>
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Global community</span>
+            </div>
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Secure & private</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side Form -->
+      <div class="registration-right-panel">
+        <div class="registration-header-mobile">
+          <div class="registration-logo-section">
+            <i class="bi bi-twitter registration-logo-icon"></i>
+            <h1 class="registration-logo-text">iTweet</h1>
+          </div>
+        </div>
+
+        <div class="registration-form-container">
+          <h2 class="registration-title">Verify Your Email</h2>
+          <p class="registration-subtitle">We sent a 6-digit code to your email. Please enter it below:</p>
+
+          <form method="post" class="registration-form">
+            {% csrf_token %}
+            <!-- Verification Code Field -->
+            <div class="registration-form-group">
+              <label for="id_varification_code" class="registration-label">
+                <i class="bi bi-key"></i>
+                Enter Code Here
+              </label>
+              <div class="registration-input-group">
+                <input type="text" id="id_varification_code" name="verification_code" maxlength="6" placeholder="123456" required />
+              </div>
+              {% if messages %}
+                <div class="registration-error-message">
+                  {% for m in messages %}
+                    {{ m }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <button type="submit" class="registration-submit-btn">Verify</button>
+          </form>
+          <div class="registration-login-link">
+            <p>
+              Didn't receive the code? <a href="{% url 'resend_code' %}" class="registration-login-link-text">Resend</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

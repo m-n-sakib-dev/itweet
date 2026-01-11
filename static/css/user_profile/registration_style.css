@@ -54,14 +54,13 @@
 
 .registration-left-logo {
         text-align: center;
+        justify-content: center;
         margin-bottom: 3rem;
 }
 
 .registration-left-icon {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        display: block;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        width: 3em;
+        height: 3em;
 }
 
 .registration-left-title {
@@ -200,7 +199,10 @@
 /* Form Input Styling */
 #id_username,
 #id_email,
+#id_first_name,
+#id_last_name,
 #id_password1,
+#id_varification_code,
 #id_password2 {
         width: 100%;
         padding: 0.75rem 1rem;
@@ -217,7 +219,10 @@
 
 #id_username::placeholder,
 #id_email::placeholder,
+#id_first_name::placeholder,
+#id_last_name::placeholder,
 #id_password1::placeholder,
+#id_varification_code::placeholder,
 #id_password2::placeholder {
         color: #64748b;
         font-size: 0.9rem;
@@ -225,6 +230,9 @@
 
 #id_username:focus,
 #id_email:focus,
+#id_first_name:focus,
+#id_last_name:focus,
+#id_varification_code:focus,
 #id_password1:focus,
 #id_password2:focus {
         outline: none;

@@ -10,7 +10,7 @@
       <div class="registration-left-panel">
         <div class="registration-left-content">
           <div class="registration-left-logo">
-            <i class="bi bi-twitter registration-left-icon"></i>
+            <img src="{% static 'favicon.ico' %}" alt="iTweet Logo" class="registration-left-icon" />
             <h1 class="registration-left-title">iTweet</h1>
           </div>
           <div class="registration-left-quotes">
@@ -74,6 +74,40 @@
               {% endif %}
               {% if form.username.errors %}
                 <div class="registration-error-message">{{ form.username.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Firstname Field -->
+            <div class="registration-form-group">
+              <label for="id_first_name" class="registration-label">
+                <i class="bi bi-person"></i>
+                First Name
+              </label>
+              <div class="registration-input-group">{{ form.first_name }}</div>
+              {% if form.first_name.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.first_name.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.first_name.errors %}
+                <div class="registration-error-message">{{ form.first_name.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- lastName Field -->
+            <div class="registration-form-group">
+              <label for="id_last_name" class="registration-label">
+                <i class="bi bi-person"></i>
+                Last Name
+              </label>
+              <div class="registration-input-group">{{ form.last_name }}</div>
+              {% if form.last_name.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.last_name.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.last_name.errors %}
+                <div class="registration-error-message">{{ form.last_name.errors }}</div>
               {% endif %}
             </div>
 

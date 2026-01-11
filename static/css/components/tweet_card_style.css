@@ -202,7 +202,7 @@ a.user_profile_link:hover {
   margin-right: 8px;
 }
 
-.user-handle::before {
+.tweet-card .user-handle::before {
   content: "·";
   margin-right: 4px;
   margin-left: 4px;
@@ -538,4 +538,8 @@ a.user_profile_link:hover {
 
 .tweet-modal .tweet-card {
   border-radius: 0px;
+}
+
+.tweet-modal .parent_tweet .tweet-card {
+  border-radius: 16px;
 }/*# sourceMappingURL=tweet_card_style.css.map */

@@ -2,7 +2,6 @@
 window.GLOBAL_CSRF_TOKEN = document.getElementsByName("csrfmiddlewaretoken")[0].value;
 function handleCommentSubmission(button) {
         tweet_id = button.closest(".tweet-modal").querySelector(".tweet-card").dataset.tweetId;
-        console.log(tweet_id);
         const form = button.closest("form");
         csrf_token = document.getElementsByName("csrfmiddlewaretoken");
 
@@ -98,7 +97,6 @@ function pushCommentIntoList(commentData) {
 // this function handles reaction  on comments(like or unlike)
 function commentlikefunction(buttonElement) {
         csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-        console.log(csrf_token);
         comment_id = buttonElement.closest(".comment-item").dataset.commentId;
         reation_type = buttonElement.dataset.reationType;
         comment_action = buttonElement.closest(".comment-actions");
@@ -113,7 +111,6 @@ function commentlikefunction(buttonElement) {
                 .then((data) => {
                         comment_action.querySelector(".comment_like_count").textContent = data.like_count;
                         comment_action.querySelector(".comment_unlike_count").textContent = data.unlike_count;
-                        console.log(data.unlike_count);
                         // document.querySelector("#_" + data.tweet_id + ".unlike_count").textContent = data.unlike_count;
                 });
 }
@@ -133,7 +130,6 @@ function addcomment(commentData, parent_container) {
         commentElement.querySelector(".comment-reply-container").id = "comment_reply_list_" + commentData.id;
         comment_body = commentElement.querySelector(".comment-body");
         comment_menu = commentElement.querySelector(".comment-menu-dropdown-menu");
-        console.log(commentData.user.user_id);
         if (commentData.user.user_id == current_user.id) {
                 comment_menu.innerHTML = `
                 <li><button class="dropdown-item" onclick="editComment(${commentData.id},this)">Edit</button></li>
@@ -220,9 +216,15 @@ function deletecomment(comment_id, parent_container) {
                                 if (data.success) {
                                         child = document.getElementById(`containerOfcommentId${comment_id}`);
                                         parent_container.removeChild(child);
-                                        document.querySelector(`#_${data.tweet_id}.comment_count`).textContent = data.tweet_comment_count;
-                                        document.querySelector(`#_${data.tweet_id}.comment_count_post-details`).textContent =
-                                                data.tweet_comment_count;
+                                        // tweet_id = button.closest(".tweet-modal").querySelector(".tweet-card").dataset.tweetId;
+                                        // document.querySelector(`#_${tweet_id}_comment`).textContent = data.comment_count;
+                                        // button.closest(".tweet-modal").querySelector(".tweet-card").querySelector(".comments-count").textContent =
+                                        //         data.comment_count;
+                                        document.querySelector(`#_${data.tweet_id}_comment`).textContent = data.tweet_comment_count;
+                                        parent_container
+                                                .closest(".tweet-modal")
+                                                .querySelector(".tweet-card")
+                                                .querySelector(".comments-count").textContent = data.tweet_comment_count;
 
                                         if (data.parent !== null) {
                                                 parent_container = document.getElementById(`containerOfcommentId${data.parent.id}`);
@@ -230,7 +232,6 @@ function deletecomment(comment_id, parent_container) {
                                         }
                                         alert("message deleted sccessfully");
                                 } else {
-                                        console.log(data.error);
                                 }
                         });
         }

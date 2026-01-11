@@ -47,42 +47,6 @@ function initSeeMoreButtons() {
 
 // Call on page load
 document.addEventListener("DOMContentLoaded", initSeeMoreButtons);
-// old post details modal,not using
-function fillPostDetailsTemplate(postData) {
-        // Get the template
-        const template = document.getElementById("post-details-template");
-        const clone = template.content.cloneNode(true);
-
-        // Fill basic data
-        clone.querySelector(".post-username").textContent = postData.user.username + "'s Post";
-        clone.querySelector(".post-text").textContent = postData.text;
-
-        // Tweet image
-        if (postData.photo && postData.photo.url) {
-                const tweetImg = clone.querySelector(".tweet_card_image");
-                tweetImg.src = postData.photo.url;
-        } else {
-                clone.querySelector(".tweet_card_image_container").style.display = "none";
-        }
-
-        // Reaction counts
-        clone.querySelector(".like_count").textContent = postData.like_count || 0;
-        clone.querySelector(".unlike_count").textContent = postData.unlike_count || 0;
-        clone.querySelector(".comment_count_post-details").textContent = postData.comment_count || 0;
-
-        // Set IDs for dynamic targeting
-        const likeCount = clone.querySelector(".like_count");
-        const unlikeCount = clone.querySelector(".unlike_count");
-        const commentCount = clone.querySelector(".comment_count_post-details");
-        const commentList = clone.querySelector(".comment_list");
-
-        likeCount.id = `_${postData.id}`;
-        unlikeCount.id = `_${postData.id}`;
-        commentCount.id = `_${postData.id}`;
-        commentList.id = `comment_list_${postData.id}`;
-
-        return clone;
-}
 
 //new post details modal, its using currently
 function loadPostDetail(tweetData) {
@@ -153,7 +117,11 @@ function loadPostDetail(tweetData) {
                 tweetImg.src = tweetData.photo.url;
                 tweetMedia.style.display = "block";
         }
-
+        // In retweets aading the parent tweets content in a tweet-card
+        if (tweetData.parent != null) {
+                parent_tweet_container = clone.querySelector(".parent_tweet");
+                parent_tweet_container.appendChild(parentTweet(tweetData.parent));
+        }
         // Reaction counts
         clone.querySelector(".likes-count").textContent = tweetData.like_count;
         clone.querySelector(".dislikes-count").textContent = tweetData.unlike_count;
@@ -171,6 +139,7 @@ function loadPostDetail(tweetData) {
                         break;
                 case "unlike":
                         dislikeBtn.classList.add("active");
+                        break;
         }
 
         // Set IDs for reaction tracking
@@ -181,7 +150,7 @@ function loadPostDetail(tweetData) {
         return clone;
 }
 
-// Parent tweet showing tweet card
+// Parent tweet showing tweet card in retweets
 function parentTweet(tweetData) {
         const template = document.getElementById("tweet-card-template");
         const clone = template.content.querySelector(".tweet_info").cloneNode(true);
@@ -286,6 +255,7 @@ function newTweetCard(tweetData) {
                 const tweetText = clone.querySelector(".tweet-text");
                 tweetText.innerHTML = `${tweetData.text}`;
         }
+        // In retweets aading the parent tweets content in a tweet-card
         if (tweetData.parent != null) {
                 parent_tweet_container = clone.querySelector(".parent_tweet");
                 parent_tweet_container.appendChild(parentTweet(tweetData.parent));

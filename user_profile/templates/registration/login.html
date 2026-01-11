@@ -2,112 +2,114 @@
 {% load static %}
 
 {% block full_page %}
-  <link rel="stylesheet" href="{% static 'css/user_profile/login_style.css' %}" />
-  <div class="login-container">
-    <div class="login-card">
-      <!-- Left Side Panel - Desktop Only -->
-      <div class="login-left-panel">
-        <div class="login-left-content">
-          <div class="login-left-logo">
-            <i class="bi bi-twitter login-left-icon"></i>
-            <h1 class="login-left-title">iTweet</h1>
+<link rel="stylesheet" href="{% static 'css/user_profile/login_style.css' %}" />
+<div class="login-container">
+  <div class="login-card">
+    <!-- Left Side Panel - Desktop Only -->
+    <div class="login-left-panel">
+      <div class="login-left-content">
+        <div class="login-left-logo">
+          <i class="bi bi-twitter login-left-icon"></i>
+          <h1 class="login-left-title">iTweet</h1>
+        </div>
+        <div class="login-left-quotes">
+          <div class="login-quote">
+            <i class="bi bi-chat-heart login-quote-icon"></i>
+            <p>"Share your thoughts with the world in real-time"</p>
           </div>
-          <div class="login-left-quotes">
-            <div class="login-quote">
-              <i class="bi bi-chat-heart login-quote-icon"></i>
-              <p>"Share your thoughts with the world in real-time"</p>
-            </div>
-            <div class="login-quote">
-              <i class="bi bi-lightning-charge login-quote-icon"></i>
-              <p>"Connect with millions of users instantly"</p>
-            </div>
-            <div class="login-quote">
-              <i class="bi bi-globe login-quote-icon"></i>
-              <p>"Join the global conversation today"</p>
-            </div>
+          <div class="login-quote">
+            <i class="bi bi-lightning-charge login-quote-icon"></i>
+            <p>"Connect with millions of users instantly"</p>
           </div>
-          <div class="login-left-stats">
-            <div class="login-stat">
-              <h3>1M+</h3>
-              <span>Active Users</span>
-            </div>
-            <div class="login-stat">
-              <h3>3M+</h3>
-              <span>Daily Tweets</span>
-            </div>
-            <div class="login-stat">
-              <h3>100+</h3>
-              <span>Countries</span>
-            </div>
+          <div class="login-quote">
+            <i class="bi bi-globe login-quote-icon"></i>
+            <p>"Join the global conversation today"</p>
           </div>
         </div>
-      </div>
-
-      <!-- Right Side Form -->
-      <div class="login-right-panel">
-        <div class="login-header-mobile">
-          <div class="login-logo-section">
-            <i class="bi bi-twitter login-logo-icon"></i>
-            <h1 class="login-logo-text">iTweet</h1>
+        <div class="login-left-stats">
+          <div class="login-stat">
+            <h3>1M+</h3>
+            <span>Active Users</span>
           </div>
-        </div>
-
-        <div class="login-form-container">
-          <h2 class="login-title">Welcome Back</h2>
-          <p class="login-subtitle">Sign in to your iTweet account</p>
-
-          <form method="post" enctype="multipart/form-data" class="login-form">
-            {% csrf_token %}
-
-            <!-- Username Field -->
-            <div class="login-form-group">
-              <label for="id_username" class="login-label">
-                <i class="bi bi-person"></i>
-                Username or Email
-              </label>
-              <div class="login-input-group">{{ form.username }}</div>
-              {% if form.username.errors %}
-                <div class="login-error-message">{{ form.username.errors }}</div>
-              {% endif %}
-            </div>
-
-            <!-- Password Field -->
-            <div class="login-form-group">
-              <label for="id_password" class="login-label">
-                <i class="bi bi-lock"></i>
-                Password
-              </label>
-              <div class="login-input-group">{{ form.password }}</div>
-              {% if form.password.errors %}
-                <div class="login-error-message">{{ form.password.errors }}</div>
-              {% endif %}
-            </div>
-
-            <!-- Remember Me & Forgot Password -->
-            <div class="login-options">
-              <label class="login-remember">
-                <input type="checkbox" name="remember" />
-                <span class="checkmark"></span>
-                Remember me
-              </label>
-              <a href="{% url 'password_reset' %}" class="login-forgot">Forgot password?</a>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="login-submit-btn">
-              <i class="bi bi-box-arrow-in-right"></i>
-              Sign In
-            </button>
-
-            <!-- Register Link -->
-            <div class="login-register-link">
-              <p>
-                Don't have an account? <a href="{% url 'registration' %}" class="login-register-text">Create account</a>
-              </p>
-            </div>
-          </form>
+          <div class="login-stat">
+            <h3>3M+</h3>
+            <span>Daily Tweets</span>
+          </div>
+          <div class="login-stat">
+            <h3>100+</h3>
+            <span>Countries</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Right Side Form -->
+    <div class="login-right-panel">
+      <div class="login-header-mobile">
+        <div class="login-logo-section">
+          <i class="bi bi-twitter login-logo-icon"></i>
+          <h1 class="login-logo-text">iTweet</h1>
+        </div>
+      </div>
+
+      <div class="login-form-container">
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-subtitle">Sign in to your iTweet account</p>
+
+        <form method="post" enctype="multipart/form-data" class="login-form">
+          {% csrf_token %}
+
+          <!-- Username Field -->
+          <div class="login-form-group">
+            <label for="id_username" class="login-label">
+              <i class="bi bi-person"></i>
+              Username or Email
+            </label>
+            <div class="login-input-group">{{ form.username }}</div>
+            {% if messages %}
+            <div class="login-error-message">{% for m in messages %}
+              {{m}}
+              {% endfor %}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password Field -->
+          <div class="login-form-group">
+            <label for="id_password" class="login-label">
+              <i class="bi bi-lock"></i>
+              Password
+            </label>
+            <div class="login-input-group">{{ form.password }}</div>
+            {% if form.password.errors %}
+            <div class="login-error-message">{{ form.password.errors }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="login-options">
+            <label class="login-remember">
+              <input type="checkbox" name="remember" />
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+            <a href="{% url 'password_reset' %}" class="login-forgot">Forgot password?</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="login-submit-btn">
+            <i class="bi bi-box-arrow-in-right"></i>
+            Sign In
+          </button>
+
+          <!-- Register Link -->
+          <div class="login-register-link">
+            <p>
+              Don't have an account? <a href="{% url 'registration' %}" class="login-register-text">Create account</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock %}
