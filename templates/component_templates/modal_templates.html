@@ -1,0 +1,28 @@
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<template id="confirm-modal-template">
+	<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">Delete Tweet</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Are your sure to delete the tweet? You won't be able to recover it again.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary confirm-tweet-delete-btn"
+						data-bs-dismiss="modal">Confirm</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

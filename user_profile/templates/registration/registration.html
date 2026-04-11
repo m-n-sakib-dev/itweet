@@ -1,0 +1,148 @@
+{% extends 'layout.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/user_profile/registration_style.css' %}" />
+
+{% block full_page %}
+  <link rel="stylesheet" href="{% static 'css/user_profile/registration_style.css' %}" />
+  <div class="registration-container">
+    <div class="registration-card">
+      <!-- Left Side Panel - Desktop Only -->
+      <div class="registration-left-panel">
+        <div class="registration-left-content">
+          <div class="registration-left-logo">
+            <i class="bi bi-twitter registration-left-icon"></i>
+            <h1 class="registration-left-title">iTweet</h1>
+          </div>
+          <div class="registration-left-quotes">
+            <div class="registration-quote">
+              <i class="bi bi-chat-quote registration-quote-icon"></i>
+              <p>"Join the conversation and share your thoughts with the world"</p>
+            </div>
+            <div class="registration-quote">
+              <i class="bi bi-people registration-quote-icon"></i>
+              <p>"Connect with friends and discover amazing content"</p>
+            </div>
+            <div class="registration-quote">
+              <i class="bi bi-lightning registration-quote-icon"></i>
+              <p>"Stay updated with real-time news and trends"</p>
+            </div>
+          </div>
+          <div class="registration-left-features">
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Real-time updates</span>
+            </div>
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Global community</span>
+            </div>
+            <div class="registration-feature">
+              <i class="bi bi-check-circle"></i>
+              <span>Secure & private</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side Form -->
+      <div class="registration-right-panel">
+        <div class="registration-header-mobile">
+          <div class="registration-logo-section">
+            <i class="bi bi-twitter registration-logo-icon"></i>
+            <h1 class="registration-logo-text">iTweet</h1>
+          </div>
+        </div>
+
+        <div class="registration-form-container">
+          <h2 class="registration-title">Create Your Account</h2>
+          <p class="registration-subtitle">Join iTweet today and start your journey</p>
+
+          <form method="post" enctype="multipart/form-data" class="registration-form">
+            {% csrf_token %}
+
+            <!-- Username Field -->
+            <div class="registration-form-group">
+              <label for="id_username" class="registration-label">
+                <i class="bi bi-person"></i>
+                Username
+              </label>
+              <div class="registration-input-group">{{ form.username }}</div>
+              {% if form.username.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.username.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.username.errors %}
+                <div class="registration-error-message">{{ form.username.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="registration-form-group">
+              <label for="id_email" class="registration-label">
+                <i class="bi bi-envelope"></i>
+                Email Address
+              </label>
+              <div class="registration-input-group">{{ form.email }}</div>
+              {% if form.email.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.email.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.email.errors %}
+                <div class="registration-error-message">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Password1 Field -->
+            <div class="registration-form-group">
+              <label for="id_password1" class="registration-label">
+                <i class="bi bi-lock"></i>
+                Password
+              </label>
+              <div class="registration-input-group">{{ form.password1 }}</div>
+              {% if form.password1.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.password1.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.password1.errors %}
+                <div class="registration-error-message">{{ form.password1.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Password2 Field -->
+            <div class="registration-form-group">
+              <label for="id_password2" class="registration-label">
+                <i class="bi bi-shield-lock"></i>
+                Confirm Password
+              </label>
+              <div class="registration-input-group">{{ form.password2 }}</div>
+              {% if form.password2.help_text %}
+                <div class="registration-constraints">
+                  <small>{{ form.password2.help_text }}</small>
+                </div>
+              {% endif %}
+              {% if form.password2.errors %}
+                <div class="registration-error-message">{{ form.password2.errors }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="registration-submit-btn">
+              <i class="bi bi-person-plus"></i>
+              Create Account
+            </button>
+
+            <!-- Login Link -->
+            <div class="registration-login-link">
+              <p>
+                Already have an account? <a href="{% url 'login' %}" class="registration-login-link-text">Sign in</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

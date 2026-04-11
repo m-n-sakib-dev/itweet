@@ -1,0 +1,79 @@
+<template id="post-details-template">
+  <div class="tweet-card" data-tweet-id="">
+    <div class="tweet-header">
+      <div class="user-info">
+        <a class="avatar-wrapper user_profile_link">
+          <img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="Profile" class="user-avatar" />
+        </a>
+        <div class="user-details">
+          <div class="d-flex">
+            <a class="username user_profile_link h3"></a>
+            <a class="user-handle user_profile_link"></a>
+          </div>
+          <span class="timestamp"></span>
+        </div>
+      </div>
+      <div class="dropdown tweet-card-menu-dropdown">
+        <button class="menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+            class="bi bi-three-dots"></i></button>
+        <ul class="dropdown-menu"></ul>
+      </div>
+    </div>
+
+    <div class="tweet-content">
+      <div class="tweet-text"></div>
+      <button class="see-more-btn" onclick="toggleSeeMore(this)">See more</button>
+    </div>
+
+    <div class="tweet-media">
+      <img src="" alt="Tweet image" class="media-image" />
+    </div>
+
+    <div class="tweet-stats">
+      <div class="stat">
+        <span class="stat-count likes-count">0</span>
+        <span class="stat-label">Likes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-count dislikes-count">0</span>
+        <span class="stat-label">Dislikes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-count comments-count">0</span>
+        <span class="stat-label">Comments</span>
+      </div>
+    </div>
+
+    <div class="tweet-actions">
+      <button class="action-btn like-btn" data-action="like">
+        <div class="icon-container">
+          <i class="bi bi-hand-thumbs-up"></i>
+        </div>
+        <span>Like</span>
+      </button>
+
+      <button class="action-btn dislike-btn" data-action="dislike">
+        <div class="icon-container">
+          <i class="bi bi-hand-thumbs-down"></i>
+        </div>
+        <span>Dislike</span>
+      </button>
+
+      <button class="action-btn comment-btn" data-action="comment" data-bs-toggle="modal" data-bs-target="">
+        <div class="icon-container">
+          <i class="bi bi-chat-left-text"></i>
+        </div>
+        <span>Comment</span>
+      </button>
+
+      <button class="action-btn share-btn" data-action="share">
+        <div class="icon-container">
+          <i class="bi bi-repeat"></i>
+        </div>
+        <span>Share</span>
+      </button>
+    </div>
+  </div>
+  </div>
+  </div>
+</template>

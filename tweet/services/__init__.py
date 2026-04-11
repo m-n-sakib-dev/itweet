@@ -1,0 +1,1 @@
+from .trending_hastags import update_trending_table

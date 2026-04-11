@@ -1,0 +1,102 @@
+<template id="tweet-card-template">
+  <div class="tweet-card mx-lg-3" data-tweet-id="">
+    <div class="tweet_info">
+      <div class="tweet-header">
+        <div class="user-info">
+          <a class="avatar-wrapper user_profile_link"><img src="{{ MEDIA_URL }}app_img/profile_avater.jpg" alt="Profile"
+              class="user-avatar" /></a>
+          <div class="user-details">
+            <div class="d-flex">
+              <a class="username user_profile_link h3"></a>
+              <a class="user-handle user_profile_link"></a>
+            </div>
+            <span class="timestamp"></span>
+          </div>
+        </div>
+        <div class="dropdown tweet-card-menu-dropdown">
+          <button class="menu-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i
+              class="bi bi-three-dots"></i></button>
+          <ul class="dropdown-menu"></ul>
+        </div>
+      </div>
+      <div class="tweet-content">
+        <div class="tweet-text"></div>
+        <button class="see-more-btn" onclick="toggleSeeMore(this)">See more</button>
+      </div>
+
+      <div class="tweet-media">
+        <img src="" alt="Tweet image" class="media-image" />
+      </div>
+    </div>
+    <div class="parent_tweet"></div>
+    <div class="tweet-stats">
+      <div class="stat">
+        <span class="stat-count likes-count">0</span>
+        <span class="stat-label">Likes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-count dislikes-count">0</span>
+        <span class="stat-label">Dislikes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-count comments-count">0</span>
+        <span class="stat-label">Comments</span>
+      </div>
+    </div>
+
+    <div class="tweet-actions">
+      <button class="action-btn like-btn" data-action="like">
+        <div class="icon-container">
+          <i class="bi bi-hand-thumbs-up"></i>
+        </div>
+        <span>Like</span>
+      </button>
+
+      <button class="action-btn dislike-btn" data-action="dislike">
+        <div class="icon-container">
+          <i class="bi bi-hand-thumbs-down"></i>
+        </div>
+        <span>Dislike</span>
+      </button>
+
+      <button class="action-btn comment-btn" data-action="comment" data-bs-toggle="modal" data-bs-target="">
+        <div class="icon-container">
+          <i class="bi bi-chat-left-text"></i>
+        </div>
+        <span>Comment</span>
+      </button>
+
+      <button class="action-btn share-btn" data-action="share">
+        <div class="icon-container">
+          <i class="bi bi-repeat"></i>
+        </div>
+        <span>Share</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal for comments -->
+  <div class="modal fade tweet-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header px-3 py-2">
+          <h5 class="modal-title fs-5 flex-grow-1 text-center mb-0">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal_tweet_data">
+            <!-- tweet data will loaded here from js -->
+          </div>
+          <div class="comment_list"></div>
+        </div>
+
+        <div class="modal-footer p-1">
+          <div class="comment-form-container">
+            {% include 'components/comment_form.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

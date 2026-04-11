@@ -1,0 +1,65 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/layouts_style/mobile_bottom_bar.css' %}" />
+<script src="{% static 'scripts/nav_scripts/mobile_bottom_bar.js' %}"></script>
+<!-- Mobile Bottom Bar -->
+<div class="mobile-bottombar">
+  <div class="bottom-nav">
+    <!-- Home Button -->
+    <a href="{% url 'home' %}" class="bottom-nav-item home"><i class="bi bi-house-door-fill"></i></a>
+    <!-- Create Tweet Button -->
+    <a href="{% url 'tweet_create' %}" class="bottom-nav-item btn-create-tweet"><i class="bi bi-feather"></i></a>
+
+    <!-- Profile Dropdown -->
+    <div class="dropdown bottom-nav-item bottom-bar-profile-dropdown" id="bottomBarProfileDropdown">
+      <!-- prettier-ignore -->
+      <div class="bottom-bar-profile-trigger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="{% if user.is_authenticated %}
+            {{ user.profile.profile_picture.url }}
+          {% else %}
+            {{ MEDIA_URL }}profile_pictures/default_avatar.jpg
+          {% endif %}" alt="Profile" class="bottom-bar-profile-avatar" />
+      </div>
+
+      <ul class="dropdown-menu bottom-bar-profile-menu bottom-bar-profile-dropdown-menu">
+        {% if user.is_authenticated %}
+        <li>
+          <div class="bottom-bar-user-info">
+            <img src="{{ user.profile.profile_picture.url }}" alt="Profile" class="bottom-bar-user-avatar" />
+            <div class="bottom-bar-user-details">
+              <strong class="bottom-bar-username">{{ user.profile.name }}</strong>
+              <span class="bottom-bar-user-handle">{{ user.username }}</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <hr class="bottom-bar-dropdown-divider" />
+        </li>
+        <li>
+          <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'user_profile' user.id %}"><i
+              class="bi bi-person"></i> Profile</a>
+        </li>
+        {% endif %}
+        <li>
+          <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'user_saved_tweets_page' %}"><i
+              class="bi bi-bookmark"></i> Saved Tweets</a>
+        </li>
+        <li>
+          <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-gear"></i> Settings</a>
+        </li>
+        <li>
+          <hr class="bottom-bar-dropdown-divider" />
+        </li>
+        {% if user.is_authenticated %}
+        <li>
+          <a class="dropdown-item bottom-bar-dropdown-item" href="{% url 'logout' %}"><i
+              class="bi bi-box-arrow-right"></i> Log out</a>
+        </li>
+        {% else %}
+        <li>
+          <a class="dropdown-item bottom-bar-dropdown-item" href=""><i class="bi bi-box-arrow-in-right"></i> Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
